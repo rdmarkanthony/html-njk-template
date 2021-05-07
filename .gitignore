@@ -1,0 +1,12 @@
+node_modules/
+package-lock.json
+
+*.lock
+*.map
+.libsass.json
+.DS_Store
+sftp-config.json
+.idea
+*.html
+public/assets/js/custom.js
+public/assets/css/style.css

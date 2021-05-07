@@ -1,0 +1,41 @@
+{% set rootDir = '' %}
+
+{% set pageTitle = 'ProjectName | PageName' %}
+{% if pageTitleMeta %} {% set pageTitle = pageTitleMeta %} {% endif %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>{{pageTitle}}</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	{% block styles %}
+	<link rel="stylesheet" href="{{ rootDir }}assets/css/style.css" media="all"/>
+	{% endblock %}
+	{% block headerscript -%}{%- endblock %}
+</head>
+<body {% if bodyClass %}class="{{ bodyClass }}"{% endif %}>
+	{% block bodyscript -%}{%- endblock %}
+	<section id="main-container">
+		<header>
+			{% block header -%}{% include "partials/header.njk" %}{%- endblock %}
+		</header>
+		<section id="main-wrapper">
+			{% block content -%}{%- endblock %}
+		</section>
+	</section>
+	{% block popup -%}{%- endblock %}
+	<footer>
+		{% include "partials/footer.njk" %}
+	</footer>
+	{% block beforescript -%}{%- endblock %}
+	{% block scripts %}
+	<script src="{{ rootDir }}assets/js/lib/jquery.min.js"></script>
+	<script src="{{ rootDir }}assets/js/custom.js"></script>
+	{% endblock %}
+	{% block footerscript -%}{%- endblock %}
+</body>
+</html>
