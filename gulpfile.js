@@ -32,7 +32,7 @@ gulp.task("browser-sync", () => {
 });
 
 // Renders Nunjucks
-gulp.task("njk-vasari", () => {
+gulp.task("njk-boilerplate", () => {
   // Gets .html and .njk files in pages
   return gulp
     .src("./pages/**/**/*.+(html|njk)")
@@ -59,10 +59,10 @@ gulp.task("njk-vasari", () => {
     // output files in app folder
     .pipe(gulp.dest("./public"))
 });
-gulp.task("njk", ["njk-vasari"]);
+gulp.task("njk", ["njk-boilerplate"]);
 
 // Compile Sass
-gulp.task("styles-vasari", () => {
+gulp.task("styles-boilerplate", () => {
   return gulp
     .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
     .pipe(
@@ -78,10 +78,10 @@ gulp.task("styles-vasari", () => {
     .pipe(gulp.dest("./public/assets/css/"))
 });
 
-gulp.task("styles", ["styles-vasari"]); // Compile all sass.
+gulp.task("styles", ["styles-boilerplate"]); // Compile all sass.
 
 // Compile JS
-gulp.task("scripts-personal", () => {
+gulp.task("scripts-boilerplate", () => {
   var g = gulp
       .src([
         // libraries
@@ -94,7 +94,7 @@ gulp.task("scripts-personal", () => {
       .pipe(gulp.dest("./public/assets/js/"));
 });
 
-gulp.task("scripts", ["scripts-personal"]);
+gulp.task("scripts", ["scripts-boilerplate"]);
 
 // Linters
 gulp.task("lint-styles", () =>

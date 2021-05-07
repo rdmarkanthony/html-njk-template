@@ -1,113 +1,115 @@
 'use strict';
 
-var bp = {
-	width: 0,
-	height: 0,
-	isMobile: false,
+const bp = {
 	init: function() {
-		bp.mobileDetect();
 		// for mobile
-		if (bp.isMobile) {
-			document.querySelector('html').classList.add('bp-touch');
+		if(bp.isMobile()) {
+			$('html').addClass('bp-touch');
 		}
 
-		bp.loader('init');
+		// for preloader
+		bp.preloader('start');
 
-		bp.resize();
-
-		window.addEventListener('resize', function() {
+		// for general resize
+		bp.resizeFn(function() {
 			bp.resize();
-
-			clearTimeout(bp.resizeTimer);
-			bp.resizeTimer = setTimeout(function() {
-				bp.resize();
-			}, 400);
 		});
 
-		document.addEventListener('DOMContentLoaded', function() {
+		// for ready
+		$(document).ready(function() {
 			bp.ready();
 		});
 	},
 	ready: function() {
 		bp.resize();
+
 		// hide the preloader
-		bp.loader('close');
+		bp.preloader('end');
 	},
-	loader: function(state) {
-		var _loader = {
-			content: '',
-			init: function() {
-				// '<div class="bp-preloader"><div class="spinner"><span></span><span></span></div></div>'
-				_loader.content = document.createElement('div');
-				_loader.content.classList.add('bp-preloader');
-
-				var _spinner = document.createElement('div');
-				_spinner.classList.add('spinner');
-
-				for (var i = 0; i < 2; i++) {
-					var _span = document.createElement('span');
-					_spinner.appendChild(_span);
-				}
-
-				_loader.content.appendChild(_spinner);
-				document.body.appendChild(_loader.content);
-			},
-			close: function() {
-				document.querySelector('.bp-preloader').classList.add('fade');
-				setTimeout(function() {
-					document.querySelector('.bp-preloader').remove();
-				}, 500);
+	preloader: function(state) {
+		// init preloader
+		if(state == 'start') {
+			// remove the preloader by url param
+			if(bp.getUrlVars().preloader == 'true') {
+				$('.bp-preloader').remove();
 			}
 		}
 
-		if(state == 'init') {
-			_loader.init();
-		} else if(state == 'close') {
-			_loader.close();
+		// hide the preloader
+		if(state == 'end') {
+			$('.bp-preloader').addClass('fade');
+
+			setTimeout(function() {
+				$('.bp-preloader').remove();
+			}, 500);
 		}
 	},
-	resizeTimer: 0,
+	width: function() {
+		return window.innerWidth;
+	},
+	height: function() {
+		return window.innerHeight;
+	},
+	header: {
+		target: document.querySelector('header'),
+		height: function() {
+			return bp.header.target.offsetHeight;
+		}
+	},
+	footer: {
+		target: document.querySelector('footer'),
+		height: function() {
+			return bp.footer.target.offsetHeight;
+		}
+	},
 	resize: function() {
-		var _resize = {
-			init: function() {
-				bp.width = window.innerWidth;
-				bp.height = window.innerHeight;
+		// sticky footer
+		$(bp.footer.target).css({marginTop: -(bp.footer.height())});
+		$('#main-wrapper').css({paddingBottom: bp.footer.height()});
 
-				// STICKY FOOTER
-				var header = document.querySelector('header'),
-				footer = document.querySelector('footer');
-
-				var headerHeight = header.offsetHeight,
-				footerHeight = footer.offsetHeight;
-
-				footer.style.marginTop = -(footerHeight) + 'px';
-				document.querySelector('#main-wrapper').style.paddingBottom = footerHeight + 'px';
-
-				// for equal height
-				bp.equalize(document.querySelectorAll('.fl'));
-			}
-		}
-		_resize.init();
+		// for equal height
+		$('.group-height').each(function() {
+			bp.equalize(this.querySelectorAll('.gh1'));
+			bp.equalize(this.querySelectorAll('.gh2'));
+			bp.equalize(this.querySelectorAll('.gh3'));
+		});
 	},
 	equalize: function(target) {
-		for (var i = 0; i < target.length; i++) {
+		for (let i = 0; i < target.length; i++) {
 			target[i].style.minHeight = 0;
 		}
 
-		var _biggest = 0;
-		for (var i = 0; i < target.length; i++ ){
-			var element_height = target[i].offsetHeight;
+		let _biggest = 0;
+		for (let i = 0; i < target.length; i++ ){
+			let element_height = target[i].offsetHeight;
 			if(element_height > _biggest ) _biggest = element_height;
 		}
 
-		for (var i = 0; i < target.length; i++) {
+		for (let i = 0; i < target.length; i++) {
 			target[i].style.minHeight = _biggest + 'px';
 		}
 		
 		return _biggest;
 	},
-	mobileDetect: function() {
-		var isMobile = {
+	resizeFn: function(fnctn) {
+		let _resizeTimer = '';
+
+		fnctn('init');
+		window.addEventListener('resize', function() {
+			fnctn('resize');
+
+			clearTimeout(_resizeTimer);
+			_resizeTimer = setTimeout(function() {
+				fnctn('after');
+			}, 300);
+		});
+
+		$(document).ready(function() {
+			fnctn('ready');
+		});
+	},
+	isMobile: function() {
+		const isMobile = {
 		    Android: function() {
 		        return navigator.userAgent.match(/Android/i);
 		    },
@@ -128,8 +130,30 @@ var bp = {
 		    }
 		};
 		if(isMobile.any) {
-			bp.isMobile = isMobile.any();
+			return isMobile.any();
 		}
+	},
+	getUrlVars: function() {
+		let vars = {};
+		const parts = window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi, function(m,key,value) {
+			vars[key] = value;
+		});
+		return vars;
+	},
+	setUrlVars: function(key, value) {
+		let url = window.location.href;
+		const hash = location.hash;
+			url = url.replace(hash, '');
+			if (url.indexOf(key + "=") >= 0) {
+				const old = ocbc.getUrlVars()[key];
+				url = url.replace(key+"="+old, key+"="+value);
+			} else {
+				if (url.indexOf("?") < 0)
+					url += "?" + key + "=" + value;
+				else
+					url += "&" + key + "=" + value;
+			}
+			window.history.pushState({ path: url + hash }, '', url + hash );
 	}
 }
 bp.init();

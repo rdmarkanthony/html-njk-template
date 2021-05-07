@@ -19,6 +19,7 @@
 </head>
 <body {% if bodyClass %}class="{{ bodyClass }}"{% endif %}>
 	{% block bodyscript -%}{%- endblock %}
+	<div class="bp-preloader"><div class="spinner"><span></span><span></span></div></div>
 	<section id="main-container">
 		<header>
 			{% block header -%}{% include "partials/header.njk" %}{%- endblock %}

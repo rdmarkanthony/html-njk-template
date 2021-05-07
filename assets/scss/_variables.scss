@@ -7,22 +7,8 @@ $maxWidth   : 1024px; // can be use as max width of the container
 $defaultFont: 'Arial', 'Helvetica', 'Calibri'; // default font families and error support for any html tags
 $fontA      : 'Arial', 'Helvetica', 'Calibri';
 
-// for font sizes
-$fontSmall  : 12px;
-$fontMedium : 14px;
-$fontLarge  : 16px;
-$fontxLarge : 18px;
-$fontxxLarge: 20px;
-
 // for colors
 $defaultColor     : #000000; // default color for the independent paragraphs, input fields, etc
 $defaultLinkColor : #3189DD; // default link color for the whole site
 $coWhite          : #ffffff;
 $coBlack          : #000000;
-
-// for margin and padding
-$spaceOne   : 10px;
-$spaceTwo   : 20px;
-$spaceThree : 30px;
-$spaceFour  : 40px;
-$spaceFive  : 50px;
