@@ -2,7 +2,7 @@
 #main-container { height:100%; height: auto !important; min-height:100%; }
 
 .ease,a,input[type="submit"],button { transition: all 0.5s ease; }
-.auto { max-width:$maxWidth; margin-left: auto; margin-right: auto; }
+.auto { max-width: var(--width-1); margin-left: auto; margin-right: auto; }
 
 #main-wrapper { }
 
@@ -10,18 +10,14 @@
 .fr { float:right; }
 .clr { display: block; float:none; clear:both; }
 
-.bp-set { display:inline-block; *display:inline;
-  &.vm { vertical-align:middle; }
-  &.vt { vertical-align:top; }
-  &.vb { vertical-align:bottom; }
-}
-
 .bp-box { @include box-sizing(border-box); }
 .bp-rel { position:relative; }
 .bp-ab { position:absolute; }
 
-.co-black { color: $coBlack; }
-.co-white { color: $coWhite; }
+.co-black { color: var(--black); }
+.co-white { color: var(--white); }
+
+.bg-black { background-color: var(--black); color: var(--white); }
 
 .bp-img {
   img { max-width: 100%; height: auto; }
@@ -36,90 +32,117 @@
 .no-margin { margin: 0; }
 .no-padding { padding: 0; }
 
-.pt1 { padding-top: 10px; }
-.pt2 { padding-top: 20px; }
-.pt3 { padding-top: 30px; }
-.pt4 { padding-top: 40px; }
-.pt5 { padding-top: 50px; }
+.pt10 { padding-top: 10px; }
+.pt20 { padding-top: 20px; }
+.pt30 { padding-top: 30px; }
+.pt40 { padding-top: 40px; }
+.pt50 { padding-top: 50px; }
 
-.pb1 { padding-bottom: 10px; }
-.pb2 { padding-bottom: 20px; }
-.pb3 { padding-bottom: 30px; }
-.pb4 { padding-bottom: 40px; }
-.pb5 { padding-bottom: 50px; }
+.pb10 { padding-bottom: 10px; }
+.pb20 { padding-bottom: 20px; }
+.pb30 { padding-bottom: 30px; }
+.pb40 { padding-bottom: 40px; }
+.pb50 { padding-bottom: 50px; }
 
-.mt1 { margin-top: 10px; }
-.mt2 { margin-top: 20px; }
-.mt3 { margin-top: 30px; }
-.mt4 { margin-top: 40px; }
-.mt5 { margin-top: 50px; }
+.mt10 { margin-top: 10px; }
+.mt20 { margin-top: 20px; }
+.mt30 { margin-top: 30px; }
+.mt40 { margin-top: 40px; }
+.mt50 { margin-top: 50px; }
 
-.mb1 { margin-bottom: 10px; }
-.mb2 { margin-bottom: 20px; }
-.mb3 { margin-bottom: 30px; }
-.mb4 { margin-bottom: 40px; }
-.mb5 { margin-bottom: 50px; }
+.mb10 { margin-bottom: 10px; }
+.mb20 { margin-bottom: 20px; }
+.mb30 { margin-bottom: 30px; }
+.mb40 { margin-bottom: 40px; }
+.mb50 { margin-bottom: 50px; }
 
 @include breakpoint(tablet2) {
-	.pt2 { padding-top: 10px; }
-	.pt3 { padding-top: 20px; }
-	.pt4 { padding-top: 30px; }
-	.pt5 { padding-top: 40px; }
+	.pt20 { padding-top: 10px; }
+	.pt30 { padding-top: 20px; }
+	.pt40 { padding-top: 30px; }
+	.pt50 { padding-top: 40px; }
 
-	.pb2 { padding-bottom: 10px; }
-	.pb3 { padding-bottom: 20px; }
-	.pb4 { padding-bottom: 30px; }
-	.pb5 { padding-bottom: 40px; }
+	.pb20 { padding-bottom: 10px; }
+	.pb30 { padding-bottom: 20px; }
+	.pb40 { padding-bottom: 30px; }
+	.pb50 { padding-bottom: 40px; }
 
-	.mt2 { margin-top: 10px; }
-	.mt3 { margin-top: 20px; }
-	.mt4 { margin-top: 30px; }
-	.mt5 { margin-top: 40px; }
+	.mt20 { margin-top: 10px; }
+	.mt30 { margin-top: 20px; }
+	.mt40 { margin-top: 30px; }
+	.mt50 { margin-top: 40px; }
 
-	.mb2 { margin-bottom: 10px; }
-	.mb3 { margin-bottom: 20px; }
-	.mb4 { margin-bottom: 30px; }
-	.mb5 { margin-bottom: 40px; }
+	.mb20 { margin-bottom: 10px; }
+	.mb30 { margin-bottom: 20px; }
+	.mb40 { margin-bottom: 30px; }
+	.mb50 { margin-bottom: 40px; }
 
 	.mob-pt0 { padding-top: 0; }
-	.mob-pt1 { padding-top: 10px; }
-	.mob-pt2 { padding-top: 20px; }
-	.mob-pt3 { padding-top: 30px; }
-	.mob-pt4 { padding-top: 40px; }
-	.mob-pt4 { padding-top: 50px; }
+	.mob-pt10 { padding-top: 10px; }
+	.mob-pt20 { padding-top: 20px; }
+	.mob-pt30 { padding-top: 30px; }
+	.mob-pt40 { padding-top: 40px; }
+	.mob-pt50 { padding-top: 50px; }
 
 	.mob-pb0 { padding-bottom: 0; }
-	.mob-pb1 { padding-bottom: 10px; }
-	.mob-pb2 { padding-bottom: 20px; }
-	.mob-pb3 { padding-bottom: 30px; }
-	.mob-pb4 { padding-bottom: 40px; }
-	.mob-pb5 { padding-bottom: 50px; }
+	.mob-pb10 { padding-bottom: 10px; }
+	.mob-pb20 { padding-bottom: 20px; }
+	.mob-pb30 { padding-bottom: 30px; }
+	.mob-pb40 { padding-bottom: 40px; }
+	.mob-pb50 { padding-bottom: 50px; }
 
 	.mob-mt0 { margin-top: 0; }
-	.mob-mt1 { margin-top: 10px; }
-	.mob-mt2 { margin-top: 20px; }
-	.mob-mt3 { margin-top: 30px; }
-	.mob-mt4 { margin-top: 40px; }
-	.mob-mt5 { margin-top: 50px; }
+	.mob-mt10 { margin-top: 10px; }
+	.mob-mt20 { margin-top: 20px; }
+	.mob-mt30 { margin-top: 30px; }
+	.mob-mt40 { margin-top: 40px; }
+	.mob-mt50 { margin-top: 50px; }
 
 	.mob-mb0 { margin-bottom: 0; }
-	.mob-mb1 { margin-bottom: 10px; }
-	.mob-mb2 { margin-bottom: 20px; }
-	.mob-mb3 { margin-bottom: 30px; }
-	.mob-mb4 { margin-bottom: 40px; }
-	.mob-mb5 { margin-bottom: 50px; }
+	.mob-mb10 { margin-bottom: 10px; }
+	.mob-mb20 { margin-bottom: 20px; }
+	.mob-mb30 { margin-bottom: 30px; }
+	.mob-mb40 { margin-bottom: 40px; }
+	.mob-mb50 { margin-bottom: 50px; }
 }
-.bp-preloader { z-index: 9999; opacity: 1; position:fixed; top: 0; left: 0; width:100%; height:100%; background-color: $coWhite; overflow:hidden; transition: opacity 0.5s;
-	&.fade { opacity: 0; }
+
+/** for inview animation **/
+.animate, .anim-content, .anim-custom, [class*="animate-child"] { opacity: 0; }
+.anim-content.visible { animation-name: animRun; }
+.anim-content.visible, .anim-custom.visible { animation-duration: 0.8s; animation-fill-mode: forwards; }
+@keyframes animRun {
+	0% { opacity: 0; transform: translate3d(0,40px,0); }
+	100% { opacity: 1; transform: translate3d(0,0,0); }
 }
-.spinner { position: absolute; width:80px; height:80px; top: 50%; left: 50%; margin-left:-40px; margin-top:-40px; animation: rotate 2.0s infinite linear;
-	span { display: inline-block; position: absolute; width:60%; height:60%;  top: 0; background-color:$coBlack; border-radius: 100%; animation: bounce 2.0s infinite ease-in-out;
-		&:nth-child(2) { top: auto; bottom: 0px; @include animation-delay( -1.0s); }
-	}
-}
-@keyframes rotate { 100% { transform: rotate(360deg); } }
-@keyframes bounce { 0%, 100% { transform: scale(0.0); } 50% { transform: scale(1.0); } }
 
 // you can include here the rest of your class name eg. home page
 .scrolling-touch { overflow: auto; overflow-scrolling: touch; -webkit-overflow-scrolling: touch; }
 .no-wrap { white-space: nowrap; }
+.break-all { word-break: break-all; }
+
+.container { padding-left: 0; padding-right: 0;
+	@include breakpoint(lg) { max-width: var(--width-1); }
+}
+
+// for rows
+.row {
+	@include breakpoint(lg) {
+		&.row-medium { margin-left: -20px; margin-right: -20px;
+			> [class*="col"] { padding-left: 20px; padding-right: 20px; }
+		}
+	}
+
+	@media (min-width: 1260px) {
+		&.row-large { margin-left: -42px; margin-right: -42px;
+			> [class*="col"] { padding-left: 42px; padding-right: 42px; }
+		}
+	}
+
+	&.row-small { margin-left: -10px; margin-right: -10px;
+		> [class*="col"] { padding-left: 10px; padding-right: 10px; }
+	}
+
+	> [class*="col-"] {
+		&:last-child { margin-bottom: 0 !important; }
+	}
+}

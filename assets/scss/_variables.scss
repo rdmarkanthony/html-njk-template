@@ -1,14 +1,13 @@
 // include all templated CSS properties here such as font sizes, margin, padding, color, background color, etc
 
-// for width
-$maxWidth   : 1024px; // can be use as max width of the container
+:root {
+    --width-1: 1024px;
 
-// for fonts
-$defaultFont: 'Arial', 'Helvetica', 'Calibri'; // default font families and error support for any html tags
-$fontA      : 'Arial', 'Helvetica', 'Calibri';
+    --font-default: 'Arial', 'Helvetica', 'Calibri';
 
-// for colors
-$defaultColor     : #000000; // default color for the independent paragraphs, input fields, etc
-$defaultLinkColor : #3189DD; // default link color for the whole site
-$coWhite          : #ffffff;
-$coBlack          : #000000;
+    --color-default: #000000;
+    --link: #3189DD;
+
+    --white: #ffffff;
+    --black: #000000;
+}

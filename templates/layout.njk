@@ -1,4 +1,4 @@
-{% set rootDir = '' %}
+{% set version = '?v=2022062001' %}
 
 {% set pageTitle = 'ProjectName | PageName' %}
 {% if pageTitleMeta %} {% set pageTitle = pageTitleMeta %} {% endif %}
@@ -13,13 +13,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	{% block styles %}
-	<link rel="stylesheet" href="{{ rootDir }}assets/css/style.css" media="all"/>
+	<link rel="stylesheet" href="{{ rootDir }}assets/css/style.css{{ version }}" media="all"/>
 	{% endblock %}
 	{% block headerscript -%}{%- endblock %}
 </head>
 <body {% if bodyClass %}class="{{ bodyClass }}"{% endif %}>
 	{% block bodyscript -%}{%- endblock %}
-	<div class="bp-preloader"><div class="spinner"><span></span><span></span></div></div>
 	<section id="main-container">
 		<header>
 			{% block header -%}{% include "partials/header.njk" %}{%- endblock %}
@@ -35,7 +34,7 @@
 	{% block beforescript -%}{%- endblock %}
 	{% block scripts %}
 	<script src="{{ rootDir }}assets/js/lib/jquery.min.js"></script>
-	<script src="{{ rootDir }}assets/js/custom.js"></script>
+	<script src="{{ rootDir }}assets/js/custom.js{{ version }}"></script>
 	{% endblock %}
 	{% block footerscript -%}{%- endblock %}
 </body>

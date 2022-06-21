@@ -3,13 +3,15 @@
   img { max-width: 100%; height: auto; }
 }
 html, body { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin:0; padding:0;}
-body { font-size: 12px; line-height: 1.4; color: $defaultColor; }
+body { font-size: 20px; line-height: 1.4; color: var(--color-default);
+    @include breakpoint(tablet2) { font-size: 16px; }
+}
 
 /*
  * Addresses `font-family` inconsistency between `textarea` and other form
  * elements.
 */
-html, body, button, input, select, textarea { font-family: $defaultFont; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html, body, button, input, select, textarea { font-family: var(--font-default); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
 /***** [Reserve CSS Stylesheet] *****/
 .opac a:hover { @include opacity(0.9); }
@@ -63,7 +65,7 @@ audio:not([controls]) { display: none; height: 0; }
 /*
  * Addresses `outline` inconsistency between Chrome and other browsers.
 */
-a { outline:none; color: $defaultLinkColor; text-decoration:none; _noFocusLine: expression(this.hideFocus=true); cursor:pointer; }
+a { outline:none; color: var(--link); text-decoration:none; _noFocusLine: expression(this.hideFocus=true); cursor:pointer; }
 a:active, a:hover , a:focus { outline:none; text-decoration:none; _noFocusLine: expression(this.hideFocus=true); }
 
 /* ==========================================================================
