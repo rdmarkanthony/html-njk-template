@@ -297,3 +297,55 @@
 // @include breakpoint(tablet) {
 //  / put your css here /
 // }
+
+@mixin underline($value) {
+  text-decoration: none;
+  @include linear-gradient(transparent 1px,$value 1px,$value 2px,transparent 2px);
+  background-size: 0% 3px;
+  // background-position: left 0 bottom;
+  background-position: 100% 100%;
+  transition: color background-size 0.3s ease-in-out;
+  background-repeat: no-repeat;
+  padding-bottom: 4px;
+  border-bottom: 3px solid transparent;
+  &:hover {
+    background-size: 100% 3px;
+  }
+  @supports (-ms-ime-align:auto) {
+    @include linear-gradient($value,$value);
+    background: transparent !important;
+    background-size: 0% 2px;
+    text-decoration: underline;
+
+    &:hover {
+      background-size: 100% 2px;
+      text-decoration: none;
+    }
+  }
+}
+
+@mixin underline2($value) {
+  text-decoration: none;
+  @include linear-gradient(transparent 1px,$value 1px,$value 2px,transparent 2px);
+  background-size: 100% 3px;
+  // background-position: right 0 bottom;
+  background-position: 100% 100%;
+  transition: color background-size 0.3s ease-in-out;
+  background-repeat: no-repeat;
+  padding-bottom: 0;
+  border-bottom: 3px solid transparent;
+  &:hover {
+    background-size: 0% 3px;
+  }
+  @supports (-ms-ime-align:auto) {
+    @include linear-gradient($value,$value);
+    background: transparent !important;
+    background-size: 100% 2px;
+    text-decoration: underline;
+
+    &:hover {
+      background-size: 0% 2px;
+      text-decoration: none;
+    }
+  }
+}

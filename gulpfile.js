@@ -85,7 +85,7 @@ gulp.task("scripts-boilerplate", () => {
   var g = gulp
       .src([
         // libraries
-        // "./assets/js/lib/jquery.min.js",
+        "./assets/js/lib/jquery.min.js",
 
         // custom
         "./assets/js/custom.js"
