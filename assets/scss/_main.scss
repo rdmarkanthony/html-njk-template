@@ -1,7 +1,8 @@
  // this is area is for reserved class
 #main-container { height:100%; height: auto !important; min-height:100%; }
 
-.ease,a,input[type="submit"],button { transition: all 0.5s ease; }
+.ease,a,input[type="submit"],button, svg path { transition: all 0.5s ease; }
+.ease2 { transition: all 0.3s ease; }
 .auto { max-width: var(--width-1); margin-left: auto; margin-right: auto; }
 
 #main-wrapper { }
@@ -20,14 +21,18 @@
 .bg-black { background-color: var(--black); color: var(--white); }
 
 .bp-img {
-  img { max-width: 100%; height: auto; }
-  &.wide img { display: block; width: 100%; }
+	img, svg { max-width: 100%; height: auto; }
+	&.wide {
+		img, svg { display: block; width: 100%; }
+	}
 }
 .bp-nocurve { @include border-radius(0); }
 .bp-curve { @include border-radius(5px); }
 .bp-circle { @include border-radius(50%); }
 
-.mobile-input { @include appearance(none); border-radius: 0; }
+.mobile-input { @include appearance(none); border: none; border-radius: 0; outline: none !important; box-shadow: none !important;
+	&:focus, &:active { outline: none !important; box-shadow: none !important; }
+}
 
 .no-margin { margin: 0; }
 .no-padding { padding: 0; }
