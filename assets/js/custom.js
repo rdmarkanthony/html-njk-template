@@ -1,18 +1,25 @@
 'use strict';
 
 const projName = {
-	debug: false,
-	preloader: true,
+	preloader: false,
 	init: function() {
-		// for mobile
-		if(projName.isMobile()) {
-			$('html').addClass('bp-touch');
-		}
+		// if mobile
+		if(projName.isMobile()) $('html').addClass('is-mobile');
 
-		if(projName.getUrlVars().debug == 'true') projName.debug = true;
+		// for debugging
+		projName.debug.init();
+
+		// for header
+		projName.header.init();
+
+		// for footer
+		projName.footer.init();
+
+		// for animate
+		projName.inview.init();
 
 		// for general resize
-		projName.resizeFn(function() {
+		projName.event.resize(function() {
 			projName.resize();
 		});
 
@@ -20,57 +27,171 @@ const projName = {
 		$(document).ready(function() {
 			projName.ready();
 		});
+	},
+	ready: function() {
+		// show animate
+		projName.inview.run();
 
-		projName.header.init();
-		projName.footer.init();
-		projName.inview.init();
+		// for auto-scroll
+		projName.scroll.init();
 
-		// for auto scroll
-		$('.auto-scroll').each(function() {
-			$(this).click(function(e) {
-				const _target = document.querySelector(this.getAttribute('href'));
+		console.log( projName );
+	},
+	isMobile: function() {
+		return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+	},
+	debug: {
+		active: false,
+		init: function() {
+			if(projName.url.getVars().debug == 'true') projName.debug.active = true;
+		}
+	},
+	url: {
+		getVars: function() {
+			let vars = {};
+			const parts = window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi, function(m,key,value) {
+				vars[key] = value;
+			});
+			return vars;
+		},
+		setVars: function(key, value) {
+			let url = window.location.href;
+			const hash = location.hash;
+
+			url = url.replace(hash, '');
+
+			if (url.indexOf(key + "=") >= 0) {
+				const old = ocbc.getUrlVars()[key];
+				url = url.replace(key+"="+old, key+"="+value);
+			} else {
+				if (url.indexOf("?") < 0)
+					url += "?" + key + "=" + value;
+				else
+					url += "&" + key + "=" + value;
+			}
+			window.history.pushState({ path: url + hash }, '', url + hash );
+		},
+		getHash: function() {
+			if(window.location.hash) {
+				return ((window.location.hash).split('?'))[0];
+			} else {
+				return false;
+			}
+		}
+	},
+	event: {
+		resize: function(callback) {
+			let _resizeTimer = '';
+
+			callback('init');
+
+			window.addEventListener('load', function(e) {
+				callback('ready', e);
+			});
+
+			window.addEventListener('resize', function(e) {
+				callback('resize', e);
+
+				clearTimeout(_resizeTimer);
+				_resizeTimer = setTimeout(function() {
+					callback('after', e);
+				}, 300);
+			});
+		},
+		scroll: function(callback) {
+			callback();
+			window.addEventListener('scroll', function(e) {
+				callback(e);
+			});
+		},
+		dispatch: function(elem, eventName) {
+			let event;
+			if (typeof(Event) === 'function') {
+				event = new Event(eventName);
+			}
+			else {
+				event = document.createEvent('Event');
+				event.initEvent(eventName, true, true);
+			}
+			elem.dispatchEvent(event);
+		},
+	},
+	scroll: {
+		auto: function(target, offset, speed, fnctn) {
+			// if need to change the target
+			let _diffTarget = target.getAttribute('scroll-diff');
+			if(_diffTarget) {
+				_diffTarget = document.querySelector('.' + _diffTarget);
+	
+				if(_diffTarget) target = _diffTarget;
+			}
+	
+			let _offset = 0;
+			let _gap = 0;
+			if(projName.width() <= 768) _gap = 0;
+			// if going to scroll up, get header height as offset
+			if($(target).offset().top <= projName.st()) {
+				_offset = projName.header.height() + _gap;
+			} else {
+				if(projName.width() > 991) {
+					_offset = _gap;
+				} else {
+					_offset = projName.header.height() + _gap;
+				}
+			}
+			if(parseInt(offset)) _offset = offset;
+	
+			let _speed = 700;
+			if(parseInt(speed)) _speed = speed;
+			
+			if(_offset <= 0 && target.dataset.headerNav) _offset = 68;
+	
+			$('html').stop().animate({scrollTop: $(target).offset().top -(_offset) }, _speed, false, function() {
+				if(fnctn) fnctn();
+			});
+		},
+		init: function() {
+			// for auto scroll
+			$('.auto-scroll').each(function() {
+				$(this).click(function(e) {
+					const _target = document.querySelector(this.getAttribute('href'));
+
+					if(_target) {
+						e.preventDefault();
+
+						projName.scroll.auto(_target);
+					}
+				});
+			});
+			if(window.location.hash) {	
+				const _target = document.querySelector(projName.url.getHash());
 
 				if(_target) {
-					e.preventDefault();
-
-					projName.autoScroll(_target);
-				}
-			});
-		});
-		if(window.location.hash) {
-			const _hash = ((window.location.hash).split('?'))[0];
-			const _target = document.querySelector(_hash);
-
-			if(_target) {
-				// for auto scroll
-				setTimeout(function() {
-					const _targetOffset = projName.st() - $(_target).offset().top;
-
-					// if(!(_targetOffset <= window.innerHeight * 0.2 && _targetOffset >= 0))
-					projName.autoScroll(_target, projName.header.target.offsetHeight);
-				}, 500);
-
-				// for auto popup
-				const _popupBtn = document.querySelector('a[href="'+ _hash +'"]');
-
-				if(_popupBtn) {
+					// for auto scroll
 					setTimeout(function() {
-						_popupBtn.click();
-					}, 300);
+						const _targetOffset = projName.st() - $(_target).offset().top;
+
+						// if(!(_targetOffset <= window.innerHeight * 0.2 && _targetOffset >= 0))
+						projName.scroll.auto(_target, projName.header.target.offsetHeight);
+					}, 500);
+
+					// for auto popup
+					const _popupBtn = document.querySelector('a[href="'+ _hash +'"]');
+
+					if(_popupBtn) {
+						setTimeout(function() {
+							_popupBtn.click();
+						}, 300);
+					}
 				}
 			}
 		}
 	},
-	ready: function() {
-		projName.resize();
-
-		projName.inview.run();
-	},
 	width: function() {
-		return $(window).width();
+		return window.innerWidth - (window.innerWidth - document.documentElement.clientWidth);
 	},
 	height: function() {
-		return $(window).height();
+		return window.innerHeight - (window.innerHeight - document.documentElement.clientHeight);
 	},
 	header: {
 		target: document.querySelector('.header-content'),
@@ -104,6 +225,8 @@ const projName = {
 			projName.equalize(this.querySelectorAll('.gh5'));
 		});
 	},
+
+
 	equalize: function(target) {
 		for (let i = 0; i < target.length; i++) {
 			target[i].style.minHeight = 0;
@@ -120,87 +243,6 @@ const projName = {
 		}
 		
 		return _biggest;
-	},
-	resizeFn: function(fnctn) {
-		let _resizeTimer = '';
-
-		fnctn('init');
-		window.addEventListener('resize', function() {
-			fnctn('resize');
-
-			clearTimeout(_resizeTimer);
-			_resizeTimer = setTimeout(function() {
-				fnctn('after');
-			}, 300);
-		});
-
-		$(document).ready(function() {
-			fnctn('ready');
-		});
-	},
-	scrollFn: function(fnctn) {
-		fnctn();
-		window.addEventListener('scroll', function(e) {
-			fnctn(e);
-		});
-	},
-	isMobile: function() {
-		const isMobile = {
-		    Android: function() {
-		        return navigator.userAgent.match(/Android/i);
-		    },
-		    BlackBerry: function() {
-		        return navigator.userAgent.match(/BlackBerry/i);
-		    },
-		    iOS: function() {
-		        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-		    },
-		    Opera: function() {
-		        return navigator.userAgent.match(/Opera Mini/i);
-		    },
-		    Windows: function() {
-		        return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
-		    },
-		    any: function() {
-		        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-		    }
-		};
-		if(isMobile.any) {
-			return isMobile.any();
-		}
-	},
-	dispatchEvent: function(elem, eventName) {
-		let event;
-		if (typeof(Event) === 'function') {
-			event = new Event(eventName);
-		}
-		else {
-			event = document.createEvent('Event');
-			event.initEvent(eventName, true, true);
-		}
-		elem.dispatchEvent(event);
-	},
-	getUrlVars: function() {
-		let vars = {};
-		const parts = window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi, function(m,key,value) {
-			vars[key] = value;
-		});
-		return vars;
-	},
-	setUrlVars: function(key, value) {
-		let url = window.location.href;
-		const hash = location.hash;
-			url = url.replace(hash, '');
-			if (url.indexOf(key + "=") >= 0) {
-				const old = ocbc.getUrlVars()[key];
-				url = url.replace(key+"="+old, key+"="+value);
-			} else {
-				if (url.indexOf("?") < 0)
-					url += "?" + key + "=" + value;
-				else
-					url += "&" + key + "=" + value;
-			}
-			window.history.pushState({ path: url + hash }, '', url + hash );
 	},
 	inview: {
 		init: function() {
@@ -333,100 +375,6 @@ const projName = {
 		}
 	},
 	st: function() { return window.pageYOffset || document.documentElement.scrollTop },
-	autoScroll: function(target, offset, speed, fnctn) {
-		// if need to change the target
-		let _diffTarget = target.getAttribute('scroll-diff');
-		if(_diffTarget) {
-			_diffTarget = document.querySelector('.' + _diffTarget);
-
-			if(_diffTarget) target = _diffTarget;
-		}
-
-		let _offset = 0;
-		let _gap = 0;
-		if(projName.width() <= 768) _gap = 0;
-		// if going to scroll up, get header height as offset
-		if($(target).offset().top <= projName.st()) {
-			_offset = projName.header.height() + _gap;
-		} else {
-			if(projName.width() > 991) {
-				_offset = _gap;
-			} else {
-				_offset = projName.header.height() + _gap;
-			}
-		}
-		if(parseInt(offset)) _offset = offset;
-
-		let _speed = 700;
-		if(parseInt(speed)) _speed = speed;
-		
-		if(_offset <= 0 && target.dataset.headerNav) _offset = 68;
-
-		$('html').stop().animate({scrollTop: $(target).offset().top -(_offset) }, _speed, false, function() {
-			if(fnctn) fnctn();
-		});
-	},
-	getImg: function(img) {
-		if(img != 'none') {
-			img = img.replace('url("', '')
-			img = img.replace('")', '');
-
-			const _img = document.createElement('img');
-			_img.src = img;
-
-			return _img;
-		} else {
-			return false;
-		}
-	},
-	preloadImg: function(opt) {
-		if(opt.assets.length != 0) {
-			if(opt.before) {
-				opt.before();
-			}
-
-			let _loaded = 0,
-			_assets = {
-				loaded: [],
-				error: []
-			}
-
-			const _push = function(state, image) {
-				_loaded++;
-
-				if(state == 'load') {
-					_assets.loaded.push(image);
-				} else {
-					_assets.error.push(image);
-				}
-
-				if(_loaded >= Math.round(opt.assets.length * 0.6)) {
-					if(opt.partial) opt.partial(_assets);
-					if(opt.onUpdate) opt.onUpdate(_assets);
-				}
-
-				if(_loaded >= opt.assets.length) {
-					if(opt.after) opt.after(_assets);
-					if(opt.onUpdate) opt.onUpdate(_assets);
-				}
-			}
-
-			for (let i = 0; i < opt.assets.length; i++) {
-				const _img = new Image();
-				_img.src = opt.assets[i].getAttribute('src');
-
-				_img.addEventListener('load', function() {
-					_push('load', _img);
-				});
-
-				_img.addEventListener('error', function() {
-					_push('error', _img);
-				});
-			} 
-		} else {
-			if(opt.after) opt.after();
-			if(opt.onUpdate) opt.onUpdate();
-		}
-	}
+	
 }
 projName.init();
