@@ -1,29 +1,29 @@
 'use strict';
 
-const bp = {
+const projName = {
 	debug: false,
 	preloader: true,
 	init: function() {
 		// for mobile
-		if(bp.isMobile()) {
+		if(projName.isMobile()) {
 			$('html').addClass('bp-touch');
 		}
 
-		if(bp.getUrlVars().debug == 'true') bp.debug = true;
+		if(projName.getUrlVars().debug == 'true') projName.debug = true;
 
 		// for general resize
-		bp.resizeFn(function() {
-			bp.resize();
+		projName.resizeFn(function() {
+			projName.resize();
 		});
 
 		// for ready
 		$(document).ready(function() {
-			bp.ready();
+			projName.ready();
 		});
 
-		bp.header.init();
-		bp.footer.init();
-		bp.inview.init();
+		projName.header.init();
+		projName.footer.init();
+		projName.inview.init();
 
 		// for auto scroll
 		$('.auto-scroll').each(function() {
@@ -33,7 +33,7 @@ const bp = {
 				if(_target) {
 					e.preventDefault();
 
-					bp.autoScroll(_target);
+					projName.autoScroll(_target);
 				}
 			});
 		});
@@ -44,10 +44,10 @@ const bp = {
 			if(_target) {
 				// for auto scroll
 				setTimeout(function() {
-					const _targetOffset = bp.st() - $(_target).offset().top;
+					const _targetOffset = projName.st() - $(_target).offset().top;
 
 					// if(!(_targetOffset <= window.innerHeight * 0.2 && _targetOffset >= 0))
-					bp.autoScroll(_target, bp.header.target.offsetHeight);
+					projName.autoScroll(_target, projName.header.target.offsetHeight);
 				}, 500);
 
 				// for auto popup
@@ -62,9 +62,9 @@ const bp = {
 		}
 	},
 	ready: function() {
-		bp.resize();
+		projName.resize();
 
-		bp.inview.run();
+		projName.inview.run();
 	},
 	width: function() {
 		return $(window).width();
@@ -75,7 +75,7 @@ const bp = {
 	header: {
 		target: document.querySelector('.header-content'),
 		height: function() {
-			return bp.header.target.offsetHeight;
+			return projName.header.target.offsetHeight;
 		},
 		init: function() {
 			
@@ -84,7 +84,7 @@ const bp = {
 	footer: {
 		target: document.querySelector('.footer-content'),
 		height: function() {
-			return bp.footer.target.offsetHeight;
+			return projName.footer.target.offsetHeight;
 		},
 		init: function() {
 
@@ -92,16 +92,16 @@ const bp = {
 	},
 	resize: function() {
 		// sticky footer
-		$(bp.footer.target).css({marginTop: -(bp.footer.height())});
-		$('#main-wrapper').css({paddingBottom: bp.footer.height()});
+		$(projName.footer.target).css({marginTop: -(projName.footer.height())});
+		$('#main-wrapper').css({paddingBottom: projName.footer.height()});
 
 		// for equal height
 		$('.group-height').each(function() {
-			bp.equalize(this.querySelectorAll('.gh1'));
-			bp.equalize(this.querySelectorAll('.gh2'));
-			bp.equalize(this.querySelectorAll('.gh3'));
-			bp.equalize(this.querySelectorAll('.gh4'));
-			bp.equalize(this.querySelectorAll('.gh5'));
+			projName.equalize(this.querySelectorAll('.gh1'));
+			projName.equalize(this.querySelectorAll('.gh2'));
+			projName.equalize(this.querySelectorAll('.gh3'));
+			projName.equalize(this.querySelectorAll('.gh4'));
+			projName.equalize(this.querySelectorAll('.gh5'));
 		});
 	},
 	equalize: function(target) {
@@ -233,7 +233,7 @@ const bp = {
 		},
 		run: function() {
 			$('.animate').each(function() {
-				bp.inview.animate({target: this, clear: true});
+				projName.inview.animate({target: this, clear: true});
 			});
 
 			$('.inview').each(function() {
@@ -290,13 +290,13 @@ const bp = {
 									// animate all children at once with delays
 									if(index != 0) _animate.delay = _animate.delay + 0.1;
 
-									bp.inview.validate(this, _animate.delay, _animate.custom, opt.clear, _animate.index)
+									projName.inview.validate(this, _animate.delay, _animate.custom, opt.clear, _animate.index)
 								});
 
 								if(opt.clear) $(_animate.target).removeAttr('animate-index');
 							} else {
 								// for single
-								bp.inview.validate(_animate.target, _animate.delay, _animate.custom, opt.clear);
+								projName.inview.validate(_animate.target, _animate.delay, _animate.custom, opt.clear);
 							}
 						}
 					});
@@ -344,15 +344,15 @@ const bp = {
 
 		let _offset = 0;
 		let _gap = 0;
-		if(bp.width() <= 768) _gap = 0;
+		if(projName.width() <= 768) _gap = 0;
 		// if going to scroll up, get header height as offset
-		if($(target).offset().top <= bp.st()) {
-			_offset = bp.header.height() + _gap;
+		if($(target).offset().top <= projName.st()) {
+			_offset = projName.header.height() + _gap;
 		} else {
-			if(bp.width() > 991) {
+			if(projName.width() > 991) {
 				_offset = _gap;
 			} else {
-				_offset = bp.header.height() + _gap;
+				_offset = projName.header.height() + _gap;
 			}
 		}
 		if(parseInt(offset)) _offset = offset;
@@ -429,4 +429,4 @@ const bp = {
 		}
 	}
 }
-bp.init();
+projName.init();
