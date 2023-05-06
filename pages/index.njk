@@ -3,5 +3,67 @@
 {% extends 'layout.njk' %}
 
 {% block content %}
-<div class="container-fluid"></div>
+{##}
+<div class="container-fluid pt-5 pb-5">
+    <div class="row align-items-start" data-group-height>
+        <div class="col-4" gh-item="1,768">
+            <p>column 1</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In commodi doloremque labore illum. Doloribus, laboriosam quisquam unde veritatis temporibus atque perferendis libero, distinctio, accusantium natus deserunt sequi possimus id accusamus?</p>
+        </div>
+        <div class="col-4" gh-item="1">
+            <p>column 2</p>
+        </div>
+        <div class="col-4" gh-item="1,768">
+            <p>column 3</p>
+        </div>
+        <div class="col-4" gh-item="2">
+            <p>column 1</p>
+        </div>
+        <div class="col-4" gh-item="2,768">
+            <p>column 2</p>
+        </div>
+        <div class="col-4" gh-item="2">
+            <p>column 3</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt accusantium molestias.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt accusantium molestias.</p>
+        </div>
+    </div>
+</div>
+<div class="container-fluid pt-5 pb-5 inview">
+    <div class="row align-items-start" data-group-height data-row-group-height>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+            <div gh-item="1,768">
+                <p>column 1</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In commodi doloremque labore illum. Doloribus, laboriosam quisquam unde veritatis temporibus atque perferendis libero, distinctio, accusantium natus deserunt sequi possimus id accusamus?</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+            <div gh-item="1,768">
+                <p>column 2</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+            <div gh-item="1,768">
+                <p>column 3</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+            <div gh-item="1,768">
+                <p>column 1</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+            <div gh-item="1,768">
+                <p>column 2</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+            <div gh-item="1,768">
+                <p>column 3</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt accusantium molestias.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt accusantium molestias.</p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

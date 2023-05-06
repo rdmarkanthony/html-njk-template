@@ -86,6 +86,7 @@ gulp.task("scripts-boilerplate", () => {
         .src([
             // libraries
             "./assets/js/lib/jquery.min.js",
+            "./assets/js/lib/jquery.inview.min.js",
 
             // custom
             "./assets/js/custom.js"

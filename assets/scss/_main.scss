@@ -34,82 +34,29 @@
 	&:focus, &:active { outline: none !important; box-shadow: none !important; }
 }
 
-.no-margin { margin: 0; }
-.no-padding { padding: 0; }
+.pt-10 { padding-top: 10px; }
+.pt-20 { padding-top: 20px; }
+.pt-30 { padding-top: 30px; }
+.pt-40 { padding-top: 40px; }
+.pt-50 { padding-top: 50px; }
 
-.pt10 { padding-top: 10px; }
-.pt20 { padding-top: 20px; }
-.pt30 { padding-top: 30px; }
-.pt40 { padding-top: 40px; }
-.pt50 { padding-top: 50px; }
+.pr-10 { padding-right: 10px; }
+.pr-20 { padding-right: 20px; }
+.pr-30 { padding-right: 30px; }
+.pr-40 { padding-right: 40px; }
+.pr-50 { padding-right: 50px; }
 
-.pb10 { padding-bottom: 10px; }
-.pb20 { padding-bottom: 20px; }
-.pb30 { padding-bottom: 30px; }
-.pb40 { padding-bottom: 40px; }
-.pb50 { padding-bottom: 50px; }
+.pb-10 { padding-bottom: 10px; }
+.pb-20 { padding-bottom: 20px; }
+.pb-30 { padding-bottom: 30px; }
+.pb-40 { padding-bottom: 40px; }
+.pb-50 { padding-bottom: 50px; }
 
-.mt10 { margin-top: 10px; }
-.mt20 { margin-top: 20px; }
-.mt30 { margin-top: 30px; }
-.mt40 { margin-top: 40px; }
-.mt50 { margin-top: 50px; }
-
-.mb10 { margin-bottom: 10px; }
-.mb20 { margin-bottom: 20px; }
-.mb30 { margin-bottom: 30px; }
-.mb40 { margin-bottom: 40px; }
-.mb50 { margin-bottom: 50px; }
-
-@include breakpoint(tablet2) {
-	.pt20 { padding-top: 10px; }
-	.pt30 { padding-top: 20px; }
-	.pt40 { padding-top: 30px; }
-	.pt50 { padding-top: 40px; }
-
-	.pb20 { padding-bottom: 10px; }
-	.pb30 { padding-bottom: 20px; }
-	.pb40 { padding-bottom: 30px; }
-	.pb50 { padding-bottom: 40px; }
-
-	.mt20 { margin-top: 10px; }
-	.mt30 { margin-top: 20px; }
-	.mt40 { margin-top: 30px; }
-	.mt50 { margin-top: 40px; }
-
-	.mb20 { margin-bottom: 10px; }
-	.mb30 { margin-bottom: 20px; }
-	.mb40 { margin-bottom: 30px; }
-	.mb50 { margin-bottom: 40px; }
-
-	.mob-pt0 { padding-top: 0; }
-	.mob-pt10 { padding-top: 10px; }
-	.mob-pt20 { padding-top: 20px; }
-	.mob-pt30 { padding-top: 30px; }
-	.mob-pt40 { padding-top: 40px; }
-	.mob-pt50 { padding-top: 50px; }
-
-	.mob-pb0 { padding-bottom: 0; }
-	.mob-pb10 { padding-bottom: 10px; }
-	.mob-pb20 { padding-bottom: 20px; }
-	.mob-pb30 { padding-bottom: 30px; }
-	.mob-pb40 { padding-bottom: 40px; }
-	.mob-pb50 { padding-bottom: 50px; }
-
-	.mob-mt0 { margin-top: 0; }
-	.mob-mt10 { margin-top: 10px; }
-	.mob-mt20 { margin-top: 20px; }
-	.mob-mt30 { margin-top: 30px; }
-	.mob-mt40 { margin-top: 40px; }
-	.mob-mt50 { margin-top: 50px; }
-
-	.mob-mb0 { margin-bottom: 0; }
-	.mob-mb10 { margin-bottom: 10px; }
-	.mob-mb20 { margin-bottom: 20px; }
-	.mob-mb30 { margin-bottom: 30px; }
-	.mob-mb40 { margin-bottom: 40px; }
-	.mob-mb50 { margin-bottom: 50px; }
-}
+.pl-10 { padding-left: 10px; }
+.pl-20 { padding-left: 20px; }
+.pl-30 { padding-left: 30px; }
+.pl-40 { padding-left: 40px; }
+.pl-50 { padding-left: 50px; }
 
 /** for inview animation **/
 .animate, .anim-content, .anim-custom, [class*="animate-child"] { opacity: 0; }

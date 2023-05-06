@@ -19,8 +19,8 @@ const projName = {
 		projName.inview.init();
 
 		// for general resize
-		projName.event.resize(function() {
-			projName.resize();
+		projName.event.resize(function(event) {
+			projName.resize(event);
 		});
 
 		// for ready
@@ -37,6 +37,150 @@ const projName = {
 
 		console.log( projName );
 	},
+	header: {
+		target: document.querySelector('.header-content'),
+		height: function() {
+			if(!projName.header.target) return 0;
+			return projName.header.target.offsetHeight;
+		},
+		init: function() {
+		}
+	},
+	footer: {
+		target: document.querySelector('.footer-content'),
+		height: function() {
+			if(!projName.footer.target) return 0;
+			return projName.footer.target.offsetHeight;
+		},
+		init: function() {
+		}
+	},
+	resize: function(event) {
+		// sticky footer
+		$(projName.footer.target).css({marginTop: -(projName.footer.height())});
+		$('#main-wrapper').css({paddingBottom: projName.footer.height()});
+
+		if(event == 'resize') return;
+		// for equal height
+		$('[data-group-height]').each(function() {
+			let _groups = [];
+
+			$('[gh-item]', this).each(function() {
+				const _item = this.getAttribute('gh-item').split(',');
+
+				if(_item[0].length <= 0) _item[0] = 1;
+
+				const _groupNum = parseInt(_item[0]) - 1;
+				if(_item[1]) this.within = parseInt(_item[1]);
+				
+				if(!_groups[_groupNum]) _groups.push([]);
+
+				_groups[_groupNum].push(this);
+			});
+
+			if(_groups.length > 0) {
+				for (let i = 0; i < _groups.length; i++) {
+					projName.equalHeight(_groups[i]);
+				}
+			}
+		});
+		$('[data-row-group-height]').each(function() {
+			let _parentWidth = this.offsetWidth;
+			let _items = this.querySelectorAll('[rgh-item]');
+			let _itemsPerRow = Math.floor(_parentWidth / _items[0].offsetWidth);
+
+			let _groups = [];
+
+			let _itemCounter = 0;
+			for (let i = 0; i < _items.length; i++) {
+				if(_itemCounter == 0) _groups.push([]);
+
+				_groups[_groups.length - 1].push(_items[i]);
+
+				_itemCounter++;
+				if(_itemCounter >= _itemsPerRow) _itemCounter = 0;
+			}
+
+			if(_groups.length > 0) {
+				for (let i = 0; i < _groups.length; i++) {
+					projName.equalHeight(_groups[i]);
+				}
+			}
+		});
+		
+	},
+	scroll: {
+		init: function() {
+			// for auto scroll
+			$('.auto-scroll').each(function() {
+				$(this).click(function(e) {
+					const _target = document.querySelector(this.getAttribute('href'));
+
+					if(_target) {
+						e.preventDefault();
+
+						projName.scroll.auto(_target);
+					}
+				});
+			});
+			if(window.location.hash) {	
+				const _target = document.querySelector(projName.url.getHash());
+
+				if(_target) {
+					// for auto scroll
+					setTimeout(function() {
+						const _targetOffset = projName.scroll.st() - $(_target).offset().top;
+
+						// if(!(_targetOffset <= window.innerHeight * 0.2 && _targetOffset >= 0))
+						projName.scroll.auto(_target, projName.header.target.offsetHeight);
+					}, 500);
+
+					// for auto popup
+					const _popupBtn = document.querySelector('a[href="'+ _hash +'"]');
+
+					if(_popupBtn) {
+						setTimeout(function() {
+							_popupBtn.click();
+						}, 300);
+					}
+				}
+			}
+		},
+		st: function() { return window.pageYOffset || document.documentElement.scrollTop },
+		auto: function(target, offset, speed, fnctn) {
+			// if need to change the target
+			let _diffTarget = target.getAttribute('scroll-diff');
+			if(_diffTarget) {
+				_diffTarget = document.querySelector('.' + _diffTarget);
+	
+				if(_diffTarget) target = _diffTarget;
+			}
+	
+			let _offset = 0;
+			let _gap = 0;
+			if(projName.width() <= 768) _gap = 0;
+			// if going to scroll up, get header height as offset
+			if($(target).offset().top <= projName.scroll.st()) {
+				_offset = projName.header.height() + _gap;
+			} else {
+				if(projName.width() > 991) {
+					_offset = _gap;
+				} else {
+					_offset = projName.header.height() + _gap;
+				}
+			}
+			if(parseInt(offset)) _offset = offset;
+	
+			let _speed = 700;
+			if(parseInt(speed)) _speed = speed;
+			
+			if(_offset <= 0 && target.dataset.headerNav) _offset = 68;
+	
+			$('html').stop().animate({scrollTop: $(target).offset().top -(_offset) }, _speed, false, function() {
+				if(fnctn) fnctn();
+			});
+		}
+	},
 	isMobile: function() {
 		return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 	},
@@ -44,6 +188,12 @@ const projName = {
 		active: false,
 		init: function() {
 			if(projName.url.getVars().debug == 'true') projName.debug.active = true;
+
+			if(projName.url.getVars().outline == 'true') {
+				$('div').each(function() {
+					$(this).css({outline: '1px dashed #ff0000'});
+				});
+			}
 		}
 	},
 	url: {
@@ -116,138 +266,38 @@ const projName = {
 			elem.dispatchEvent(event);
 		},
 	},
-	scroll: {
-		auto: function(target, offset, speed, fnctn) {
-			// if need to change the target
-			let _diffTarget = target.getAttribute('scroll-diff');
-			if(_diffTarget) {
-				_diffTarget = document.querySelector('.' + _diffTarget);
-	
-				if(_diffTarget) target = _diffTarget;
-			}
-	
-			let _offset = 0;
-			let _gap = 0;
-			if(projName.width() <= 768) _gap = 0;
-			// if going to scroll up, get header height as offset
-			if($(target).offset().top <= projName.st()) {
-				_offset = projName.header.height() + _gap;
-			} else {
-				if(projName.width() > 991) {
-					_offset = _gap;
-				} else {
-					_offset = projName.header.height() + _gap;
-				}
-			}
-			if(parseInt(offset)) _offset = offset;
-	
-			let _speed = 700;
-			if(parseInt(speed)) _speed = speed;
-			
-			if(_offset <= 0 && target.dataset.headerNav) _offset = 68;
-	
-			$('html').stop().animate({scrollTop: $(target).offset().top -(_offset) }, _speed, false, function() {
-				if(fnctn) fnctn();
-			});
-		},
-		init: function() {
-			// for auto scroll
-			$('.auto-scroll').each(function() {
-				$(this).click(function(e) {
-					const _target = document.querySelector(this.getAttribute('href'));
-
-					if(_target) {
-						e.preventDefault();
-
-						projName.scroll.auto(_target);
-					}
-				});
-			});
-			if(window.location.hash) {	
-				const _target = document.querySelector(projName.url.getHash());
-
-				if(_target) {
-					// for auto scroll
-					setTimeout(function() {
-						const _targetOffset = projName.st() - $(_target).offset().top;
-
-						// if(!(_targetOffset <= window.innerHeight * 0.2 && _targetOffset >= 0))
-						projName.scroll.auto(_target, projName.header.target.offsetHeight);
-					}, 500);
-
-					// for auto popup
-					const _popupBtn = document.querySelector('a[href="'+ _hash +'"]');
-
-					if(_popupBtn) {
-						setTimeout(function() {
-							_popupBtn.click();
-						}, 300);
-					}
-				}
-			}
-		}
-	},
 	width: function() {
 		return window.innerWidth - (window.innerWidth - document.documentElement.clientWidth);
 	},
 	height: function() {
 		return window.innerHeight - (window.innerHeight - document.documentElement.clientHeight);
 	},
-	header: {
-		target: document.querySelector('.header-content'),
-		height: function() {
-			return projName.header.target.offsetHeight;
-		},
-		init: function() {
-			
-		}
-	},
-	footer: {
-		target: document.querySelector('.footer-content'),
-		height: function() {
-			return projName.footer.target.offsetHeight;
-		},
-		init: function() {
+	equalHeight: function(elements) {
+		// clear the height first
+		for (let i = 0; i < elements.length; i++) {
+			elements[i].style.minHeight = '';
+		} 
+		if(elements.length <= 1) return;
 
-		}
-	},
-	resize: function() {
-		// sticky footer
-		$(projName.footer.target).css({marginTop: -(projName.footer.height())});
-		$('#main-wrapper').css({paddingBottom: projName.footer.height()});
-
-		// for equal height
-		$('.group-height').each(function() {
-			projName.equalize(this.querySelectorAll('.gh1'));
-			projName.equalize(this.querySelectorAll('.gh2'));
-			projName.equalize(this.querySelectorAll('.gh3'));
-			projName.equalize(this.querySelectorAll('.gh4'));
-			projName.equalize(this.querySelectorAll('.gh5'));
-		});
-	},
-
-
-	equalize: function(target) {
-		for (let i = 0; i < target.length; i++) {
-			target[i].style.minHeight = 0;
+		// find which has highest height
+		let _biggestHeight = 0;
+		for (let i = 0; i < elements.length; i++) {
+			const _elHeight = elements[i].offsetHeight;
+			if(_elHeight > _biggestHeight) _biggestHeight = _elHeight;
 		}
 
-		let _biggest = 0;
-		for (let i = 0; i < target.length; i++ ){
-			let element_height = target[i].offsetHeight;
-			if(element_height > _biggest ) _biggest = element_height;
+		// apply the common height
+		for (let i = 0; i < elements.length; i++) {
+			if(elements[i].within) {
+				// if has media-query
+				if(projName.width() >= elements[i].within) elements[i].style.minHeight = _biggestHeight + 'px';
+			} else {
+				elements[i].style.minHeight = _biggestHeight + 'px';
+			}
 		}
-
-		for (let i = 0; i < target.length; i++) {
-			target[i].style.minHeight = _biggest + 'px';
-		}
-		
-		return _biggest;
 	},
 	inview: {
 		init: function() {
-			!function(a){"function"==typeof define&&define.amd?define(["jquery"],a):"object"==typeof exports?module.exports=a(require("jquery")):a(jQuery)}(function(a){function i(){var b,c,d={height:f.innerHeight,width:f.innerWidth};return d.height||(b=e.compatMode,(b||!a.support.boxModel)&&(c="CSS1Compat"===b?g:e.body,d={height:c.clientHeight,width:c.clientWidth})),d}function j(){return{top:f.pageYOffset||g.scrollTop||e.body.scrollTop,left:f.pageXOffset||g.scrollLeft||e.body.scrollLeft}}function k(){if(b.length){var e=0,f=a.map(b,function(a){var b=a.data.selector,c=a.$element;return b?c.find(b):c});for(c=c||i(),d=d||j();e<b.length;e++)if(a.contains(g,f[e][0])){var h=a(f[e]),k={height:h[0].offsetHeight,width:h[0].offsetWidth},l=h.offset(),m=h.data("inview");if(!d||!c)return;l.top+k.height>d.top&&l.top<d.top+c.height&&l.left+k.width>d.left&&l.left<d.left+c.width?m||h.data("inview",!0).trigger("inview",[!0]):m&&h.data("inview",!1).trigger("inview",[!1])}}}var c,d,h,b=[],e=document,f=window,g=e.documentElement;a.event.special.inview={add:function(c){b.push({data:c,$element:a(this),element:this}),!h&&b.length&&(h=setInterval(k,250))},remove:function(a){for(var c=0;c<b.length;c++){var d=b[c];if(d.element===this&&d.data.guid===a.guid){b.splice(c,1);break}}b.length||(clearInterval(h),h=null)}},a(f).on("scroll resize scrollstop",function(){c=d=null}),!g.addEventListener&&g.attachEvent&&g.attachEvent("onfocusin",function(){d=null})});
-
 			// animate containers that are parents/child
 			$('.animate').each(function(index) {
 				const _this = this;
@@ -373,8 +423,6 @@ const projName = {
 				}, (0.8 + delay) * 1000);
 			}
 		}
-	},
-	st: function() { return window.pageYOffset || document.documentElement.scrollTop },
-	
+	}
 }
 projName.init();
