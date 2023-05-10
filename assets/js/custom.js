@@ -16,7 +16,7 @@ const projName = {
 		projName.footer.init();
 
 		// for animate
-		projName.inview.init();
+		projName.animate.init();
 
 		// for general resize
 		projName.event.resize(function(event) {
@@ -30,12 +30,24 @@ const projName = {
 	},
 	ready: function() {
 		// show animate
-		projName.inview.run();
+		projName.animate.run();
 
 		// for auto-scroll
 		projName.scroll.init();
 
 		console.log( projName );
+	},
+	debug: {
+		active: false,
+		init: function() {
+			if(projName.url.getVars().debug == 'true') projName.debug.active = true;
+
+			if(projName.url.getVars().outline == 'true') {
+				$('div').each(function() {
+					$(this).css({outline: '1px dashed #ff0000'});
+				});
+			}
+		}
 	},
 	header: {
 		target: document.querySelector('.header-content'),
@@ -129,7 +141,7 @@ const projName = {
 				if(_target) {
 					// for auto scroll
 					setTimeout(function() {
-						const _targetOffset = projName.scroll.st() - $(_target).offset().top;
+						const _targetOffset = projName.scroll.top() - $(_target).offset().top;
 
 						// if(!(_targetOffset <= window.innerHeight * 0.2 && _targetOffset >= 0))
 						projName.scroll.auto(_target, projName.header.target.offsetHeight);
@@ -146,7 +158,7 @@ const projName = {
 				}
 			}
 		},
-		st: function() { return window.pageYOffset || document.documentElement.scrollTop },
+		top: function() { return window.pageYOffset || document.documentElement.scrollTop },
 		auto: function(target, offset, speed, fnctn) {
 			// if need to change the target
 			let _diffTarget = target.getAttribute('scroll-diff');
@@ -160,7 +172,7 @@ const projName = {
 			let _gap = 0;
 			if(projName.width() <= 768) _gap = 0;
 			// if going to scroll up, get header height as offset
-			if($(target).offset().top <= projName.scroll.st()) {
+			if($(target).offset().top <= projName.scroll.top()) {
 				_offset = projName.header.height() + _gap;
 			} else {
 				if(projName.width() > 991) {
@@ -183,18 +195,6 @@ const projName = {
 	},
 	isMobile: function() {
 		return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-	},
-	debug: {
-		active: false,
-		init: function() {
-			if(projName.url.getVars().debug == 'true') projName.debug.active = true;
-
-			if(projName.url.getVars().outline == 'true') {
-				$('div').each(function() {
-					$(this).css({outline: '1px dashed #ff0000'});
-				});
-			}
-		}
 	},
 	url: {
 		getVars: function() {
@@ -296,132 +296,111 @@ const projName = {
 			}
 		}
 	},
-	inview: {
+	animate: {
 		init: function() {
-			// animate containers that are parents/child
-			$('.animate').each(function(index) {
+			$('[data-animate]').each(function() {
 				const _this = this;
+				const _dataset = this.dataset.animate.split(',');
 
-				const _dataset = _this.dataset.animate;
-				if(_dataset) {
-					const _attr = _dataset.split(',');
-
-					// if parent, put index number
-					if(_attr[0] == 'parent') {
-						$(_this).attr('animate-index', index);
-					}
-
-					// if child, group them to its parent
-					if(_attr[0] == 'child') {
-						$(_this).removeClass('animate');
-						const _parentIndex = $(_this).parent().closest('.animate').attr('animate-index');
-
-						if(_parentIndex) {
-							$('> *', _this).addClass('animate-child' + _parentIndex);
-						}
-					}
+				_this.opt = {
+					status: null,
+					animation: 'animateFade',
+					duration: null,
+					delay: null
 				}
+				
+				if(_dataset[0] != 'parent' && _dataset[0] != 'child') {
+					// for single animation
+					if(_dataset[0] && _dataset[0] != 'false') _this.opt.animation = _dataset[0];
+					if(_dataset[1] && _dataset[1] != 'false') _this.opt.duration = _dataset[1];
+					if(_dataset[2] && _dataset[2] != 'false') _this.opt.delay = _dataset[2];
+
+					projName.animate.addListener(_this);
+				} else {
+					// for group animation
+					if(_dataset[0] != 'parent') return;
+
+					if(_dataset[1] && _dataset[1] != 'false') _this.opt.animation = _dataset[1];
+					if(_dataset[2] && _dataset[2] != 'false') _this.opt.duration = _dataset[2];
+					if(_dataset[3] && _dataset[3] != 'false') _this.opt.delay = _dataset[3];
+
+					_this.opt.status = 'parent';
+
+					$('[data-animate="child"]', _this).each(function() {
+						$('> *', this).each(function() {
+							$(this).attr('data-animate', 'sub-child');
+						});
+					});
+
+					let _delay = 0.5;
+					if(_this.opt.delay) _delay = parseFloat(_this.opt.delay);
+					$('[data-animate]', _this).each(function() {
+						if(this.dataset.animate == 'child') return;
+
+						this.opt = Object.create(_this.opt);
+						this.opt.status = 'child';
+
+						_delay += 0.05;
+						this.opt.delay = _delay;
+
+						projName.animate.addListener(this);
+					});
+				}
+			});
+		},
+		addListener: function(target) {
+			const _dataset = target.dataset.animate.split(',');
+
+			target.addEventListener('visible', function() {
+				$(target).addClass(target.opt.animation);
+				if(target.opt.duration) $(target).css({'animation-duration': target.opt.duration + 's'});
+				if(target.opt.delay) $(target).css({'animation-delay': target.opt.delay + 's'});
+
+				$(target).addClass('animated');
+
+				const _duration = parseFloat($(target).css('animation-duration'));
+				const _delay = parseFloat($(target).css('animation-delay'));
+
+				setTimeout(function() {
+					$(target).removeAttr('data-animate').removeClass('animated animateFade').css({'animation-duration': '', 'animation-delay': ''});
+					if(_dataset[0]) $(target).removeClass(_dataset[0]);
+					if(_dataset[1]) $(target).removeClass(_dataset[1]);
+				}, (_duration + _delay) * 1000);
 			});
 		},
 		run: function() {
-			$('.animate').each(function() {
-				projName.inview.animate({target: this, clear: true});
-			});
+			$('[data-animate]').each(function() {
+				const _this = this;
 
-			$('.inview').each(function() {
-				$(this).one('inview', function(event, visible) {
-					if(visible) $(this).addClass('visible');
-				});
-			});
-		},
-		animate: function(opt) {
-			const _animate = {
-				target: null,
-				custom: null,
-				mobileCustom: null,
-				parent: false,
-				delay: null,
-				index: null,
-				init: function() {
-					_animate.target = opt.target;
+				const _opt = this.opt;
+				let _animated = false;
 
-					const _dataset = _animate.target.dataset.animate;
-					if(_dataset) {
-						const _attr = _dataset.split(',');
-
-						// dont animate the parent
-						if(_attr[0] == 'parent') {
-							$(_animate.target).removeClass('animate');
-							_animate.parent = true;
-
-							// get the parent index
-							_animate.index = parseInt(_animate.target.getAttribute('animate-index'));
-						}
-
-						// custom css animation
-						if(_attr[1]) {
-							if(_attr[1] != 'false') _animate.custom = _attr[1];
-						}
-
-						// animation delay
-						if(_attr[2]) _animate.delay = parseFloat(_attr[2]);
-
-						// if custom css animation for mobile
-						if(_attr[3]) {
-							if(_attr[3] != 'false') _animate.mobileCustom = _attr[3];
-						}
-					}
-
-					$(_animate.target).one('inview', function(event, visible) {
+				if(_opt.status != 'parent' && _opt.status != 'child') {
+					$(_this).on('inview', function(event, visible) {
 						if(visible) {
-							if(window.innerWidth <= 768) _animate.custom = _animate.mobileCustom;
+							if(_animated) return;
+							_animated = true;
 
-							if(_animate.parent) {
-								// for parent
-								$('.animate-child' + _animate.index).each(function(index) {
-									// animate all children at once with delays
-									if(index != 0) _animate.delay = _animate.delay + 0.1;
+							projName.event.dispatch(_this, 'visible');
+						}
+					});
+				} else {
+					if(_opt.status != 'parent') return;
 
-									projName.inview.validate(this, _animate.delay, _animate.custom, opt.clear, _animate.index)
-								});
+					$(_this).on('inview', function(event, visible) {
+						if(visible) {
+							if(_animated) return;
+							_animated = true;
+							$(_this).addClass('visible');
+							$('[data-animate="child"]', _this).removeAttr('data-animate');
 
-								if(opt.clear) $(_animate.target).removeAttr('animate-index');
-							} else {
-								// for single
-								projName.inview.validate(_animate.target, _animate.delay, _animate.custom, opt.clear);
-							}
+							$('[data-animate]', _this).each(function() {
+								projName.event.dispatch(this, 'visible');
+							});
 						}
 					});
 				}
-			}
-			_animate.init();
-		},
-		validate: function(target, delay, custom, clear, index) {
-			// add delay
-			if(delay) $(target).css('animation-delay', delay + 's');
-
-			if(custom) {
-				// add custom animation
-				$(target).addClass('anim-custom ' + custom);
-			} else {
-				// common animation
-				$(target).addClass('anim-content');
-			}
-
-			// show the animation
-			$(target).addClass('visible');
-
-			// remove all animate attributes
-			if(clear) {
-				setTimeout(function() {
-					$(target).removeClass('animate anim-content anim-custom visible');
-
-					if(custom) $(target).removeClass(custom);
-					if(index != null) $(target).removeClass('animate-child' + index);
-
-					$(target).css('animation-delay', '');
-				}, (0.8 + delay) * 1000);
-			}
+			});
 		}
 	}
 }

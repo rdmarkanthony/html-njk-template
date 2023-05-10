@@ -4,8 +4,8 @@
 
 {% block content %}
 {##}
-<div class="container-fluid pt-5 pb-5">
-    <div class="row align-items-start" data-group-height>
+<div class="container-fluid pt-5 pb-5" data-animate="parent">
+    <div class="row align-items-start" data-group-height data-animate="child">
         <div class="col-4" gh-item="1,768">
             <p>column 1</p>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In commodi doloremque labore illum. Doloribus, laboriosam quisquam unde veritatis temporibus atque perferendis libero, distinctio, accusantium natus deserunt sequi possimus id accusamus?</p>
@@ -23,41 +23,45 @@
             <p>column 2</p>
         </div>
         <div class="col-4" gh-item="2">
-            <p>column 3</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt accusantium molestias.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt accusantium molestias.</p>
+            <div data-animate="child">
+                <p>column 3</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt accusantium molestias.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, unde assumenda laboriosam hic a quis asperiores, enim nisi porro fuga magni autem accusamus velit vel. Ut temporibus vero iusto laudantium?</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident possimus rem dolore placeat, totam animi neque eius temporibus quae quibusdam alias minima quam consectetur vero rerum dolorum, quia porro magni.</p>
+            </div>
         </div>
     </div>
 </div>
+<div class="container-fluid pt-5 pb-5"></div>
 <div class="container-fluid pt-5 pb-5 inview">
     <div class="row align-items-start" data-group-height data-row-group-height>
-        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate>
             <div gh-item="1,768">
                 <p>column 1</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In commodi doloremque labore illum. Doloribus, laboriosam quisquam unde veritatis temporibus atque perferendis libero, distinctio, accusantium natus deserunt sequi possimus id accusamus?</p>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInDown,1,0.5">
             <div gh-item="1,768">
                 <p>column 2</p>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInLeft">
             <div gh-item="1,768">
                 <p>column 3</p>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInRight">
             <div gh-item="1,768">
                 <p>column 1</p>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInUp">
             <div gh-item="1,768">
                 <p>column 2</p>
             </div>
         </div>
-        <div class="col-12 col-md-6 col-lg-4" rgh-item>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInUpBig,2,1">
             <div gh-item="1,768">
                 <p>column 3</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt accusantium molestias.</p>
