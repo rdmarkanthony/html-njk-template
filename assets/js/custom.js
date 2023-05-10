@@ -311,18 +311,18 @@ const projName = {
 				
 				if(_dataset[0] != 'parent' && _dataset[0] != 'child') {
 					// for single animation
-					if(_dataset[0] && _dataset[0] != 'false') _this.opt.animation = _dataset[0];
-					if(_dataset[1] && _dataset[1] != 'false') _this.opt.duration = _dataset[1];
-					if(_dataset[2] && _dataset[2] != 'false') _this.opt.delay = _dataset[2];
+					if(projName.animate.getValue(_dataset[0])) _this.opt.animation = _dataset[0];
+					if(projName.animate.getValue(_dataset[1])) _this.opt.duration = _dataset[1];
+					if(projName.animate.getValue(_dataset[2])) _this.opt.delay = _dataset[2];
 
 					projName.animate.addListener(_this);
 				} else {
 					// for group animation
 					if(_dataset[0] != 'parent') return;
 
-					if(_dataset[1] && _dataset[1] != 'false') _this.opt.animation = _dataset[1];
-					if(_dataset[2] && _dataset[2] != 'false') _this.opt.duration = _dataset[2];
-					if(_dataset[3] && _dataset[3] != 'false') _this.opt.delay = _dataset[3];
+					if(projName.animate.getValue(_dataset[1])) _this.opt.animation = _dataset[1];
+					if(projName.animate.getValue(_dataset[2])) _this.opt.duration = _dataset[2];
+					if(projName.animate.getValue(_dataset[3])) _this.opt.delay = _dataset[3];
 
 					_this.opt.status = 'parent';
 
@@ -348,9 +348,13 @@ const projName = {
 				}
 			});
 		},
+		getValue: function(target) {
+			if(!target) return false;
+			if(target.length <= 0) return false;
+			if(target == 'false') return false;
+			return target;
+		},
 		addListener: function(target) {
-			const _dataset = target.dataset.animate.split(',');
-
 			target.addEventListener('visible', function() {
 				$(target).addClass(target.opt.animation);
 				if(target.opt.duration) $(target).css({'animation-duration': target.opt.duration + 's'});
@@ -363,8 +367,8 @@ const projName = {
 
 				setTimeout(function() {
 					$(target).removeAttr('data-animate').removeClass('animated animateFade').css({'animation-duration': '', 'animation-delay': ''});
-					if(_dataset[0]) $(target).removeClass(_dataset[0]);
-					if(_dataset[1]) $(target).removeClass(_dataset[1]);
+					if(target.opt.animation) $(target).removeClass(target.opt.animation);
+					if(target.style.length <= 0) target.removeAttribute('style');
 				}, (_duration + _delay) * 1000);
 			});
 		},
