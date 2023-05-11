@@ -119,7 +119,6 @@ const projName = {
 				}
 			}
 		});
-		
 	},
 	scroll: {
 		init: function() {
@@ -406,6 +405,51 @@ const projName = {
 				}
 			});
 		}
+	},
+	enquire: function(breakpoints) {
+		const _enquire = this;
+
+		_enquire.instance = 0;
+		_enquire.currentBreakpoint = null;
+		_enquire.state = null;
+		_enquire.event = null;
+
+		_enquire.init = function() {
+			// how to use this function
+			// new projName.enquire({
+			// 	0: function(enquire) {
+			// 		// if(enquire.instance > 0) return; // if you want to call the function once
+			// 		console.log('minwidth 0', enquire);
+			// 	},
+			// 	768: function(enquire) {
+			// 		// if(enquire.instance > 0) return; // if you want to call the function once
+			// 		console.log('minwidth 768', enquire);
+			// 	},
+			// 	1200: function(enquire) {
+			// 		// if(enquire.instance > 0) return; // if you want to call the function once
+			// 		console.log('minwidth 1200', enquire);
+			// 	}
+			// });
+
+			projName.event.resize(function(state, e) {
+				let _currentBreakpoint = null;
+
+				for (const breakpoint in breakpoints) {
+					if (projName.width() >= breakpoint) _currentBreakpoint = breakpoint;
+				}
+
+				_enquire.instance++;
+				if(_enquire.currentBreakpoint != breakpoints[_currentBreakpoint]) _enquire.instance = 0;
+				_enquire.currentBreakpoint = breakpoints[_currentBreakpoint];
+
+				_enquire.state = state;
+				_enquire.event = e;
+
+				_enquire.currentBreakpoint(_enquire);
+			});
+		}
+
+		if(Object.keys(breakpoints).length > 0) _enquire.init();
 	}
 }
 projName.init();
