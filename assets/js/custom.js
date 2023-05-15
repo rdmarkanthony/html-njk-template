@@ -151,12 +151,7 @@ const projName = {
 				if(!_target) return;
 				e.preventDefault();
 				
-				projName.scroll.auto({
-					target: _target,
-					offset: 0,
-					speed: null,
-					callback: null
-				});
+				projName.scroll.auto({target: _target});
 			});
 		},
 		top: function() { return window.pageYOffset || document.documentElement.scrollTop },
@@ -185,7 +180,6 @@ const projName = {
 			// for speed
 			if(!opt.speed) opt.speed = 700;
 
-			console.log('auto-scroll', opt);
 			$('html').stop().animate({scrollTop: $(opt.target).offset().top -(opt.offset)}, opt.speed, false, function() {
 				if(opt.callback) opt.callback();
 			});
