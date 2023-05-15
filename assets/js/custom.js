@@ -123,72 +123,71 @@ const projName = {
 	scroll: {
 		init: function() {
 			// for auto scroll
-			$('.auto-scroll').each(function() {
-				$(this).click(function(e) {
-					const _target = document.querySelector(this.getAttribute('href'));
-
-					if(_target) {
-						e.preventDefault();
-
-						projName.scroll.auto(_target);
-					}
-				});
-			});
-			if(window.location.hash) {	
+			if(projName.url.getHash()) {
 				const _target = document.querySelector(projName.url.getHash());
 
-				if(_target) {
-					// for auto scroll
-					setTimeout(function() {
-						const _targetOffset = projName.scroll.top() - $(_target).offset().top;
+				if(!_target) return;
+				// for auto scroll
+				setTimeout(function() {
+					projName.scroll.auto({
+						target: _target,
+						offset: null,
+						speed: null,
+						callback: null
+					});
+				}, 500);
 
-						// if(!(_targetOffset <= window.innerHeight * 0.2 && _targetOffset >= 0))
-						projName.scroll.auto(_target, projName.header.target.offsetHeight);
-					}, 500);
-
-					// for auto popup
-					const _popupBtn = document.querySelector('a[href="'+ _hash +'"]');
-
-					if(_popupBtn) {
-						setTimeout(function() {
-							_popupBtn.click();
-						}, 300);
-					}
-				}
+				// for auto popup
+				const _btnPopup = document.querySelector('a[href="'+ projName.url.getHash() +'"]');
+				if(!_btnPopup) return;
+				setTimeout(function() {
+					_btnPopup.click();
+				}, 300);
 			}
+
+			$('[data-auto-scroll]').click(function(e) {
+				const _target = document.querySelector(this.getAttribute('href'));
+
+				if(!_target) return;
+				e.preventDefault();
+				
+				projName.scroll.auto({
+					target: _target,
+					offset: 0,
+					speed: null,
+					callback: null
+				});
+			});
 		},
 		top: function() { return window.pageYOffset || document.documentElement.scrollTop },
-		auto: function(target, offset, speed, fnctn) {
-			// if need to change the target
-			let _diffTarget = target.getAttribute('scroll-diff');
-			if(_diffTarget) {
-				_diffTarget = document.querySelector('.' + _diffTarget);
-	
-				if(_diffTarget) target = _diffTarget;
+		auto: function(opt) {
+			if(!opt.target) return;
+
+			// if need to scroll to parent of the target
+			let _changeTarget = opt.target.dataset.scrollParent;
+			if(_changeTarget) {
+				_changeTarget =  $(opt.target).closest(_changeTarget)[0];
+				if(_changeTarget) opt.target = _changeTarget;
 			}
-	
-			let _offset = 0;
-			let _gap = 0;
-			if(projName.width() <= 768) _gap = 0;
-			// if going to scroll up, get header height as offset
-			if($(target).offset().top <= projName.scroll.top()) {
-				_offset = projName.header.height() + _gap;
-			} else {
-				if(projName.width() > 991) {
-					_offset = _gap;
-				} else {
-					_offset = projName.header.height() + _gap;
-				}
+
+			// for direction
+			opt.direction = 'down';
+			if(projName.scroll.top() >= $(opt.target).offset().top) opt.direction = 'up';
+
+			// for offset
+			if(!opt.offset) {
+				opt.offset = 0;
+
+				// if target has no padding-top
+				if(parseInt($(opt.target).css('padding-top')) <= 0) opt.offset += 20;
 			}
-			if(parseInt(offset)) _offset = offset;
-	
-			let _speed = 700;
-			if(parseInt(speed)) _speed = speed;
-			
-			if(_offset <= 0 && target.dataset.headerNav) _offset = 68;
-	
-			$('html').stop().animate({scrollTop: $(target).offset().top -(_offset) }, _speed, false, function() {
-				if(fnctn) fnctn();
+
+			// for speed
+			if(!opt.speed) opt.speed = 700;
+
+			console.log('auto-scroll', opt);
+			$('html').stop().animate({scrollTop: $(opt.target).offset().top -(opt.offset)}, opt.speed, false, function() {
+				if(opt.callback) opt.callback();
 			});
 		}
 	},

@@ -3,8 +3,13 @@
 {% extends 'layout.njk' %}
 
 {% block content %}
-{##}
-<div class="container-fluid pt-5 pb-5" data-animate="parent">
+{#
+<div id="content1" class="container-fluid pt-5 pb-5" data-animate="parent">
+    <div>
+        <p><a data-auto-scroll href="#content2">link 1</a></p>
+        <p><a data-auto-scroll href="#content4">link to content 4(hidden)</a></p>
+        <p><a data-auto-scroll href="#content2-sub1">link to sub-content</a></p>
+    </div>
     <div class="row align-items-start" data-group-height data-animate="child">
         <div class="col-4" gh-item="1,768">
             <p>column 1</p>
@@ -32,8 +37,19 @@
         </div>
     </div>
 </div>
-<div class="container-fluid pt-5 pb-5"></div>
-<div class="container-fluid pt-5 pb-5 inview">
+<div id="content2" class="container-fluid pt-5 pb-5" data-animate="parent">
+    <div data-animate="child">
+        <p><a data-auto-scroll href="#content3">link 2</a></p>
+        <div id="content2-sub1" data-scroll-parent=".container-fluid">
+            <p>this is sub content of content2</p>
+        </div>
+    </div>
+</div>
+<div style="min-height: 500vh;"></div>
+<div id="content3" class="container-fluid pt-5 pb-5" data-animate="parent">
+    <div data-animate="child">
+        <p><a data-auto-scroll href="#content1">link 3</a></p>
+    </div>
     <div class="row align-items-start" data-group-height data-row-group-height>
         <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate>
             <div gh-item="1,768">
@@ -70,4 +86,12 @@
         </div>
     </div>
 </div>
+<div style="display: none;">
+    <div id="content4" class="container-fluid pt-5 pb-5">
+        <div class="container">
+            <p>sample</p>
+        </div>
+    </div>
+</div>
+#}
 {% endblock %}
