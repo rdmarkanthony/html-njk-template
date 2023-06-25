@@ -358,11 +358,11 @@ const projName = {
 				const _duration = parseFloat($(target).css('animation-duration'));
 				const _delay = parseFloat($(target).css('animation-delay'));
 
-				// setTimeout(function() {
-				// 	$(target).removeAttr('data-animate').removeClass('animated animateFade').css({'animation-duration': '', 'animation-delay': ''});
-				// 	if(target.opt.animation) $(target).removeClass(target.opt.animation);
-				// 	if(target.style.length <= 0) target.removeAttribute('style');
-				// }, (_duration + _delay) * 1000);
+				setTimeout(function() {
+					$(target).removeAttr('data-animate').removeClass('animated animateFade').css({'animation-duration': '', 'animation-delay': ''});
+					if(target.opt.animation) $(target).removeClass(target.opt.animation);
+					if(target.style.length <= 0) target.removeAttribute('style');
+				}, (_duration + _delay) * 1000);
 			});
 		},
 		run: function() {
