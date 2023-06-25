@@ -320,6 +320,7 @@ const projName = {
 
 					$('[data-animate="child"]', _this).each(function() {
 						$('> *', this).each(function() {
+							if(this.hasAttribute('data-animate')) return;
 							$(this).attr('data-animate', 'sub-child');
 						});
 					});
@@ -332,7 +333,7 @@ const projName = {
 						this.opt = Object.create(_this.opt);
 						this.opt.status = 'child';
 
-						_delay += 0.05;
+						_delay += 0.1;
 						this.opt.delay = _delay;
 
 						projName.animate.addListener(this);
@@ -357,11 +358,11 @@ const projName = {
 				const _duration = parseFloat($(target).css('animation-duration'));
 				const _delay = parseFloat($(target).css('animation-delay'));
 
-				setTimeout(function() {
-					$(target).removeAttr('data-animate').removeClass('animated animateFade').css({'animation-duration': '', 'animation-delay': ''});
-					if(target.opt.animation) $(target).removeClass(target.opt.animation);
-					if(target.style.length <= 0) target.removeAttribute('style');
-				}, (_duration + _delay) * 1000);
+				// setTimeout(function() {
+				// 	$(target).removeAttr('data-animate').removeClass('animated animateFade').css({'animation-duration': '', 'animation-delay': ''});
+				// 	if(target.opt.animation) $(target).removeClass(target.opt.animation);
+				// 	if(target.style.length <= 0) target.removeAttribute('style');
+				// }, (_duration + _delay) * 1000);
 			});
 		},
 		run: function() {

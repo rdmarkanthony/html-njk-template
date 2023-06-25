@@ -4,8 +4,26 @@
 
 {% block content %}
 {#
+<div class="container-fluid pt-5 pb-5" data-animate>
+    <div class="container" data-animate="parent">
+        <div data-animate="child">
+            <div class="section-par" data-animate="child">
+                <p>sample 1</p>
+                <p>sample 2</p>
+                <p>sample 3</p>
+            </div>
+            <div>
+                <div class="section-par" data-animate="child">
+                    <p>sample 4</p>
+                    <p>sample 5</p>
+                    <p>sample 6</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="content1" class="container-fluid pt-5 pb-5" data-animate="parent">
-    <div>
+    <div data-animate="child">
         <p><a data-auto-scroll href="#content2">link 1</a></p>
         <p><a data-auto-scroll href="#content4">link to content 4(hidden)</a></p>
         <p><a data-auto-scroll href="#content2-sub1">link to sub-content</a></p>
