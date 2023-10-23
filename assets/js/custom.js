@@ -35,7 +35,7 @@ const projName = {
 		// for auto-scroll
 		projName.scroll.init();
 
-		console.log( projName );
+		console.log(projName);
 	},
 	debug: {
 		active: false,

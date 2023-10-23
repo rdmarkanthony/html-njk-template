@@ -2,7 +2,6 @@ const gulp = require("gulp");
 const sass = require('gulp-sass')(require('node-sass'));
 const header = require('gulp-header');
 const htmlbeautify = require('gulp-html-beautify');
-const webpack = require('webpack');
 const argv = require('yargs').argv;
 
 // Load all required plugins (listed in package.json)
