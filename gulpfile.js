@@ -32,7 +32,7 @@ gulp.task("browser-sync", (after) => {
 });
 
 // Renders Nunjucks
-gulp.task("njk-boilerplate", () => {
+gulp.task("njk", () => {
     // Gets .html and .njk files in pages
     return gulp
         .src("./pages/**/**/*.+(html|njk)")
@@ -53,10 +53,8 @@ gulp.task("njk-boilerplate", () => {
         .pipe(gulp.dest("./public"))
 });
 
-gulp.task("njk", gulp.series("njk-boilerplate"));
-
 // Compile Sass
-gulp.task("styles-boilerplate", () => {
+gulp.task("styles", () => {
     return gulp
         .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
         .pipe(
@@ -74,10 +72,8 @@ gulp.task("styles-boilerplate", () => {
         .pipe(gulp.dest("./public/assets/css/"))
 });
 
-gulp.task("styles", gulp.series("styles-boilerplate"));
-
 // Compile JS
-gulp.task("scripts-boilerplate", () => {
+gulp.task("scripts", () => {
     return gulp
         .src([
             // libraries
@@ -90,8 +86,6 @@ gulp.task("scripts-boilerplate", () => {
         .pipe(plugins.concat("custom.js"))
         .pipe(gulp.dest("./public/assets/js/"));
 });
-
-gulp.task("scripts", gulp.series("scripts-boilerplate"));
 
 // Linters
 gulp.task("lint-styles", () => {
@@ -111,7 +105,7 @@ gulp.task("lint-scripts", () => {
 });
 
 // Merge and minify files
-gulp.task("concat-css", () => {
+gulp.task("concat-styles", () => {
     return gulp
       .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
       .pipe(
@@ -134,7 +128,7 @@ gulp.task("concat-css", () => {
       .pipe(gulp.dest("./public/assets/css/"));
 });
 
-gulp.task("concat-js", () => {
+gulp.task("concat-scripts", () => {
     return gulp
         .src(["./public/assets/js/custom.js"])
         .pipe(plugins.concat("custom.js"))
@@ -163,5 +157,5 @@ gulp.task("watch", gulp.series("njk", "styles", "scripts", "browser-sync", () =>
 
 gulp.task("default", gulp.series("watch")); // Default gulp task
 gulp.task("lint", gulp.series("lint-styles", "lint-scripts")); // Lint css + js files
-gulp.task("merge", gulp.series("concat-css", "concat-js")); // Merge & minify css + js
+gulp.task("merge", gulp.series("concat-styles", "concat-scripts")); // Merge & minify css + js
 gulp.task("default", gulp.series("njk", "styles", "scripts", "merge")); // Default gulp task that runs all build tasks
