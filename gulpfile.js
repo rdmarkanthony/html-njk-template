@@ -2,6 +2,7 @@ const gulp = require("gulp");
 const sass = require('gulp-sass')(require('node-sass'));
 const header = require('gulp-header');
 const htmlbeautify = require('gulp-html-beautify');
+const webpack = require('webpack');
 const argv = require('yargs').argv;
 
 // Load all required plugins (listed in package.json)
@@ -107,25 +108,25 @@ gulp.task("lint-scripts", () => {
 // Merge and minify files
 gulp.task("concat-styles", () => {
     return gulp
-      .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
-      .pipe(
+        .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
+        .pipe(
         header("$folder: '../fonts';\n"))
-      .pipe(
+        .pipe(
         sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-      .pipe(
+        .pipe(
         plugins.autoprefixer({
-          browsers: ["last 3 versions"],
-          cascade: false
+            browsers: ["last 3 versions"],
+            cascade: false
         })
-      )
-      .pipe(gulp.dest("./public/assets/css/"))
-      .pipe(
-        plugins.rename({
-          suffix: ".min"
-        })
-      )
-    //   .pipe(plugins.sourcemaps.write())
-      .pipe(gulp.dest("./public/assets/css/"));
+        )
+        .pipe(gulp.dest("./public/assets/css/"))
+        .pipe(
+            plugins.rename({
+                suffix: ".min"
+            })
+        )
+        // .pipe(plugins.sourcemaps.write())
+        .pipe(gulp.dest("./public/assets/css/"));
 });
 
 gulp.task("concat-scripts", () => {
