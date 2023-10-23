@@ -10,3 +10,7 @@ sftp-config.json
 *.html
 public/assets/js/custom.js
 public/assets/css/style.css
+
+.firebase
+.firebaserc
+firebase.json
