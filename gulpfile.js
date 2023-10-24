@@ -4,19 +4,19 @@ const header = require('gulp-header');
 const htmlbeautify = require('gulp-html-beautify');
 const argv = require('yargs').argv;
 
-// Load all required plugins (listed in package.json)
+// load all required plugins (listed in package.json)
 const plugins = require("gulp-load-plugins")({
     pattern: "*"
 });
 
-console.log(plugins); // Logs loaded plugins in terminal
+console.log(plugins); // logs loaded plugins in terminal
 
 const reload = (after) => {
     plugins.browserSync.reload();
     after();
 }
 
-// Loads BrowserSync
+// loads browsersync
 gulp.task("browser-sync", (after) => {
     plugins.browserSync.init({
         server: {
@@ -27,11 +27,10 @@ gulp.task("browser-sync", (after) => {
             }
         }
     });
-
     after();
 });
 
-// Renders Nunjucks
+// renders nunjucks
 gulp.task("njk", () => {
     // Gets .html and .njk files in pages
     return gulp
@@ -53,7 +52,7 @@ gulp.task("njk", () => {
         .pipe(gulp.dest("./public"))
 });
 
-// Compile Sass
+// compile scss
 gulp.task("styles", () => {
     return gulp
         .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
@@ -72,7 +71,7 @@ gulp.task("styles", () => {
         .pipe(gulp.dest("./public/assets/css/"))
 });
 
-// Compile JS
+// compile js
 gulp.task("scripts", () => {
     return gulp
         .src([
@@ -87,7 +86,7 @@ gulp.task("scripts", () => {
         .pipe(gulp.dest("./public/assets/js/"));
 });
 
-// Linters
+// linters
 gulp.task("lint-styles", () => {
     return gulp
         .src(["./assets/scss/**/*.scss", "!assets/scss/vendor/**/*.scss"])
@@ -104,7 +103,7 @@ gulp.task("lint-scripts", () => {
         .pipe(plugins.eslint.failAfterError());
 });
 
-// Merge and minify files
+// merge and minify files
 gulp.task("concat-styles", () => {
     return gulp
         .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
@@ -114,7 +113,7 @@ gulp.task("concat-styles", () => {
         sass({ outputStyle: 'compressed' }).on('error', sass.logError))
         .pipe(
         plugins.autoprefixer({
-            browsers: ["last 3 versions"],
+            overrideBrowserslist: ["last 3 versions"],
             cascade: false
         })
         )
@@ -145,17 +144,25 @@ gulp.task("concat-scripts", () => {
         .pipe(gulp.dest("./public/assets/js"));
 });
 
-// Gulp tasks
+// gulp watch
 gulp.task("watch", gulp.series("njk", "styles", "scripts", "browser-sync", () => {
-    // Watch all files in assets and pages directories for changes
+    // watch njk files
     gulp.watch([
-        "./assets/**/*",
-        "./pages/**/*",
-        "./templates/**/*",
-    ], gulp.series("njk", "styles", "scripts", reload));
+        "./pages/**/*.+(html|njk)",
+        "./templates/**/*.+(html|njk)",
+    ], gulp.series("njk", reload));
+
+    // watch sass files
+    gulp.watch([
+        "./assets/scss/**/*.scss",
+    ], gulp.series("styles", reload));
+
+    // watch js files
+    gulp.watch([
+        "./assets/js/*.js",
+    ], gulp.series("scripts", reload));
 }));    
 
-gulp.task("default", gulp.series("watch")); // Default gulp task
-gulp.task("lint", gulp.series("lint-styles", "lint-scripts")); // Lint css + js files
-gulp.task("merge", gulp.series("concat-styles", "concat-scripts")); // Merge & minify css + js
-gulp.task("default", gulp.series("njk", "styles", "scripts", "merge")); // Default gulp task that runs all build tasks
+gulp.task("lint", gulp.series("lint-styles", "lint-scripts")); // lint css + js files
+gulp.task("merge", gulp.series("concat-styles", "concat-scripts")); // merge & minify css + js
+gulp.task("build", gulp.series("njk", "styles", "scripts", "merge")); // default gulp task that runs all build tasks
