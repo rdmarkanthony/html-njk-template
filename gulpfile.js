@@ -108,14 +108,16 @@ gulp.task("concat-styles", () => {
     return gulp
         .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
         .pipe(
-        header("$folder: '../fonts';\n"))
+            header("$folder: '../fonts';\n")
+        )
         .pipe(
-        sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+            sass({ outputStyle: 'compressed' }).on('error', sass.logError)
+        )
         .pipe(
-        plugins.autoprefixer({
-            overrideBrowserslist: ["last 3 versions"],
-            cascade: false
-        })
+            plugins.autoprefixer({
+                overrideBrowserslist: ["last 3 versions"],
+                cascade: false
+            })
         )
         .pipe(gulp.dest("./public/assets/css/"))
         .pipe(
