@@ -1,26 +1,37 @@
 {% set pageTitle = 'PageName | ProjectName' %} {% extends 'layout.njk' %} {%
 block content %}
-<div class="container mx-auto bg-yellow-300 p-5">
-  <div class="xs:flex sm:flex md:flex lg:flex xl:flex justify-between">
-    <div>column 1</div>
-    <div>column 2</div>
-    <div>column 3</div>
+<div class="container-fluid pl-3 pr-3">
+  <div class="container mx-auto bg-yellow-300 p-5">
+    <div
+      class="xs:flex sm:flex md:flex lg:flex xl:flex justify-between font-arial"
+    >
+      <div>column 1</div>
+      <div>column 2</div>
+      <div>column 3</div>
+    </div>
   </div>
-</div>
-<div class="container mx-auto bg-sky-300 mt-5 mb-5">
-  <div class="flex justify-end">
-    <div>column 1</div>
-    <div>column 2</div>
-    <div>column 3</div>
+  <div class="container mx-auto bg-sky-300 mt-5 mb-5 p-5">
+    <div class="flex justify-end">
+      <div>column 1</div>
+      <div>column 2</div>
+      <div>column 3</div>
+    </div>
   </div>
-</div>
-<div class="container mx-auto">
-  <div class="flex justify-between">
-    <a class="btn btn-primary" href="#">btn-primary</a>
-    <button class="btn btn-secondary btn-error text-white">
-      btn-secondary
-    </button>
-    <button class="btn btn-accent btn-success text-white">btn-accent</button>
+  <div class="container mx-auto">
+    <div class="flex justify-between">
+      <a class="btn btn-primary" href="#">btn-primary</a>
+      <button class="btn btn-secondary btn-error text-white">
+        btn-secondary
+      </button>
+      <button class="btn btn-accent btn-success text-white">btn-accent</button>
+    </div>
+  </div>
+  <div class="container mx-auto pt-5 pb-5 text-left md:text-center">
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam ratione,
+      voluptatum maiores quis, debitis autem rem ipsam vel ad voluptatibus et
+      deserunt placeat adipisci facilis quo temporibus possimus cum. Est?
+    </p>
   </div>
 </div>
 {#

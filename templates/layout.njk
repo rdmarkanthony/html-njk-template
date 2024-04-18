@@ -2,66 +2,122 @@
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
 
-	<title>{{pageTitle}}</title>
-	{% if pageKeywords or pageDescription or pageURL %}
-	<meta name="keywords" content="{{pageKeywords}}">
-	<meta name="description" content="{{pageDescription}}">
-	<meta property="og:image" content="og-image.jpg">
-	<meta property="og:title" content="{{pageTitle}}">
-	<meta property="og:description" content="{{pageDescription}}">
-	<meta property="og:url" content="{{pageURL}}">
-	<link rel="canonical" href="{{pageURL}}" />
-	{% endif %}
-
-	{#
-	<link rel="apple-touch-icon" sizes="57x57" href="{{ rootDir }}favicon/apple-icon-57x57.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="{{ rootDir }}favicon/apple-icon-60x60.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="{{ rootDir }}favicon/apple-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="{{ rootDir }}favicon/apple-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="{{ rootDir }}favicon/apple-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="{{ rootDir }}favicon/apple-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="{{ rootDir }}favicon/apple-icon-144x144.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="{{ rootDir }}favicon/apple-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="{{ rootDir }}favicon/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192" href="{{ rootDir }}favicon/android-icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="{{ rootDir }}favicon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="{{ rootDir }}favicon/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="{{ rootDir }}favicon/favicon-16x16.png">
-	<link rel="manifest" href="{{ rootDir }}favicon/manifest.json">
-	<meta name="msapplication-TileColor" content="#ffffff">
-	<meta name="msapplication-TileImage" content="{{ rootDir }}favicon/ms-icon-144x144.png">
-	<meta name="theme-color" content="#ffffff">
-	#}
-
-	{% block styles %}
-	<link rel="stylesheet" href="{{ rootDir }}assets/css/style.css{{ version }}" media="all"/>
-	{% endblock %}
-	{% block headerscript -%}{%- endblock %}
-</head>
-<body {% if bodyClass %}class="{{ bodyClass }}"{% endif %}>
-	{% block bodyscript -%}{%- endblock %}
-	<section id="main-container">
-		<header>
-			{% block header -%}{% include "partials/header.njk" %}{%- endblock %}
-		</header>
-		<section id="main-wrapper">
-			{% block content -%}{%- endblock %}
-		</section>
-	</section>
-	{% block popup -%}{%- endblock %}
-	<footer>
-		{% include "partials/footer.njk" %}
-	</footer>
-	{% block beforescript -%}{%- endblock %}
-	{% block scripts %}
-	{#<script src="{{ rootDir }}assets/js/lib/jquery.min.js"></script>#}
-	<script src="{{ rootDir }}assets/js/custom.js{{ version }}"></script>
-	{% endblock %}
-	{% block footerscript -%}{%- endblock %}
-</body>
+    <title>{{ pageTitle }}</title>
+    {% if pageKeywords or pageDescription or pageURL %}
+    <meta name="keywords" content="{{ pageKeywords }}" />
+    <meta name="description" content="{{ pageDescription }}" />
+    <meta property="og:image" content="og-image.jpg" />
+    <meta property="og:title" content="{{ pageTitle }}" />
+    <meta property="og:description" content="{{ pageDescription }}" />
+    <meta property="og:url" content="{{ pageURL }}" />
+    <link rel="canonical" href="{{ pageURL }}" />
+    {% endif %} {#
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="{{ rootDir }}favicon/apple-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="{{ rootDir }}favicon/apple-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="{{ rootDir }}favicon/apple-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="{{ rootDir }}favicon/apple-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="{{ rootDir }}favicon/apple-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="{{ rootDir }}favicon/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="{{ rootDir }}favicon/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="{{ rootDir }}favicon/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ rootDir }}favicon/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="{{ rootDir }}favicon/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ rootDir }}favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="{{ rootDir }}favicon/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{ rootDir }}favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="{{ rootDir }}favicon/manifest.json" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta
+      name="msapplication-TileImage"
+      content="{{ rootDir }}favicon/ms-icon-144x144.png"
+    />
+    <meta name="theme-color" content="#ffffff" />
+    #} {% block styles %}
+    <link
+      rel="stylesheet"
+      href="{{ rootDir }}assets/css/style.css{{ version }}"
+      media="all"
+    />
+    {% endblock %} {% block headerscript -%}{%- endblock %}
+  </head>
+  <body {% if bodyClass %}class="{{ bodyClass }}" {% endif %}>
+    {% block bodyscript -%}{%- endblock %}
+    <section id="main-container">
+      <header>
+        {% block header -%}{% include "partials/header.njk" %}{%- endblock %}
+      </header>
+      <section id="main-wrapper">{% block content -%}{%- endblock %}</section>
+    </section>
+    {% block popup -%}{%- endblock %}
+    <footer>{% include "partials/footer.njk" %}</footer>
+    {% block beforescript -%}{%- endblock %} {% block scripts %} {#
+    <script src="{{ rootDir }}assets/js/lib/jquery.min.js"></script>
+    #}
+    <script src="{{ rootDir }}assets/js/script.js{{ version }}"></script>
+    {% endblock %} {% block footerscript -%}{%- endblock %}
+  </body>
 </html>

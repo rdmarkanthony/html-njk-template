@@ -97,9 +97,9 @@ gulp.task("scripts", () => {
       "./assets/js/lib/jquery.inview.min.js",
 
       // custom
-      "./assets/js/custom.js",
+      "./assets/js/script.js",
     ])
-    .pipe(plugins.concat("custom.js"))
+    .pipe(plugins.concat("script.js"))
     .pipe(gulp.dest("./public/assets/js/"));
 });
 
@@ -154,8 +154,8 @@ gulp.task("concat-styles", () => {
 gulp.task("concat-scripts", () => {
   return (
     gulp
-      .src(["./public/assets/js/custom.js"])
-      .pipe(plugins.concat("custom.js"))
+      .src(["./public/assets/js/script.js"])
+      .pipe(plugins.concat("script.js"))
       .pipe(plugins.uglify())
       .on("error", function (err) {
         console.log(err);

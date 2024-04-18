@@ -8,8 +8,8 @@ package-lock.json
 sftp-config.json
 .idea
 *.html
-public/assets/js/custom.js
-public/assets/js/custom.min.js
+public/assets/js/script.js
+public/assets/js/script.min.js
 public/assets/css/style.css
 public/assets/css/style.min.css
 
