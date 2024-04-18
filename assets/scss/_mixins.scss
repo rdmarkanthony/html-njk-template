@@ -3,18 +3,23 @@
 // for responsive or so called media queries or breakpoints
 // you can adjust it anytime depending on the max width of the content
 @mixin breakpoint($point) {
-  @if $point == xl {
-    @media (min-width: 1280px) { @content; }
-  }
-  @else if $point == lg {
-    @media (min-width: 1024px) { @content; }
-  }
-  @else if $point == md {
-    @media (min-width: 768px) { @content; }
-  }
-  @else if $point == sm {
-    @media (min-width: 640px) { @content; }
-  }
+    @if $point == xl {
+        @media (min-width: 1280px) {
+            @content;
+        }
+    } @else if $point == lg {
+        @media (min-width: 1024px) {
+            @content;
+        }
+    } @else if $point == md {
+        @media (min-width: 768px) {
+            @content;
+        }
+    } @else if $point == sm {
+        @media (min-width: 640px) {
+            @content;
+        }
+    }
 }
 // example use
 // @include breakpoint(md) {
@@ -23,19 +28,29 @@
 
 // for css3 animation
 @mixin keyframes($animation-name) {
-  @-webkit-keyframes #{$animation-name} { @content; }
-     @-moz-keyframes #{$animation-name} { @content; }
-      @-ms-keyframes #{$animation-name} { @content; }
-       @-o-keyframes #{$animation-name} { @content; }
-          @keyframes #{$animation-name} { @content; }
+    @-webkit-keyframes #{$animation-name} {
+        @content;
+    }
+    @-moz-keyframes #{$animation-name} {
+        @content;
+    }
+    @-ms-keyframes #{$animation-name} {
+        @content;
+    }
+    @-o-keyframes #{$animation-name} {
+        @content;
+    }
+    @keyframes #{$animation-name} {
+        @content;
+    }
 }
 
 @mixin animation($str) {
-  -webkit-animation: #{$str};
-     -moz-animation: #{$str};
-      -ms-animation: #{$str};
-       -o-animation: #{$str};
-          animation: #{$str};
+    -webkit-animation: #{$str};
+    -moz-animation: #{$str};
+    -ms-animation: #{$str};
+    -o-animation: #{$str};
+    animation: #{$str};
 }
 // for example use
 // @include keyframes(animationName) {
@@ -48,82 +63,102 @@
 
 // for border radius
 @mixin border-radius($radius) {
-  -webkit-border-radius: $radius;
-     -moz-border-radius: $radius;
-      -ms-border-radius: $radius;
-          border-radius: $radius;
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
 }
 // example use
 //.class-name { @include border-radius(10px); }
 
 // for input appearance
 @mixin appearance($appearance) {
-  -webkit-appearance: $appearance;
-     -moz-appearance: $appearance;
-          appearance: $appearance;
+    -webkit-appearance: $appearance;
+    -moz-appearance: $appearance;
+    appearance: $appearance;
 }
 // example use
 //.class-name { @include appearance(none); }
 
 // for placeholder
 @mixin optional-at-root($sel) {
-  @at-root #{if(not &, $sel, selector-append(&, $sel))} { @content; }
+    @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+        @content;
+    }
 }
 @mixin placeholder {
-  @include optional-at-root('::-webkit-input-placeholder') { @content; }
-  @include optional-at-root(':-moz-placeholder') { @content; }
-  @include optional-at-root('::-moz-placeholder') { @content; }
-  @include optional-at-root(':-ms-input-placeholder') { @content; }
+    @include optional-at-root("::-webkit-input-placeholder") {
+        @content;
+    }
+    @include optional-at-root(":-moz-placeholder") {
+        @content;
+    }
+    @include optional-at-root("::-moz-placeholder") {
+        @content;
+    }
+    @include optional-at-root(":-ms-input-placeholder") {
+        @content;
+    }
 }
 
 @mixin underline($value) {
-  text-decoration: none;
-  @include linear-gradient(transparent 1px,$value 1px,$value 2px,transparent 2px);
-  background-size: 0% 3px;
-  // background-position: left 0 bottom;
-  background-position: 100% 100%;
-  transition: color background-size 0.3s ease-in-out;
-  background-repeat: no-repeat;
-  padding-bottom: 4px;
-  border-bottom: 3px solid transparent;
-  &:hover {
-    background-size: 100% 3px;
-  }
-  @supports (-ms-ime-align:auto) {
-    @include linear-gradient($value,$value);
-    background: transparent !important;
-    background-size: 0% 2px;
-    text-decoration: underline;
-
+    text-decoration: none;
+    @include linear-gradient(
+        transparent 1px,
+        $value 1px,
+        $value 2px,
+        transparent 2px
+    );
+    background-size: 0% 3px;
+    // background-position: left 0 bottom;
+    background-position: 100% 100%;
+    transition: color background-size 0.3s ease-in-out;
+    background-repeat: no-repeat;
+    padding-bottom: 4px;
+    border-bottom: 3px solid transparent;
     &:hover {
-      background-size: 100% 2px;
-      text-decoration: none;
+        background-size: 100% 3px;
     }
-  }
+    @supports (-ms-ime-align: auto) {
+        @include linear-gradient($value, $value);
+        background: transparent !important;
+        background-size: 0% 2px;
+        text-decoration: underline;
+
+        &:hover {
+            background-size: 100% 2px;
+            text-decoration: none;
+        }
+    }
 }
 
 @mixin underline2($value) {
-  text-decoration: none;
-  @include linear-gradient(transparent 1px,$value 1px,$value 2px,transparent 2px);
-  background-size: 100% 3px;
-  // background-position: right 0 bottom;
-  background-position: 100% 100%;
-  transition: color background-size 0.3s ease-in-out;
-  background-repeat: no-repeat;
-  padding-bottom: 0;
-  border-bottom: 3px solid transparent;
-  &:hover {
-    background-size: 0% 3px;
-  }
-  @supports (-ms-ime-align:auto) {
-    @include linear-gradient($value,$value);
-    background: transparent !important;
-    background-size: 100% 2px;
-    text-decoration: underline;
-
+    text-decoration: none;
+    @include linear-gradient(
+        transparent 1px,
+        $value 1px,
+        $value 2px,
+        transparent 2px
+    );
+    background-size: 100% 3px;
+    // background-position: right 0 bottom;
+    background-position: 100% 100%;
+    transition: color background-size 0.3s ease-in-out;
+    background-repeat: no-repeat;
+    padding-bottom: 0;
+    border-bottom: 3px solid transparent;
     &:hover {
-      background-size: 0% 2px;
-      text-decoration: none;
+        background-size: 0% 3px;
     }
-  }
+    @supports (-ms-ime-align: auto) {
+        @include linear-gradient($value, $value);
+        background: transparent !important;
+        background-size: 100% 2px;
+        text-decoration: underline;
+
+        &:hover {
+            background-size: 0% 2px;
+            text-decoration: none;
+        }
+    }
 }
