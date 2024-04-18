@@ -1,187 +1,303 @@
 {% set pageTitle = 'PageName | ProjectName' %} {% extends 'layout.njk' %} {%
 block content %}
 <div class="container-fluid pl-3 pr-3">
-  <div class="container mx-auto bg-yellow-300 p-5">
+    <div class="container mx-auto p-5">
+        <div class="mb-3">
+            <h1>Grids</h1>
+        </div>
+    </div>
+    <div class="container mx-auto p-5">
+        <div class="mb-3">
+            <h1>Sample image</h1>
+        </div>
+        <div>
+            <img
+                src="https://placehold.co/600x400/EEE/31343C"
+                alt="" />
+        </div>
+    </div>
+    <div class="container mx-auto p-5">
+        <div class="mb-3">
+            <h1>Margins and paddings</h1>
+        </div>
+        <div
+            class="custom:mt-40 custom:mb-40 lg:custom:mt-50 lg:custom:mb-50 custom:pt-20 md:custom:pt-40 custom:pb-20 md:custom:pb-40 bg-red-500"></div>
+        <div class="w-60 h-60 bg-black rounded-full"></div>
+    </div>
     <div
-      class="xs:flex sm:flex md:flex lg:flex xl:flex justify-between font-arial"
-    >
-      <div>column 1</div>
-      <div>column 2</div>
-      <div>column 3</div>
+        class="relative container mx-auto bg-black p-5 text-white rounded-full">
+        <div class="float-left">float: left;</div>
+        <div class="float-right">float: right;</div>
+        <div class="clear-both"></div>
     </div>
-  </div>
-  <div class="container mx-auto bg-sky-300 mt-5 mb-5 p-5">
-    <div class="flex justify-end">
-      <div>column 1</div>
-      <div>column 2</div>
-      <div>column 3</div>
+    <div class="container mx-auto bg-yellow-300 mt-5 mb-5 p-5">
+        <div
+            class="xs:flex sm:flex md:flex lg:flex xl:flex justify-between font-arial">
+            <div>column 1</div>
+            <div>column 2</div>
+            <div>column 3</div>
+        </div>
     </div>
-  </div>
-  <div class="container mx-auto">
-    <div class="flex justify-between">
-      <a class="btn btn-primary" href="#">btn-primary</a>
-      <button class="btn btn-secondary btn-error text-white">
-        btn-secondary
-      </button>
-      <button class="btn btn-accent btn-success text-white">btn-accent</button>
+    <div class="container mx-auto bg-sky-300 mt-5 mb-5 p-5">
+        <div class="flex justify-end">
+            <div>column 1</div>
+            <div>column 2</div>
+            <div>column 3</div>
+        </div>
     </div>
-  </div>
-  <div class="container mx-auto pt-5 pb-5 text-left md:text-center">
-    <p>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam ratione,
-      voluptatum maiores quis, debitis autem rem ipsam vel ad voluptatibus et
-      deserunt placeat adipisci facilis quo temporibus possimus cum. Est?
-    </p>
-  </div>
+    <div class="container mx-auto">
+        <div class="flex justify-between">
+            <a
+                class="btn btn-primary"
+                href="#"
+                >btn-primary</a
+            >
+            <button class="btn btn-secondary btn-error text-white">
+                btn-secondary
+            </button>
+            <button class="btn btn-accent btn-success text-white">
+                btn-accent
+            </button>
+        </div>
+    </div>
+    <div class="container mx-auto pt-5 pb-5 text-left md:text-center">
+        <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam
+            ratione, voluptatum maiores quis, debitis autem rem ipsam vel ad
+            voluptatibus et deserunt placeat adipisci facilis quo temporibus
+            possimus cum. Est?
+        </p>
+    </div>
 </div>
 {#
-<div class="container-fluid pt-5 pb-5" data-animate>
-  <div class="container" data-animate="parent">
-    <div data-animate="child">
-      <div class="section-par" data-animate="child">
-        <p>sample 1</p>
-        <p>sample 2</p>
-        <p>sample 3</p>
-      </div>
-      <div>
-        <div class="section-par" data-animate="child">
-          <p>sample 4</p>
-          <p>sample 5</p>
-          <p>sample 6</p>
+<div
+    class="container-fluid pt-5 pb-5"
+    data-animate>
+    <div
+        class="container"
+        data-animate="parent">
+        <div data-animate="child">
+            <div
+                class="section-par"
+                data-animate="child">
+                <p>sample 1</p>
+                <p>sample 2</p>
+                <p>sample 3</p>
+            </div>
+            <div>
+                <div
+                    class="section-par"
+                    data-animate="child">
+                    <p>sample 4</p>
+                    <p>sample 5</p>
+                    <p>sample 6</p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-<div id="content1" class="container-fluid pt-5 pb-5" data-animate="parent">
-  <div data-animate="child">
-    <p><a data-auto-scroll href="#content2">link 1</a></p>
-    <p><a data-auto-scroll href="#content4">link to content 4(hidden)</a></p>
-    <p><a data-auto-scroll href="#content2-sub1">link to sub-content</a></p>
-  </div>
-  <div class="row align-items-start" data-group-height data-animate="child">
-    <div class="col-4" gh-item="1,768">
-      <p>column 1</p>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. In commodi
-        doloremque labore illum. Doloribus, laboriosam quisquam unde veritatis
-        temporibus atque perferendis libero, distinctio, accusantium natus
-        deserunt sequi possimus id accusamus?
-      </p>
-    </div>
-    <div class="col-4" gh-item="1">
-      <p>column 2</p>
-    </div>
-    <div class="col-4" gh-item="1,768">
-      <p>column 3</p>
-    </div>
-    <div class="col-4" gh-item="2">
-      <p>column 1</p>
-    </div>
-    <div class="col-4" gh-item="2,768">
-      <p>column 2</p>
-    </div>
-    <div class="col-4" gh-item="2">
-      <div data-animate="child">
-        <p>column 3</p>
+<div
+    id="content1"
+    class="container-fluid pt-5 pb-5"
+    data-animate="parent">
+    <div data-animate="child">
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet
-          eius omnis? Provident beatae quod culpa, illum sapiente quam possimus
-          voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt
-          accusantium molestias.
+            <a
+                data-auto-scroll
+                href="#content2"
+                >link 1</a
+            >
         </p>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, unde
-          assumenda laboriosam hic a quis asperiores, enim nisi porro fuga magni
-          autem accusamus velit vel. Ut temporibus vero iusto laudantium?
+            <a
+                data-auto-scroll
+                href="#content4"
+                >link to content 4(hidden)</a
+            >
         </p>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-          possimus rem dolore placeat, totam animi neque eius temporibus quae
-          quibusdam alias minima quam consectetur vero rerum dolorum, quia porro
-          magni.
+            <a
+                data-auto-scroll
+                href="#content2-sub1"
+                >link to sub-content</a
+            >
         </p>
-      </div>
     </div>
-  </div>
+    <div
+        class="row align-items-start"
+        data-group-height
+        data-animate="child">
+        <div
+            class="col-4"
+            gh-item="1,768">
+            <p>column 1</p>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. In
+                commodi doloremque labore illum. Doloribus, laboriosam quisquam
+                unde veritatis temporibus atque perferendis libero, distinctio,
+                accusantium natus deserunt sequi possimus id accusamus?
+            </p>
+        </div>
+        <div
+            class="col-4"
+            gh-item="1">
+            <p>column 2</p>
+        </div>
+        <div
+            class="col-4"
+            gh-item="1,768">
+            <p>column 3</p>
+        </div>
+        <div
+            class="col-4"
+            gh-item="2">
+            <p>column 1</p>
+        </div>
+        <div
+            class="col-4"
+            gh-item="2,768">
+            <p>column 2</p>
+        </div>
+        <div
+            class="col-4"
+            gh-item="2">
+            <div data-animate="child">
+                <p>column 3</p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
+                    eveniet eius omnis? Provident beatae quod culpa, illum
+                    sapiente quam possimus voluptatibus quidem suscipit, dolore
+                    libero, nisi doloremque incidunt accusantium molestias.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Quidem, unde assumenda laboriosam hic a quis asperiores,
+                    enim nisi porro fuga magni autem accusamus velit vel. Ut
+                    temporibus vero iusto laudantium?
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Provident possimus rem dolore placeat, totam animi neque
+                    eius temporibus quae quibusdam alias minima quam consectetur
+                    vero rerum dolorum, quia porro magni.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
-<div id="content2" class="container-fluid pt-5 pb-5" data-animate="parent">
-  <div data-animate="child">
-    <p><a data-auto-scroll href="#content3">link 2</a></p>
-    <div id="content2-sub1" data-scroll-parent=".container-fluid">
-      <p>this is sub content of content2</p>
+<div
+    id="content2"
+    class="container-fluid pt-5 pb-5"
+    data-animate="parent">
+    <div data-animate="child">
+        <p>
+            <a
+                data-auto-scroll
+                href="#content3"
+                >link 2</a
+            >
+        </p>
+        <div
+            id="content2-sub1"
+            data-scroll-parent=".container-fluid">
+            <p>this is sub content of content2</p>
+        </div>
     </div>
-  </div>
 </div>
 <div style="min-height: 500vh"></div>
-<div id="content3" class="container-fluid pt-5 pb-5" data-animate="parent">
-  <div data-animate="child">
-    <p><a data-auto-scroll href="#content1">link 3</a></p>
-  </div>
-  <div class="row align-items-start" data-group-height data-row-group-height>
-    <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate>
-      <div gh-item="1,768">
-        <p>column 1</p>
+<div
+    id="content3"
+    class="container-fluid pt-5 pb-5"
+    data-animate="parent">
+    <div data-animate="child">
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. In commodi
-          doloremque labore illum. Doloribus, laboriosam quisquam unde veritatis
-          temporibus atque perferendis libero, distinctio, accusantium natus
-          deserunt sequi possimus id accusamus?
+            <a
+                data-auto-scroll
+                href="#content1"
+                >link 3</a
+            >
         </p>
-      </div>
     </div>
     <div
-      class="col-12 col-md-6 col-lg-4"
-      rgh-item
-      data-animate="fadeInDown,1,0.5"
-    >
-      <div gh-item="1,768">
-        <p>column 2</p>
-      </div>
+        class="row align-items-start"
+        data-group-height
+        data-row-group-height>
+        <div
+            class="col-12 col-md-6 col-lg-4"
+            rgh-item
+            data-animate>
+            <div gh-item="1,768">
+                <p>column 1</p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. In
+                    commodi doloremque labore illum. Doloribus, laboriosam
+                    quisquam unde veritatis temporibus atque perferendis libero,
+                    distinctio, accusantium natus deserunt sequi possimus id
+                    accusamus?
+                </p>
+            </div>
+        </div>
+        <div
+            class="col-12 col-md-6 col-lg-4"
+            rgh-item
+            data-animate="fadeInDown,1,0.5">
+            <div gh-item="1,768">
+                <p>column 2</p>
+            </div>
+        </div>
+        <div
+            class="col-12 col-md-6 col-lg-4"
+            rgh-item
+            data-animate="fadeInLeft">
+            <div gh-item="1,768">
+                <p>column 3</p>
+            </div>
+        </div>
+        <div
+            class="col-12 col-md-6 col-lg-4"
+            rgh-item
+            data-animate="fadeInRight">
+            <div gh-item="1,768">
+                <p>column 4</p>
+            </div>
+        </div>
+        <div
+            class="col-12 col-md-6 col-lg-4"
+            rgh-item
+            data-animate="fadeInUp">
+            <div gh-item="1,768">
+                <p>column 5</p>
+            </div>
+        </div>
+        <div
+            class="col-12 col-md-6 col-lg-4"
+            rgh-item
+            data-animate="fadeInUpBig,2,1">
+            <div gh-item="1,768">
+                <p>column 6</p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
+                    eveniet eius omnis? Provident beatae quod culpa, illum
+                    sapiente quam possimus voluptatibus quidem suscipit, dolore
+                    libero, nisi doloremque incidunt accusantium molestias.
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
+                    eveniet eius omnis? Provident beatae quod culpa, illum
+                    sapiente quam possimus voluptatibus quidem suscipit, dolore
+                    libero, nisi doloremque incidunt accusantium molestias.
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInLeft">
-      <div gh-item="1,768">
-        <p>column 3</p>
-      </div>
-    </div>
-    <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInRight">
-      <div gh-item="1,768">
-        <p>column 4</p>
-      </div>
-    </div>
-    <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInUp">
-      <div gh-item="1,768">
-        <p>column 5</p>
-      </div>
-    </div>
-    <div
-      class="col-12 col-md-6 col-lg-4"
-      rgh-item
-      data-animate="fadeInUpBig,2,1"
-    >
-      <div gh-item="1,768">
-        <p>column 6</p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet
-          eius omnis? Provident beatae quod culpa, illum sapiente quam possimus
-          voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt
-          accusantium molestias.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet
-          eius omnis? Provident beatae quod culpa, illum sapiente quam possimus
-          voluptatibus quidem suscipit, dolore libero, nisi doloremque incidunt
-          accusantium molestias.
-        </p>
-      </div>
-    </div>
-  </div>
 </div>
 <div style="display: none">
-  <div id="content4" class="container-fluid pt-5 pb-5">
-    <div class="container">
-      <p>sample</p>
+    <div
+        id="content4"
+        class="container-fluid pt-5 pb-5">
+        <div class="container">
+            <p>sample</p>
+        </div>
     </div>
-  </div>
 </div>
 #} {% endblock %}
