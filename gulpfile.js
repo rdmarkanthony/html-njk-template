@@ -6,6 +6,7 @@ const argv = require("yargs").argv;
 const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const tailwindcss = require("tailwindcss");
+const cssnano = require("cssnano");
 
 // load all required plugins (listed in package.json)
 const plugins = require("gulp-load-plugins")({
@@ -76,7 +77,13 @@ gulp.task("styles", () => {
       //     cascade: false,
       //   })
       // )
-      .pipe(postcss([tailwindcss, autoprefixer]))
+      .pipe(
+        postcss([
+          tailwindcss,
+          autoprefixer({ overrideBrowserslist: ["last 3 version"] }),
+          cssnano,
+        ])
+      )
       .pipe(gulp.dest("./public/assets/css/"))
   );
 });
@@ -120,12 +127,13 @@ gulp.task("concat-styles", () => {
       .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
       .pipe(header("$folder: '../fonts';\n"))
       .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
-      .pipe(
-        plugins.autoprefixer({
-          overrideBrowserslist: ["last 3 versions"],
-          cascade: false,
-        })
-      )
+      // .pipe(
+      //   plugins.autoprefixer({
+      //     overrideBrowserslist: ["last 3 versions"],
+      //     cascade: false,
+      //   })
+      // )
+      .pipe(postcss([tailwindcss, autoprefixer]))
       .pipe(gulp.dest("./public/assets/css/"))
       .pipe(
         plugins.rename({

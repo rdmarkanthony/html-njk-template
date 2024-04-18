@@ -3,8 +3,8 @@ module.exports = {
   content: [
     "./pages/**/*.{html,njk}",
     "./templates/**/*.{html,njk}",
-    "./assets/scss/**/*.{scss}",
-    "./assets/js/**/*.{js}",
+    "./assets/scss/**/*.scss",
+    "./assets/js/**/*.js",
   ],
   theme: {
     extend: {},
