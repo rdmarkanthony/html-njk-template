@@ -21,7 +21,7 @@ body {
     line-height: 1.4;
     color: var(--color-default);
     @include breakpoint(md) {
-        font-size: 20px;
+        font-size: 18px;
     }
 }
 
@@ -47,10 +47,6 @@ textarea {
 .invisible {
     visibility: hidden;
 } /* Hide visually and from screenreaders, but maintain layout */
-.hidden {
-    display: none !important;
-    visibility: hidden;
-} /* Hide from both screenreaders and browsers: h5bp.com/u */
 
 small {
     font-size: 80%;
