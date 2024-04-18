@@ -40,11 +40,7 @@ module.exports = {
         //   },
         // },
     },
-    plugins: [
-        require("tailwindcss"),
-        require("autoprefixer"),
-        require("daisyui"),
-    ],
+    plugins: [require("tailwindcss"), require("autoprefixer"), require("daisyui")],
     daisyui: {
         themes: false, // https://daisyui.com/docs/themes/
     },

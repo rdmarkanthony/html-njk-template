@@ -1,0 +1,15 @@
+{
+    "printWidth": 120,
+    "tabWidth": 4,
+    "overrides": [
+        {
+            "files": "*.html",
+            "options": {
+                "printWidth": 100,
+                "htmlWhitespaceSensitivity": "ignore",
+                "tabWidth": 4,
+                "endOfLine": "auto"
+            }
+        }
+    ]
+}

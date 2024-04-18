@@ -103,12 +103,7 @@
 
 @mixin underline($value) {
     text-decoration: none;
-    @include linear-gradient(
-        transparent 1px,
-        $value 1px,
-        $value 2px,
-        transparent 2px
-    );
+    @include linear-gradient(transparent 1px, $value 1px, $value 2px, transparent 2px);
     background-size: 0% 3px;
     // background-position: left 0 bottom;
     background-position: 100% 100%;
@@ -134,12 +129,7 @@
 
 @mixin underline2($value) {
     text-decoration: none;
-    @include linear-gradient(
-        transparent 1px,
-        $value 1px,
-        $value 2px,
-        transparent 2px
-    );
+    @include linear-gradient(transparent 1px, $value 1px, $value 2px, transparent 2px);
     background-size: 100% 3px;
     // background-position: right 0 bottom;
     background-position: 100% 100%;

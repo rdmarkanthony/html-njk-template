@@ -40,8 +40,7 @@ const projName = {
     debug: {
         active: false,
         init: function () {
-            if (projName.url.getVars().debug == "true")
-                projName.debug.active = true;
+            if (projName.url.getVars().debug == "true") projName.debug.active = true;
 
             if (projName.url.getVars().outline == "true") {
                 $("div").each(function () {
@@ -137,9 +136,7 @@ const projName = {
                 }, 500);
 
                 // for auto popup
-                const _btnPopup = document.querySelector(
-                    'a[href="' + projName.url.getHash() + '"]'
-                );
+                const _btnPopup = document.querySelector('a[href="' + projName.url.getHash() + '"]');
                 if (!_btnPopup) return;
                 setTimeout(function () {
                     _btnPopup.click();
@@ -147,9 +144,7 @@ const projName = {
             }
 
             $("[data-auto-scroll]").click(function (e) {
-                const _target = document.querySelector(
-                    this.getAttribute("href")
-                );
+                const _target = document.querySelector(this.getAttribute("href"));
 
                 if (!_target) return;
                 e.preventDefault();
@@ -172,16 +167,14 @@ const projName = {
 
             // for direction
             opt.direction = "down";
-            if (projName.scroll.top() >= $(opt.target).offset().top)
-                opt.direction = "up";
+            if (projName.scroll.top() >= $(opt.target).offset().top) opt.direction = "up";
 
             // for offset
             if (!opt.offset) {
                 opt.offset = 0;
 
                 // if target has no padding-top
-                if (parseInt($(opt.target).css("padding-top")) <= 0)
-                    opt.offset += 20;
+                if (parseInt($(opt.target).css("padding-top")) <= 0) opt.offset += 20;
             }
 
             // for speed
@@ -189,14 +182,9 @@ const projName = {
 
             $("html")
                 .stop()
-                .animate(
-                    { scrollTop: $(opt.target).offset().top - opt.offset },
-                    opt.speed,
-                    false,
-                    function () {
-                        if (opt.callback) opt.callback();
-                    }
-                );
+                .animate({ scrollTop: $(opt.target).offset().top - opt.offset }, opt.speed, false, function () {
+                    if (opt.callback) opt.callback();
+                });
         },
     },
     isMobile: function () {
@@ -205,12 +193,9 @@ const projName = {
     url: {
         getVars: function () {
             let vars = {};
-            const parts = window.location.href.replace(
-                /[?&]+([^=&]+)=([^&#]*)/gi,
-                function (m, key, value) {
-                    vars[key] = value;
-                }
-            );
+            const parts = window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi, function (m, key, value) {
+                vars[key] = value;
+            });
             return vars;
         },
         setVars: function (key, value) {
@@ -273,16 +258,10 @@ const projName = {
         },
     },
     width: function () {
-        return (
-            window.innerWidth -
-            (window.innerWidth - document.documentElement.clientWidth)
-        );
+        return window.innerWidth - (window.innerWidth - document.documentElement.clientWidth);
     },
     height: function () {
-        return (
-            window.innerHeight -
-            (window.innerHeight - document.documentElement.clientHeight)
-        );
+        return window.innerHeight - (window.innerHeight - document.documentElement.clientHeight);
     },
     equalHeight: function (elements) {
         // clear the height first
@@ -302,8 +281,7 @@ const projName = {
         for (let i = 0; i < elements.length; i++) {
             if (elements[i].within) {
                 // if has media-query
-                if (projName.width() >= elements[i].within)
-                    elements[i].style.minHeight = _biggestHeight + "px";
+                if (projName.width() >= elements[i].within) elements[i].style.minHeight = _biggestHeight + "px";
             } else {
                 elements[i].style.minHeight = _biggestHeight + "px";
             }
@@ -324,24 +302,18 @@ const projName = {
 
                 if (_dataset[0] != "parent" && _dataset[0] != "child") {
                     // for single animation
-                    if (projName.animate.getValue(_dataset[0]))
-                        _this.opt.animation = _dataset[0];
-                    if (projName.animate.getValue(_dataset[1]))
-                        _this.opt.duration = _dataset[1];
-                    if (projName.animate.getValue(_dataset[2]))
-                        _this.opt.delay = _dataset[2];
+                    if (projName.animate.getValue(_dataset[0])) _this.opt.animation = _dataset[0];
+                    if (projName.animate.getValue(_dataset[1])) _this.opt.duration = _dataset[1];
+                    if (projName.animate.getValue(_dataset[2])) _this.opt.delay = _dataset[2];
 
                     projName.animate.addListener(_this);
                 } else {
                     // for group animation
                     if (_dataset[0] != "parent") return;
 
-                    if (projName.animate.getValue(_dataset[1]))
-                        _this.opt.animation = _dataset[1];
-                    if (projName.animate.getValue(_dataset[2]))
-                        _this.opt.duration = _dataset[2];
-                    if (projName.animate.getValue(_dataset[3]))
-                        _this.opt.delay = _dataset[3];
+                    if (projName.animate.getValue(_dataset[1])) _this.opt.animation = _dataset[1];
+                    if (projName.animate.getValue(_dataset[2])) _this.opt.duration = _dataset[2];
+                    if (projName.animate.getValue(_dataset[3])) _this.opt.delay = _dataset[3];
 
                     _this.opt.status = "parent";
 
@@ -388,23 +360,16 @@ const projName = {
 
                 $(target).addClass("animated");
 
-                const _duration = parseFloat(
-                    $(target).css("animation-duration")
-                );
+                const _duration = parseFloat($(target).css("animation-duration"));
                 const _delay = parseFloat($(target).css("animation-delay"));
 
                 setTimeout(function () {
-                    $(target)
-                        .removeAttr("data-animate")
-                        .removeClass("animated animateFade")
-                        .css({
-                            "animation-duration": "",
-                            "animation-delay": "",
-                        });
-                    if (target.opt.animation)
-                        $(target).removeClass(target.opt.animation);
-                    if (target.style.length <= 0)
-                        target.removeAttribute("style");
+                    $(target).removeAttr("data-animate").removeClass("animated animateFade").css({
+                        "animation-duration": "",
+                        "animation-delay": "",
+                    });
+                    if (target.opt.animation) $(target).removeClass(target.opt.animation);
+                    if (target.style.length <= 0) target.removeAttribute("style");
                 }, (_duration + _delay) * 1000);
             });
         },
@@ -432,9 +397,7 @@ const projName = {
                             if (_animated) return;
                             _animated = true;
                             $(_this).addClass("visible");
-                            $('[data-animate="child"]', _this).removeAttr(
-                                "data-animate"
-                            );
+                            $('[data-animate="child"]', _this).removeAttr("data-animate");
 
                             $("[data-animate]", _this).each(function () {
                                 projName.event.dispatch(this, "visible");
@@ -474,16 +437,11 @@ const projName = {
                 let _currentBreakpoint = null;
 
                 for (const breakpoint in breakpoints) {
-                    if (projName.width() >= breakpoint)
-                        _currentBreakpoint = breakpoint;
+                    if (projName.width() >= breakpoint) _currentBreakpoint = breakpoint;
                 }
 
                 _enquire.instance++;
-                if (
-                    _enquire.currentBreakpoint !=
-                    breakpoints[_currentBreakpoint]
-                )
-                    _enquire.instance = 0;
+                if (_enquire.currentBreakpoint != breakpoints[_currentBreakpoint]) _enquire.instance = 0;
                 _enquire.currentBreakpoint = breakpoints[_currentBreakpoint];
 
                 _enquire.state = state;

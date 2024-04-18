@@ -1,5 +1,4 @@
-{% set pageTitle = 'PageName | ProjectName' %} {% extends 'layout.njk' %} {%
-block content %}
+{% set pageTitle = 'PageName | ProjectName' %} {% extends 'layout.njk' %} {% block content %}
 <!-- Tailwind samples -->
 <div class="px-5 py-10">
     <div class="container mx-auto">
@@ -8,87 +7,64 @@ block content %}
                 <a
                     class="text-inherit hover:text-sky-500"
                     href="https://tailwindcss.com/docs/grid-template-columns"
-                    target="_blank">
+                    target="_blank"
+                >
                     Grids
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        class="inline w-5 h-5">
+                        class="inline w-5 h-5"
+                    >
                         <path
                             fill-rule="evenodd"
                             d="M4.25 5.5a.75.75 0 0 0-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 1 1.5 0v4A2.25 2.25 0 0 1 12.75 17h-8.5A2.25 2.25 0 0 1 2 14.75v-8.5A2.25 2.25 0 0 1 4.25 4h5a.75.75 0 0 1 0 1.5h-5Z"
-                            clip-rule="evenodd" />
+                            clip-rule="evenodd"
+                        />
                         <path
                             fill-rule="evenodd"
                             d="M6.194 12.753a.75.75 0 0 0 1.06.053L16.5 4.44v2.81a.75.75 0 0 0 1.5 0v-4.5a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0 0 0 1.5h2.553l-9.056 8.194a.75.75 0 0 0-.053 1.06Z"
-                            clip-rule="evenodd" />
+                            clip-rule="evenodd"
+                        />
                     </svg>
                 </a>
             </h1>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div class="border border-dashed border-slate-600 p-4">
-                Column 1
-            </div>
-            <div class="border border-dashed border-slate-600 p-4">
-                Column 2
-            </div>
-            <div
-                class="col-span-2 md:col-span-1 border border-dashed border-slate-600 p-4 flex items-center">
+            <div class="border border-dashed border-slate-600 p-4">Column 1</div>
+            <div class="border border-dashed border-slate-600 p-4">Column 2</div>
+            <div class="col-span-2 md:col-span-1 border border-dashed border-slate-600 p-4 flex items-center">
                 <div>
                     Column 3 <br />
-                    <small class="block md:hidden text-green-900"
-                        ><code>2 col span</code></small
-                    >
+                    <small class="block md:hidden text-green-900"><code>2 col span</code></small>
                 </div>
             </div>
-            <div
-                class="col-span-2 border border-dashed border-slate-600 p-4 flex items-center">
+            <div class="col-span-2 border border-dashed border-slate-600 p-4 flex items-center">
                 <div>
                     Column 4 <br />
-                    <small class="text-green-900"
-                        ><code>2 col span</code></small
-                    >
+                    <small class="text-green-900"><code>2 col span</code></small>
                 </div>
             </div>
-            <div
-                class="col-span-2 md:col-span-1 border border-dashed border-slate-600 p-4 flex items-center">
+            <div class="col-span-2 md:col-span-1 border border-dashed border-slate-600 p-4 flex items-center">
                 <div>
                     Column 5 <br />
-                    <small class="bock md:hidden text-green-900"
-                        ><code>2 col span</code></small
-                    >
+                    <small class="bock md:hidden text-green-900"><code>2 col span</code></small>
                 </div>
             </div>
-            <div
-                class="row-span-3 md:row-span-2 border border-dashed border-slate-600 p-4 flex items-center">
+            <div class="row-span-3 md:row-span-2 border border-dashed border-slate-600 p-4 flex items-center">
                 <div>
                     Column 6 <br />
-                    <small class="block md:hidden text-green-900"
-                        ><code>3 row span</code></small
-                    >
-                    <small class="hidden md:block text-green-900"
-                        ><code>2 row span</code></small
-                    >
+                    <small class="block md:hidden text-green-900"><code>3 row span</code></small>
+                    <small class="hidden md:block text-green-900"><code>2 row span</code></small>
                 </div>
             </div>
-            <div class="border border-dashed border-slate-600 p-4">
-                Column 7
-            </div>
-            <div class="border border-dashed border-slate-600 p-4">
-                Column 8
-            </div>
-            <div
-                class="col-span-1 md:col-span-2 border border-dashed border-slate-600 p-4 flex items-center">
+            <div class="border border-dashed border-slate-600 p-4">Column 7</div>
+            <div class="border border-dashed border-slate-600 p-4">Column 8</div>
+            <div class="col-span-1 md:col-span-2 border border-dashed border-slate-600 p-4 flex items-center">
                 <div>
                     Column 9 <br />
-                    <small class="block md:hidden text-green-900"
-                        ><code>1 col span</code></small
-                    >
-                    <small class="hidden md:block text-green-900"
-                        ><code>2 col span</code></small
-                    >
+                    <small class="block md:hidden text-green-900"><code>1 col span</code></small>
+                    <small class="hidden md:block text-green-900"><code>2 col span</code></small>
                 </div>
             </div>
         </div>
@@ -101,52 +77,39 @@ block content %}
                 <a
                     class="text-inherit hover:text-sky-500"
                     href="https://tailwindcss.com/docs/flex-basis"
-                    target="_blank">
+                    target="_blank"
+                >
                     Flex
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        class="inline w-5 h-5">
+                        class="inline w-5 h-5"
+                    >
                         <path
                             fill-rule="evenodd"
                             d="M4.25 5.5a.75.75 0 0 0-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 1 1.5 0v4A2.25 2.25 0 0 1 12.75 17h-8.5A2.25 2.25 0 0 1 2 14.75v-8.5A2.25 2.25 0 0 1 4.25 4h5a.75.75 0 0 1 0 1.5h-5Z"
-                            clip-rule="evenodd" />
+                            clip-rule="evenodd"
+                        />
                         <path
                             fill-rule="evenodd"
                             d="M6.194 12.753a.75.75 0 0 0 1.06.053L16.5 4.44v2.81a.75.75 0 0 0 1.5 0v-4.5a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0 0 0 1.5h2.553l-9.056 8.194a.75.75 0 0 0-.053 1.06Z"
-                            clip-rule="evenodd" />
+                            clip-rule="evenodd"
+                        />
                     </svg>
                 </a>
             </h1>
         </div>
         <div class="flex flex-col gap-4">
             <div class="flex flex-row hover:flex-col gap-4">
-                <div
-                    class="basis-1/4 border border-dashed border-slate-600 p-4">
-                    Column 1
-                </div>
-                <div
-                    class="basis-1/4 border border-dashed border-slate-600 p-4">
-                    Column 2
-                </div>
-                <div
-                    class="basis-1/2 border border-dashed border-slate-600 p-4">
-                    Column 3
-                </div>
+                <div class="basis-1/4 border border-dashed border-slate-600 p-4">Column 1</div>
+                <div class="basis-1/4 border border-dashed border-slate-600 p-4">Column 2</div>
+                <div class="basis-1/2 border border-dashed border-slate-600 p-4">Column 3</div>
             </div>
             <div class="flex gap-4">
-                <div
-                    class="w-2/4 border border-dashed border-slate-600 p-4 box-border">
-                    Column 4
-                </div>
-                <div class="w-1/4 border border-dashed border-slate-600 p-4">
-                    Column 5
-                </div>
-                <div
-                    class="row-span-2 w-1/4 border border-dashed border-slate-600 p-4">
-                    Column 6
-                </div>
+                <div class="w-2/4 border border-dashed border-slate-600 p-4 box-border">Column 4</div>
+                <div class="w-1/4 border border-dashed border-slate-600 p-4">Column 5</div>
+                <div class="row-span-2 w-1/4 border border-dashed border-slate-600 p-4">Column 6</div>
             </div>
         </div>
     </div>
@@ -158,83 +121,55 @@ block content %}
                 <a
                     class="text-inherit hover:text-sky-500"
                     href="https://daisyui.com/components/button/"
-                    target="_blank">
+                    target="_blank"
+                >
                     Buttons
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        class="inline w-5 h-5">
+                        class="inline w-5 h-5"
+                    >
                         <path
                             fill-rule="evenodd"
                             d="M4.25 5.5a.75.75 0 0 0-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 1 1.5 0v4A2.25 2.25 0 0 1 12.75 17h-8.5A2.25 2.25 0 0 1 2 14.75v-8.5A2.25 2.25 0 0 1 4.25 4h5a.75.75 0 0 1 0 1.5h-5Z"
-                            clip-rule="evenodd" />
+                            clip-rule="evenodd"
+                        />
                         <path
                             fill-rule="evenodd"
                             d="M6.194 12.753a.75.75 0 0 0 1.06.053L16.5 4.44v2.81a.75.75 0 0 0 1.5 0v-4.5a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0 0 0 1.5h2.553l-9.056 8.194a.75.75 0 0 0-.053 1.06Z"
-                            clip-rule="evenodd" />
+                            clip-rule="evenodd"
+                        />
                     </svg>
                 </a>
             </h1>
         </div>
-        <div class="grid grid-cols-4 gap-4 flex items-end">
+        <div class="grid grid-cols-4 gap-4 items-end">
             <div>
-                <a
-                    class="btn w-full"
-                    href="#"
-                    >Button</a
-                >
+                <a class="btn w-full" href="#">Button</a>
             </div>
             <div>
-                <a
-                    class="btn btn-neutral w-full"
-                    href="#"
-                    >Neutral</a
-                >
+                <a class="btn btn-neutral w-full" href="#">Neutral</a>
             </div>
             <div>
                 <div class="mb-3">
-                    <a
-                        class="btn btn-primary w-full"
-                        href="#"
-                        >Primary</a
-                    >
+                    <a class="btn btn-primary w-full" href="#">Primary</a>
                 </div>
                 <div>
-                    <a
-                        class="btn btn-primary btn-active w-full"
-                        href="#"
-                        >Active</a
-                    >
+                    <a class="btn btn-primary btn-active w-full" href="#">Active</a>
                 </div>
             </div>
             <div>
-                <a
-                    class="btn btn-secondary w-full"
-                    href="#"
-                    >Secondary</a
-                >
+                <a class="btn btn-secondary w-full" href="#">Secondary</a>
             </div>
             <div>
-                <a
-                    class="btn btn-accent w-full"
-                    href="#"
-                    >Accent</a
-                >
+                <a class="btn btn-accent w-full" href="#">Accent</a>
             </div>
             <div>
-                <a
-                    class="btn btn-ghost w-full"
-                    href="#"
-                    >Ghost</a
-                >
+                <a class="btn btn-ghost w-full" href="#">Ghost</a>
             </div>
             <div>
-                <a
-                    class="btn btn-link w-full"
-                    href="#"
-                    >Link</a
-                >
+                <a class="btn btn-link w-full" href="#">Link</a>
             </div>
         </div>
     </div>
@@ -243,24 +178,24 @@ block content %}
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>
-                <a
-                    class="text-inherit hover:text-sky-500"
-                    href="https://daisyui.com/components/modal/"
-                    target="_blank">
+                <a class="text-inherit hover:text-sky-500" href="https://daisyui.com/components/modal/" target="_blank">
                     Modal
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 20 20"
                         fill="currentColor"
-                        class="inline w-5 h-5">
+                        class="inline w-5 h-5"
+                    >
                         <path
                             fill-rule="evenodd"
                             d="M4.25 5.5a.75.75 0 0 0-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 1 1.5 0v4A2.25 2.25 0 0 1 12.75 17h-8.5A2.25 2.25 0 0 1 2 14.75v-8.5A2.25 2.25 0 0 1 4.25 4h5a.75.75 0 0 1 0 1.5h-5Z"
-                            clip-rule="evenodd" />
+                            clip-rule="evenodd"
+                        />
                         <path
                             fill-rule="evenodd"
                             d="M6.194 12.753a.75.75 0 0 0 1.06.053L16.5 4.44v2.81a.75.75 0 0 0 1.5 0v-4.5a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0 0 0 1.5h2.553l-9.056 8.194a.75.75 0 0 0-.053 1.06Z"
-                            clip-rule="evenodd" />
+                            clip-rule="evenodd"
+                        />
                     </svg>
                 </a>
             </h1>
@@ -268,19 +203,11 @@ block content %}
         <div class="grid grid-cols-4 gap-4">
             <div>
                 <!-- Open the modal using ID.showModal() method -->
-                <button
-                    class="btn btn-info w-full"
-                    onclick="my_modal_1.showModal()">
-                    open modal
-                </button>
-                <dialog
-                    id="my_modal_1"
-                    class="modal">
+                <button class="btn btn-info w-full" onclick="my_modal_1.showModal()">open modal</button>
+                <dialog id="my_modal_1" class="modal">
                     <div class="modal-box">
                         <h3 class="font-bold text-lg">Hello!</h3>
-                        <p class="py-4">
-                            Press ESC key or click the button below to close
-                        </p>
+                        <p class="py-4">Press ESC key or click the button below to close</p>
                         <div class="modal-action">
                             <form method="dialog">
                                 <!-- if there is a button in form, it will close the modal -->
@@ -292,61 +219,53 @@ block content %}
             </div>
             <div>
                 <!-- Open the modal using ID.showModal() method -->
-                <button
-                    class="btn btn-info w-full"
-                    onclick="my_modal_2.showModal()">
+                <button class="btn btn-info w-full" onclick="my_modal_2.showModal()">
                     open modal and click outside
                 </button>
-                <dialog
-                    id="my_modal_2"
-                    class="modal">
+                <dialog id="my_modal_2" class="modal">
                     <div class="modal-box">
                         <h3 class="font-bold text-lg">Hello!</h3>
-                        <p class="py-4">
-                            Press ESC key or click outside to close
-                        </p>
+                        <p class="py-4">Press ESC key or click outside to close</p>
                     </div>
-                    <form
-                        method="dialog"
-                        class="modal-backdrop">
+                    <form method="dialog" class="modal-backdrop">
                         <button>close</button>
                     </form>
                 </dialog>
             </div>
             <div>
                 <!-- You can open the modal using ID.showModal() method -->
-                <button
-                    class="btn btn-info w-full"
-                    onclick="my_modal_3.showModal()">
+                <button class="btn btn-info w-full" onclick="my_modal_3.showModal()">
                     open modal with
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 16 16"
                         fill="currentColor"
-                        class="inline w-4 h-4">
+                        class="inline w-4 h-4"
+                    >
                         <path
-                            d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                            d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z"
+                        />
                     </svg>
 
                     icon
                 </button>
-                <dialog
-                    id="my_modal_3"
-                    class="modal">
+                <dialog id="my_modal_3" class="modal">
                     <div class="modal-box">
                         <form method="dialog">
-                            <button
-                                class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                                ✕
-                            </button>
+                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
                         <h3 class="font-bold text-lg">Hello!</h3>
-                        <p class="py-4">
-                            Press ESC key or click on ✕ button to close
-                        </p>
+                        <p class="py-4">Press ESC key or click on ✕ button to close</p>
                     </div>
                 </dialog>
             </div>
+        </div>
+    </div>
+</div>
+<div class="px-5 py-10">
+    <div class="container mx-auto">
+        <div class="mb-3">
+            <h1>Margins and Paddings</h1>
         </div>
     </div>
 </div>
@@ -360,9 +279,7 @@ block content %}
             <h1>Sample image</h1>
         </div>
         <div>
-            <img
-                src="https://placehold.co/600x400/EEE/31343C"
-                alt="" />
+            <img src="https://placehold.co/600x400/EEE/31343C" alt="" />
         </div>
     </div>
     <div class="container mx-auto p-5">
@@ -370,14 +287,13 @@ block content %}
             <h1>Margins and paddings</h1>
         </div>
         <div
-            class="custom:mt-40 custom:mb-40 lg:custom:mt-50 lg:custom:mb-50 custom:pt-20 md:custom:pt-40 custom:pb-20 md:custom:pb-40 bg-red-500"></div>
+            class="custom:mt-40 custom:mb-40 lg:custom:mt-50 lg:custom:mb-50 custom:pt-20 md:custom:pt-40 custom:pb-20 md:custom:pb-40 bg-red-500"
+        ></div>
         <div class="flex justify-centergit items-center">
-            <div
-                class="w-60 h-60 ease bg-gray-900 hover:bg-green-600 rounded-full cursor-pointer"></div>
+            <div class="w-60 h-60 ease bg-gray-900 hover:bg-green-600 rounded-full cursor-pointer"></div>
         </div>
     </div>
-    <div
-        class="relative container mx-auto bg-black p-5 text-white rounded-full">
+    <div class="relative container mx-auto bg-black p-5 text-white rounded-full">
         <div class="float-left">float: left;</div>
         <div class="float-right">float: right;</div>
         <div class="clear-both"></div>
@@ -388,24 +304,16 @@ block content %}
 <!-- Bootstrap samples -->
 <div class="container-fluid"></div>
 #} {#
-<div
-    class="container-fluid pt-5 pb-5"
-    data-animate>
-    <div
-        class="container"
-        data-animate="parent">
+<div class="container-fluid pt-5 pb-5" data-animate>
+    <div class="container" data-animate="parent">
         <div data-animate="child">
-            <div
-                class="section-par"
-                data-animate="child">
+            <div class="section-par" data-animate="child">
                 <p>sample 1</p>
                 <p>sample 2</p>
                 <p>sample 3</p>
             </div>
             <div>
-                <div
-                    class="section-par"
-                    data-animate="child">
+                <div class="section-par" data-animate="child">
                     <p>sample 4</p>
                     <p>sample 5</p>
                     <p>sample 6</p>
@@ -414,205 +322,128 @@ block content %}
         </div>
     </div>
 </div>
-<div
-    id="content1"
-    class="container-fluid pt-5 pb-5"
-    data-animate="parent">
+<div id="content1" class="container-fluid pt-5 pb-5" data-animate="parent">
     <div data-animate="child">
         <p>
-            <a
-                data-auto-scroll
-                href="#content2"
-                >link 1</a
-            >
+            <a data-auto-scroll href="#content2">link 1</a>
         </p>
         <p>
-            <a
-                data-auto-scroll
-                href="#content4"
-                >link to content 4(hidden)</a
-            >
+            <a data-auto-scroll href="#content4">link to content 4(hidden)</a>
         </p>
         <p>
-            <a
-                data-auto-scroll
-                href="#content2-sub1"
-                >link to sub-content</a
-            >
+            <a data-auto-scroll href="#content2-sub1">link to sub-content</a>
         </p>
     </div>
-    <div
-        class="row align-items-start"
-        data-group-height
-        data-animate="child">
-        <div
-            class="col-4"
-            gh-item="1,768">
+    <div class="row align-items-start" data-group-height data-animate="child">
+        <div class="col-4" gh-item="1,768">
             <p>column 1</p>
             <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. In
-                commodi doloremque labore illum. Doloribus, laboriosam quisquam
-                unde veritatis temporibus atque perferendis libero, distinctio,
-                accusantium natus deserunt sequi possimus id accusamus?
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. In commodi doloremque labore illum. Doloribus,
+                laboriosam quisquam unde veritatis temporibus atque perferendis libero, distinctio, accusantium natus
+                deserunt sequi possimus id accusamus?
             </p>
         </div>
-        <div
-            class="col-4"
-            gh-item="1">
+        <div class="col-4" gh-item="1">
             <p>column 2</p>
         </div>
-        <div
-            class="col-4"
-            gh-item="1,768">
+        <div class="col-4" gh-item="1,768">
             <p>column 3</p>
         </div>
-        <div
-            class="col-4"
-            gh-item="2">
+        <div class="col-4" gh-item="2">
             <p>column 1</p>
         </div>
-        <div
-            class="col-4"
-            gh-item="2,768">
+        <div class="col-4" gh-item="2,768">
             <p>column 2</p>
         </div>
-        <div
-            class="col-4"
-            gh-item="2">
+        <div class="col-4" gh-item="2">
             <div data-animate="child">
                 <p>column 3</p>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
-                    eveniet eius omnis? Provident beatae quod culpa, illum
-                    sapiente quam possimus voluptatibus quidem suscipit, dolore
-                    libero, nisi doloremque incidunt accusantium molestias.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae
+                    quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi
+                    doloremque incidunt accusantium molestias.
                 </p>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Quidem, unde assumenda laboriosam hic a quis asperiores,
-                    enim nisi porro fuga magni autem accusamus velit vel. Ut
-                    temporibus vero iusto laudantium?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, unde assumenda laboriosam hic a
+                    quis asperiores, enim nisi porro fuga magni autem accusamus velit vel. Ut temporibus vero iusto
+                    laudantium?
                 </p>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Provident possimus rem dolore placeat, totam animi neque
-                    eius temporibus quae quibusdam alias minima quam consectetur
-                    vero rerum dolorum, quia porro magni.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident possimus rem dolore placeat,
+                    totam animi neque eius temporibus quae quibusdam alias minima quam consectetur vero rerum dolorum,
+                    quia porro magni.
                 </p>
             </div>
         </div>
     </div>
 </div>
-<div
-    id="content2"
-    class="container-fluid pt-5 pb-5"
-    data-animate="parent">
+<div id="content2" class="container-fluid pt-5 pb-5" data-animate="parent">
     <div data-animate="child">
         <p>
-            <a
-                data-auto-scroll
-                href="#content3"
-                >link 2</a
-            >
+            <a data-auto-scroll href="#content3">link 2</a>
         </p>
-        <div
-            id="content2-sub1"
-            data-scroll-parent=".container-fluid">
+        <div id="content2-sub1" data-scroll-parent=".container-fluid">
             <p>this is sub content of content2</p>
         </div>
     </div>
 </div>
 <div style="min-height: 500vh"></div>
-<div
-    id="content3"
-    class="container-fluid pt-5 pb-5"
-    data-animate="parent">
+<div id="content3" class="container-fluid pt-5 pb-5" data-animate="parent">
     <div data-animate="child">
         <p>
-            <a
-                data-auto-scroll
-                href="#content1"
-                >link 3</a
-            >
+            <a data-auto-scroll href="#content1">link 3</a>
         </p>
     </div>
-    <div
-        class="row align-items-start"
-        data-group-height
-        data-row-group-height>
-        <div
-            class="col-12 col-md-6 col-lg-4"
-            rgh-item
-            data-animate>
+    <div class="row align-items-start" data-group-height data-row-group-height>
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate>
             <div gh-item="1,768">
                 <p>column 1</p>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. In
-                    commodi doloremque labore illum. Doloribus, laboriosam
-                    quisquam unde veritatis temporibus atque perferendis libero,
-                    distinctio, accusantium natus deserunt sequi possimus id
-                    accusamus?
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. In commodi doloremque labore illum.
+                    Doloribus, laboriosam quisquam unde veritatis temporibus atque perferendis libero, distinctio,
+                    accusantium natus deserunt sequi possimus id accusamus?
                 </p>
             </div>
         </div>
-        <div
-            class="col-12 col-md-6 col-lg-4"
-            rgh-item
-            data-animate="fadeInDown,1,0.5">
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInDown,1,0.5">
             <div gh-item="1,768">
                 <p>column 2</p>
             </div>
         </div>
-        <div
-            class="col-12 col-md-6 col-lg-4"
-            rgh-item
-            data-animate="fadeInLeft">
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInLeft">
             <div gh-item="1,768">
                 <p>column 3</p>
             </div>
         </div>
-        <div
-            class="col-12 col-md-6 col-lg-4"
-            rgh-item
-            data-animate="fadeInRight">
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInRight">
             <div gh-item="1,768">
                 <p>column 4</p>
             </div>
         </div>
-        <div
-            class="col-12 col-md-6 col-lg-4"
-            rgh-item
-            data-animate="fadeInUp">
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInUp">
             <div gh-item="1,768">
                 <p>column 5</p>
             </div>
         </div>
-        <div
-            class="col-12 col-md-6 col-lg-4"
-            rgh-item
-            data-animate="fadeInUpBig,2,1">
+        <div class="col-12 col-md-6 col-lg-4" rgh-item data-animate="fadeInUpBig,2,1">
             <div gh-item="1,768">
                 <p>column 6</p>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
-                    eveniet eius omnis? Provident beatae quod culpa, illum
-                    sapiente quam possimus voluptatibus quidem suscipit, dolore
-                    libero, nisi doloremque incidunt accusantium molestias.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae
+                    quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi
+                    doloremque incidunt accusantium molestias.
                 </p>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
-                    eveniet eius omnis? Provident beatae quod culpa, illum
-                    sapiente quam possimus voluptatibus quidem suscipit, dolore
-                    libero, nisi doloremque incidunt accusantium molestias.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea eveniet eius omnis? Provident beatae
+                    quod culpa, illum sapiente quam possimus voluptatibus quidem suscipit, dolore libero, nisi
+                    doloremque incidunt accusantium molestias.
                 </p>
             </div>
         </div>
     </div>
 </div>
 <div style="display: none">
-    <div
-        id="content4"
-        class="container-fluid pt-5 pb-5">
+    <div id="content4" class="container-fluid pt-5 pb-5">
         <div class="container">
             <p>sample</p>
         </div>

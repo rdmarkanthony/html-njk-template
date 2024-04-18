@@ -78,10 +78,7 @@ summary {
     display: block;
 }
 
-@media print,
-    (-o-min-device-pixel-ratio: 5/4),
-    (-webkit-min-device-pixel-ratio: 1.25),
-    (min-resolution: 120dppx) {
+@media print, (-o-min-device-pixel-ratio: 5/4), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dppx) {
     // Style adjustments for high resolution devices
 }
 
