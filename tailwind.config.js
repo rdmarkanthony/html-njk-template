@@ -3,7 +3,7 @@ module.exports = {
   content: [
     "./pages/**/*.{html,njk}",
     "./templates/**/*.{html,njk}",
-    "./assets/scss/**/*.scss",
+    "./assets/scss/**/*.{css,scss}",
     "./assets/js/**/*.js",
   ],
   theme: {
@@ -15,6 +15,7 @@ module.exports = {
     require("daisyui"),
   ],
   daisyui: {
-    themes: ["wireframe"],
+    // https://daisyui.com/docs/themes/
+    themes: false,
   },
 };

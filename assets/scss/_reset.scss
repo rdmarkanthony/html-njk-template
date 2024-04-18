@@ -3,8 +3,8 @@
   img { max-width: 100%; height: auto; }
 }
 html, body { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin:0; padding:0;}
-body { font-size: 20px; line-height: 1.4; color: var(--color-default);
-    @include breakpoint(tablet2) { font-size: 16px; }
+body { font-size: 16px; line-height: 1.4; color: var(--color-default);
+    @include breakpoint(md) { font-size: 20px; }
 }
 
 /*
@@ -14,7 +14,7 @@ body { font-size: 20px; line-height: 1.4; color: var(--color-default);
 html, body, button, input, select, textarea { font-family: var(--font-default); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
 /***** [Reserve CSS Stylesheet] *****/
-.opac a:hover { @include opacity(0.9); }
+.opac a:hover { opacity: 0.9; }
 .invisible { visibility: hidden; } /* Hide visually and from screenreaders, but maintain layout */
 .hidden { display: none !important; visibility: hidden; } /* Hide from both screenreaders and browsers: h5bp.com/u */
 
@@ -241,7 +241,7 @@ input[type="radio"] {
  */
 input[type="search"] {
     -webkit-appearance: textfield; /* 1 */
-    @include box-sizing(content-box);
+    box-sizing: content-box;
 }
 
 /*

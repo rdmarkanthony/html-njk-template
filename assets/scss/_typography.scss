@@ -5,17 +5,3 @@ h3 { font-size: 1.17em; }
 h4 { font-size: 1em; }
 h5 { font-size: 0.83em; }
 h6 { font-size: 0.67em; }
-
-.fz-12 { font-size: 12px; }
-.fz-14 { font-size: 14px; }
-.fz-16 { font-size: 16px; }
-.fz-18 { font-size: 18px; }
-.fz-20 { font-size: 20px; }
-.fz-24 { font-size: 24px; }
-
-@include breakpoint(phablet) {
-	.fz-16 { font-size: 14px; }
-	.fz-18 { font-size: 16px; }
-	.fz-20 { font-size: 18px; }
-	.fz-24 { font-size: 22px; }
-}
