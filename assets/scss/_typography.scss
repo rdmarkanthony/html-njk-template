@@ -20,8 +20,10 @@ h6 {
 
 .section-par {
     > * {
-        &:not([class*="mb"]) {
-            margin-bottom: 0.75em;
+        &:not(:last-child) {
+            &:not([class*="mb"]) {
+                margin-bottom: 1em;
+            }
         }
     }
 }
