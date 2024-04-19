@@ -17,3 +17,11 @@ h5 {
 h6 {
     font-size: 0.67em;
 }
+
+.section-par {
+    > * {
+        &:not([class*="mb"]) {
+            margin-bottom: 0.75em;
+        }
+    }
+}
