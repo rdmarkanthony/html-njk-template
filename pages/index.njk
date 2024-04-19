@@ -144,7 +144,7 @@
                 </a>
             </h1>
         </div>
-        <div class="grid grid-cols-4 gap-4 items-end">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 items-end">
             <div>
                 <a class="btn btn-block" href="#">Button</a>
             </div>
@@ -200,7 +200,7 @@
                 </a>
             </h1>
         </div>
-        <div class="grid grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
                 <!-- Open the modal using ID.showModal() method -->
                 <button class="btn btn-info w-full" onclick="my_modal_1.showModal()">open modal</button>
@@ -223,9 +223,14 @@
                     open modal and click outside
                 </button>
                 <dialog id="my_modal_2" class="modal">
-                    <div class="modal-box">
+                    <div class="modal-box w-11/12 max-w-5xl">
                         <h3 class="font-bold text-lg">Hello!</h3>
                         <p class="py-4">Press ESC key or click outside to close</p>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus facere et culpa ea saepe
+                            incidunt, fugit blanditiis porro architecto ut repudiandae iure laudantium assumenda
+                            reprehenderit odio sit inventore perspiciatis molestiae?
+                        </p>
                     </div>
                     <form method="dialog" class="modal-backdrop">
                         <button>close</button>
@@ -262,6 +267,7 @@
         </div>
     </div>
 </div>
+{#
 <div class="px-5 py-10">
     <div class="container mx-auto">
         <div class="mb-3">
@@ -269,6 +275,7 @@
         </div>
     </div>
 </div>
+#}
 <div id="animate" class="px-5 py-10 bg-slate-50" data-animate>
     <div class="container mx-auto" data-animate="parent">
         <div class="mb-3">
@@ -335,7 +342,7 @@
         <div class="mb-3">
             <h1>Group Height</h1>
         </div>
-        <div class="grid grid-cols-3 gap-4 items-start" data-group-height>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 items-start" data-group-height>
             <div class="outline outline-dashed p-4" gh-item="1,768">
                 <p>Column 1</p>
                 <p>
@@ -356,6 +363,11 @@
             </div>
             <div class="outline outline-dashed p-4" class="col-4" gh-item="2">
                 <p>Column 6</p>
+                <p>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dicta adipisci vel unde assumenda, sunt
+                    quasi magnam laboriosam deserunt molestiae quam consequatur, quas labore possimus! Labore
+                    consequatur unde accusamus veniam facere.
+                </p>
             </div>
         </div>
     </div>

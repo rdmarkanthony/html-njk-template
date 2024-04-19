@@ -2,7 +2,7 @@
 
 const projName = {
     preloader: false,
-    init: function () {
+    init() {
         // if mobile
         if (projName.isMobile()) $("html").addClass("is-mobile");
 
@@ -19,16 +19,27 @@ const projName = {
         projName.animate.init();
 
         // for general resize
-        projName.event.resize(function (event) {
-            projName.resize(event);
-        });
+        projName.on("resize", (event) => projName.resize(event));
 
         // for ready
-        $(document).ready(function () {
-            projName.ready();
-        });
+        projName.on("ready", () => projName.ready());
+
+        // initialize the events
+        projName.event.init();
     },
-    ready: function () {
+    debug: {
+        active: false,
+        init() {
+            if (projName.url.getVars().debug == "true") projName.debug.active = true;
+
+            if (projName.url.getVars().outline == "true") {
+                document.querySelectorAll("div").forEach((div) => {
+                    div.style.outline = "1px dashed #ff0000";
+                });
+            }
+        },
+    },
+    ready() {
         // show animate
         projName.animate.run();
 
@@ -37,35 +48,23 @@ const projName = {
 
         console.log(projName);
     },
-    debug: {
-        active: false,
-        init: function () {
-            if (projName.url.getVars().debug == "true") projName.debug.active = true;
-
-            if (projName.url.getVars().outline == "true") {
-                $("div").each(function () {
-                    $(this).css({ outline: "1px dashed #ff0000" });
-                });
-            }
-        },
-    },
     header: {
         target: document.querySelector(".header-content"),
-        height: function () {
-            if (!projName.header.target) return 0;
+        height() {
+            if (!projName.header.target || projName.header.target.offsetHeight <= 0) return null;
             return projName.header.target.offsetHeight;
         },
-        init: function () {},
+        init() {},
     },
     footer: {
         target: document.querySelector(".footer-content"),
-        height: function () {
-            if (!projName.footer.target) return 0;
+        height() {
+            if (!projName.footer.target || projName.footer.target.offsetHeight <= 0) return null;
             return projName.footer.target.offsetHeight;
         },
-        init: function () {},
+        init() {},
     },
-    resize: function (event) {
+    resize(event) {
         // sticky footer
         $(projName.footer.target).css({ marginTop: -projName.footer.height() });
         $("#main-wrapper").css({ paddingBottom: projName.footer.height() });
@@ -89,11 +88,12 @@ const projName = {
             });
 
             if (_groups.length > 0) {
-                for (let i = 0; i < _groups.length; i++) {
-                    projName.equalHeight(_groups[i]);
-                }
+                _groups.forEach((group) => {
+                    projName.equalHeight(group);
+                });
             }
         });
+
         $("[data-row-group-height]").each(function () {
             let _parentWidth = this.offsetWidth;
             let _items = this.querySelectorAll("[rgh-item]");
@@ -119,7 +119,7 @@ const projName = {
         });
     },
     scroll: {
-        init: function () {
+        init() {
             // for auto scroll
             if (projName.url.getHash()) {
                 const _target = document.querySelector(projName.url.getHash());
@@ -152,10 +152,10 @@ const projName = {
                 projName.scroll.auto({ target: _target });
             });
         },
-        top: function () {
+        top() {
             return window.pageYOffset || document.documentElement.scrollTop;
         },
-        auto: function (opt) {
+        auto(opt) {
             if (!opt.target) return;
 
             // if need to scroll to parent of the target
@@ -187,18 +187,25 @@ const projName = {
                 });
         },
     },
-    isMobile: function () {
+    isMobile() {
         return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     },
     url: {
-        getVars: function () {
+        getHash() {
+            if (window.location.hash) {
+                return window.location.hash.split("?")[0];
+            } else {
+                return false;
+            }
+        },
+        getVars() {
             let vars = {};
             const parts = window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi, function (m, key, value) {
                 vars[key] = value;
             });
             return vars;
         },
-        setVars: function (key, value) {
+        setVars(key, value) {
             let url = window.location.href;
             const hash = location.hash;
 
@@ -213,16 +220,18 @@ const projName = {
             }
             window.history.pushState({ path: url + hash }, "", url + hash);
         },
-        getHash: function () {
-            if (window.location.hash) {
-                return window.location.hash.split("?")[0];
-            } else {
-                return false;
-            }
-        },
     },
     event: {
-        resize: function (callback) {
+        init() {
+            projName.event.resize(function (event) {
+                projName.emit("resize", event);
+            });
+
+            $(document).ready(function () {
+                projName.emit("ready");
+            });
+        },
+        resize(callback) {
             let _resizeTimer = "";
 
             callback("init");
@@ -240,13 +249,13 @@ const projName = {
                 }, 300);
             });
         },
-        scroll: function (callback) {
+        scroll(callback) {
             callback();
             window.addEventListener("scroll", function (e) {
                 callback(e);
             });
         },
-        dispatch: function (elem, eventName) {
+        dispatch(elem, eventName) {
             let event;
             if (typeof Event === "function") {
                 event = new Event(eventName);
@@ -257,38 +266,32 @@ const projName = {
             elem.dispatchEvent(event);
         },
     },
-    width: function () {
+    width() {
         return window.innerWidth - (window.innerWidth - document.documentElement.clientWidth);
     },
-    height: function () {
+    height() {
         return window.innerHeight - (window.innerHeight - document.documentElement.clientHeight);
     },
-    equalHeight: function (elements) {
+    equalHeight(elements) {
         // clear the height first
-        for (let i = 0; i < elements.length; i++) {
-            elements[i].style.minHeight = "";
-        }
-        if (elements.length <= 1) return;
+        elements.forEach((element) => {
+            element.style.removeProperty("minHeight");
+        });
 
-        // find which has highest height
-        let _biggestHeight = 0;
-        for (let i = 0; i < elements.length; i++) {
-            const _elHeight = elements[i].offsetHeight;
-            if (_elHeight > _biggestHeight) _biggestHeight = _elHeight;
-        }
+        // find the maximum height
+        const maxHeight = Math.max(...elements.map((element) => element.offsetHeight));
 
         // apply the common height
-        for (let i = 0; i < elements.length; i++) {
-            if (elements[i].within) {
-                // if has media-query
-                if (projName.width() >= elements[i].within) elements[i].style.minHeight = _biggestHeight + "px";
+        elements.forEach((element) => {
+            if (element.within && projName.width() >= element.within) {
+                element.style.minHeight = `${maxHeight}px`;
             } else {
-                elements[i].style.minHeight = _biggestHeight + "px";
+                element.style.minHeight = `${maxHeight}px`;
             }
-        }
+        });
     },
     animate: {
-        init: function () {
+        init() {
             $("[data-animate]").each(function () {
                 const _this = this;
                 const _dataset = this.dataset.animate.split(",");
@@ -340,13 +343,13 @@ const projName = {
                 }
             });
         },
-        getValue: function (target) {
+        getValue(target) {
             if (!target) return false;
             if (target.length <= 0) return false;
             if (target == "false") return false;
             return target;
         },
-        addListener: function (target) {
+        addListener(target) {
             target.addEventListener("visible", function () {
                 $(target).addClass(target.opt.animation);
                 if (target.opt.duration)
@@ -373,7 +376,7 @@ const projName = {
                 }, (_duration + _delay) * 1000);
             });
         },
-        run: function () {
+        run() {
             $("[data-animate]").each(function () {
                 const _this = this;
 
@@ -408,7 +411,7 @@ const projName = {
             });
         },
     },
-    enquire: function (breakpoints) {
+    enquire(breakpoints) {
         const _enquire = this;
 
         _enquire.instance = 0;
@@ -452,6 +455,17 @@ const projName = {
         };
 
         if (Object.keys(breakpoints).length > 0) _enquire.init();
+    },
+    listeners: {},
+    on(event, callback) {
+        if (!projName.listeners[event]) projName.listeners[event] = [];
+        projName.listeners[event].push(callback);
+    },
+    emit(event, data) {
+        if (!projName.listeners[event]) return;
+        projName.listeners[event].forEach((callback) => {
+            if (callback) callback(data);
+        });
     },
 };
 projName.init();
