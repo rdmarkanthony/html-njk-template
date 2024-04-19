@@ -1,101 +1,133 @@
- // this is area is for reserved class
-#main-container { height:100%; height: auto !important; min-height:100%; }
-
-.ease,a,input[type="submit"],button, svg path { transition: all 0.5s ease; }
-.ease2 { transition: all 0.3s ease; }
-.auto { max-width: var(--width-1); margin-left: auto; margin-right: auto; }
-
-#main-wrapper { }
-
-.fl { float:left; }
-.fr { float:right; }
-.clr { display: block; float:none; clear:both; }
-
-.bp-box { @include box-sizing(border-box); }
-.bp-rel { position:relative; }
-.bp-ab { position:absolute; }
-
-.co-black { color: var(--black); }
-.co-white { color: var(--white); }
-
-.bg-black { background-color: var(--black); color: var(--white); }
-
-.bp-img {
-	img, svg { max-width: 100%; height: auto; }
-	&.wide {
-		img, svg { display: block; width: 100%; }
-	}
+// this is area is for reserved class
+#main-container {
+    height: 100%;
+    height: auto !important;
+    min-height: 100%;
 }
-.bp-nocurve { @include border-radius(0); }
-.bp-curve { @include border-radius(5px); }
-.bp-circle { @include border-radius(50%); }
-
-.mobile-input { @include appearance(none); border: none; border-radius: 0; outline: none !important; box-shadow: none !important;
-	&:focus, &:active { outline: none !important; box-shadow: none !important; }
+#main-wrapper {
 }
 
-.pt-10 { padding-top: 10px; }
-.pt-20 { padding-top: 20px; }
-.pt-30 { padding-top: 30px; }
-.pt-40 { padding-top: 40px; }
-.pt-50 { padding-top: 50px; }
+.ease,
+a,
+input[type="submit"],
+button {
+    transition: all 0.5s ease;
+}
 
-.pr-10 { padding-right: 10px; }
-.pr-20 { padding-right: 20px; }
-.pr-30 { padding-right: 30px; }
-.pr-40 { padding-right: 40px; }
-.pr-50 { padding-right: 50px; }
+.mobile-input {
+    @include appearance(none);
+    border: none;
+    border-radius: 0;
+    outline: none !important;
+    box-shadow: none !important;
+    &:focus,
+    &:active {
+        outline: none !important;
+        box-shadow: none !important;
+    }
+}
 
-.pb-10 { padding-bottom: 10px; }
-.pb-20 { padding-bottom: 20px; }
-.pb-30 { padding-bottom: 30px; }
-.pb-40 { padding-bottom: 40px; }
-.pb-50 { padding-bottom: 50px; }
+// custom paddings and margins
+$padding-values: (
+    pt: padding-top,
+    pr: padding-right,
+    pb: padding-bottom,
+    pl: padding-left,
+);
 
-.pl-10 { padding-left: 10px; }
-.pl-20 { padding-left: 20px; }
-.pl-30 { padding-left: 30px; }
-.pl-40 { padding-left: 40px; }
-.pl-50 { padding-left: 50px; }
+$margin-values: (
+    mt: margin-top,
+    mr: margin-right,
+    mb: margin-bottom,
+    ml: margin-left,
+);
+
+@each $direction, $property in $padding-values {
+    @for $i from 1 through 5 {
+        .custom {
+            &\:#{$direction}-#{$i * 10} {
+                #{$property}: #{$i * 10}px;
+            }
+        }
+    }
+}
+
+@each $direction, $property in $margin-values {
+    @for $i from 1 through 5 {
+        .custom {
+            &\:#{$direction}-#{$i * 10} {
+                #{$property}: #{$i * 10}px;
+            }
+        }
+    }
+}
+
+$breakpoints: (
+    sm: 640px,
+    md: 768px,
+    lg: 1024px,
+    xl: 1280px,
+);
+
+@each $breakpoint, $min-width in $breakpoints {
+    @media (min-width: #{$min-width}) {
+        @for $i from 1 through 5 {
+            .#{$breakpoint}\:custom\:pt-#{$i * 10} {
+                padding-top: #{$i * 10}px;
+            }
+            .#{$breakpoint}\:custom\:pr-#{$i * 10} {
+                padding-right: #{$i * 10}px;
+            }
+            .#{$breakpoint}\:custom\:pb-#{$i * 10} {
+                padding-bottom: #{$i * 10}px;
+            }
+            .#{$breakpoint}\:custom\:pl-#{$i * 10} {
+                padding-left: #{$i * 10}px;
+            }
+            .#{$breakpoint}\:custom\:mt-#{$i * 10} {
+                margin-top: #{$i * 10}px;
+            }
+            .#{$breakpoint}\:custom\:mr-#{$i * 10} {
+                margin-right: #{$i * 10}px;
+            }
+            .#{$breakpoint}\:custom\:mb-#{$i * 10} {
+                margin-bottom: #{$i * 10}px;
+            }
+            .#{$breakpoint}\:custom\:ml-#{$i * 10} {
+                margin-left: #{$i * 10}px;
+            }
+        }
+    }
+}
 
 // for animate
-[data-animate] { opacity: 0;
-	&.visible { opacity: 1; }
+[data-animate] {
+    opacity: 0;
+    &.visible {
+        opacity: 1;
+    }
 }
-.animateFade { animation-name: animateFade; }
+.animateFade {
+    animation-name: animateFade;
+}
 @keyframes animateFade {
-	0% { opacity: 0; transform: translate3d(0,40px,0); }
-	100% { opacity: 1; transform: translate3d(0,0,0); }
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 40px, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
 }
 
 // you can include here the rest of your class name eg. home page
-.scrolling-touch { overflow: auto; overflow-scrolling: touch; -webkit-overflow-scrolling: touch; }
-.no-wrap { white-space: nowrap; }
-.break-all { word-break: break-all; }
-
-.container { padding-left: 0; padding-right: 0;
-	@include breakpoint(lg) { max-width: var(--width-1); }
+.scrolling-touch {
+    overflow: auto;
+    overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
 }
 
-// for rows
 .row {
-	@include breakpoint(lg) {
-		&.row-medium { margin-left: -20px; margin-right: -20px;
-			> [class*="col"] { padding-left: 20px; padding-right: 20px; }
-		}
-	}
-
-	@media (min-width: 1260px) {
-		&.row-large { margin-left: -42px; margin-right: -42px;
-			> [class*="col"] { padding-left: 42px; padding-right: 42px; }
-		}
-	}
-
-	&.row-small { margin-left: -10px; margin-right: -10px;
-		> [class*="col"] { padding-left: 10px; padding-right: 10px; }
-	}
-
-	> [class*="col-"] {
-		&:last-child { margin-bottom: 0 !important; }
-	}
+    @apply grid;
 }

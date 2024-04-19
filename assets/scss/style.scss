@@ -1,21 +1,24 @@
 // import all scss files here, please don't remove the notes for this template
 
 // mostly default imports
-@import 'fonts'; // for all embedded fonts
-@import 'variables'; // all declared variables including font size, color and bg color and font families
-@import 'mixins'; // for groups of css that can be reuse like CSS3 for cross browsing
+@import "fonts"; // for all embedded fonts
+@import "variables"; // all declared variables including font size, color and bg color and font families
+@import "mixins"; // for groups of css that can be reuse like CSS3 for cross browsing
 
-@import 'bootstrap.min';
+// @import "bootstrap.min"; // css framework: bootstrap
+@tailwind base; // css framework: tailwind
+@tailwind components;
+@tailwind utilities;
 
-@import 'reset'; // this includes all normalize or reset css
-@import 'typography'; // for the paragraphs including header, p, line-height,etc
+@import "reset"; // this includes all normalize or reset css
+@import "typography"; // for the paragraphs including header, p, line-height,etc
 
-@import 'animate';
+@import "animate";
 
 // all customized styles
-@import 'header'; // the main style css
-@import 'footer'; // the main style css
-@import 'main'; // the main style css
-@import 'home';
+@import "header"; // the main style css
+@import "footer"; // the main style css
+@import "main"; // the main style css
+@import "home";
 
-@import 'mobile'; // the main style css
+@import "mobile"; // the main style css

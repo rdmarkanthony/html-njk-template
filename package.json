@@ -1,34 +1,42 @@
 {
-	"name": "html-template",
-	"version": "2.2.0",
-	"description": "slicing html",
-	"main": "index.html",
-	"engines": {
-		"node": ">=14.18.0",
-		"npm": ">=8.11.0"
-	},
-	"scripts": {
-		"test": "test"
-	},
-	"author": "RippleWerkz",
-	"license": "ISC",
-	"dependencies": {
-		"browser-sync": "^2.27.4",
-		"gulp": "^4.0.2",
-		"gulp-autoprefixer": "^8.0.0",
-		"gulp-concat": "^2.6.1",
-		"gulp-eslint": "^6.0.0",
-		"gulp-header": "^2.0.9",
-		"gulp-html-beautify": "^1.0.1",
-		"gulp-load-plugins": "^2.0.7",
-		"gulp-nunjucks-render": "^2.2.2",
-		"gulp-rename": "^2.0.0",
-		"gulp-sass": "^5.1.0",
-		"gulp-sass-lint": "^1.4.0",
-		"gulp-sourcemaps": "^3.0.0",
-		"gulp-uglify": "^3.0.2",
-		"node-sass": "^7.0.1",
-		"nunjucks": "^3.2.4",
-		"yargs": "^17.0.1"
-	}
+    "name": "html-template",
+    "version": "2.2.0",
+    "description": "slicing html",
+    "main": "index.html",
+    "engines": {
+        "node": ">=14.18.0",
+        "npm": ">=8.11.0"
+    },
+    "scripts": {
+        "test": "test"
+    },
+    "author": "RippleWerkz",
+    "license": "ISC",
+    "dependencies": {
+        "browser-sync": "^2.27.4",
+        "gulp": "^4.0.2",
+        "gulp-concat": "^2.6.1",
+        "gulp-eslint": "^6.0.0",
+        "gulp-header": "^2.0.9",
+        "gulp-html-beautify": "^1.0.1",
+        "gulp-load-plugins": "^2.0.7",
+        "gulp-nunjucks-render": "^2.2.2",
+        "gulp-rename": "^2.0.0",
+        "gulp-sass": "^5.1.0",
+        "gulp-sass-lint": "^1.4.0",
+        "gulp-sourcemaps": "^3.0.0",
+        "gulp-uglify": "^3.0.2",
+        "node-sass": "^7.0.1",
+        "nunjucks": "^3.2.4",
+        "yargs": "^17.0.1"
+    },
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.5.7",
+        "@tailwindcss/typography": "^0.5.12",
+        "autoprefixer": "^10.4.19",
+        "cssnano": "^6.1.2",
+        "daisyui": "^4.10.2",
+        "gulp-postcss": "^10.0.0",
+        "tailwindcss": "^3.4.3"
+    }
 }
