@@ -275,18 +275,23 @@ const projName = {
     equalHeight(elements) {
         // clear the height first
         elements.forEach((element) => {
-            element.style.removeProperty("minHeight");
+            element.style.minHeight = "";
         });
+        if (elements.length <= 1) return;
 
-        // find the maximum height
-        const maxHeight = Math.max(...elements.map((element) => element.offsetHeight));
+        // find which has highest height
+        let _biggestHeight = 0;
+        elements.forEach((element) => {
+            const _elHeight = element.offsetHeight;
+            if (_elHeight > _biggestHeight) _biggestHeight = _elHeight;
+        });
 
         // apply the common height
         elements.forEach((element) => {
-            if (element.within && projName.width() >= element.within) {
-                element.style.minHeight = `${maxHeight}px`;
+            if (element.within) {
+                if (projName.width() >= element.within) element.style.minHeight = _biggestHeight + "px";
             } else {
-                element.style.minHeight = `${maxHeight}px`;
+                element.style.minHeight = _biggestHeight + "px";
             }
         });
     },
