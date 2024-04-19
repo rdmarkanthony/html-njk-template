@@ -25,6 +25,9 @@ gulp.task("browser-sync", (after) => {
     plugins.browserSync.init({
         server: {
             baseDir: "./public",
+            serveStaticOptions: {
+                extensions: ["html"],
+            },
             middleware: function (req, res, next) {
                 res.setHeader("Access-Control-Allow-Origin", "*");
                 next();
@@ -95,6 +98,7 @@ gulp.task("scripts", () => {
             // libraries
             "./assets/js/lib/jquery.min.js",
             "./assets/js/lib/jquery.inview.min.js",
+            "./assets/js/lib/lodash.min.js",
 
             // custom
             "./assets/js/script.js",

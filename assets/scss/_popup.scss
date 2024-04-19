@@ -1,0 +1,107 @@
+.com_modal-popup {
+    z-index: 500;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    &-cover {
+        z-index: 1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(247, 247, 247, 0.9);
+    }
+    &-main {
+        z-index: 2;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 15px;
+        overflow: auto;
+        @extend .scrolling-touch;
+        @include breakpoint(md) {
+            padding: 40px 80px;
+        }
+    }
+    &-btn {
+        &.btn-close {
+            z-index: 3;
+            display: block;
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 15px;
+            font-size: 30px;
+            color: var(--black);
+            &:hover,
+            &:focus,
+            &:active {
+                color: var(--primary-red);
+            }
+
+            @include breakpoint(md) {
+                padding: 20px;
+            }
+        }
+        &.btn-small {
+            font-size: 22px;
+        }
+    }
+
+    &.popup-short {
+        .com_modal-popup-main {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    &.popup-visible {
+        .com_modal-popup-cover {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .com_modal-popup-center {
+            animation: fadeInUp 0.5s cubic-bezier(0.5, 0, 0, 1.25) forwards;
+        }
+        .com_modal-popup-btn.btn-close {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    }
+    &.popup-hiding {
+        .com_modal-popup-cover {
+            animation: fadeOut 0.5s ease forwards;
+        }
+        .com_modal-popup-center {
+            animation: fadeOutDown 0.5s cubic-bezier(0.5, 0, 0, 1.25) forwards;
+        }
+        .com_modal-popup-btn.btn-close {
+            animation: fadeOut 0.5s ease forwards;
+        }
+    }
+}
+
+.popup-content {
+    position: relative;
+    padding: 48px 32px 64px 32px;
+    border-radius: 16px;
+    background-color: var(--white);
+    box-shadow: 0 26px 30px rgba(0, 0, 0, 0.05);
+    &.container {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    &.popup-small {
+        max-width: 355px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.popup-active {
+    overflow: hidden;
+}

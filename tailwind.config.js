@@ -4,9 +4,11 @@ module.exports = {
         "./pages/**/*.{html,njk}",
         "./templates/**/*.{html,njk}",
         "./assets/scss/**/*.{css,scss}",
-        // "./assets/js/**/*.js",
+        "./assets/js/**/script.js",
         // Exclude specific file
         "./assets/scss/!(_bootstrap.min).scss",
+        "./assets/scss/!(_reset.min).scss",
+        "./assets/scss/!(_animate.min).scss",
     ],
     theme: {
         // screens: {
