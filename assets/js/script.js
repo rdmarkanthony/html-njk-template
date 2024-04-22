@@ -433,7 +433,7 @@ const projName = {
             });
         },
     },
-    enquire(breakpoints) {
+    enquire: function (breakpoints) {
         const _enquire = this;
 
         _enquire.instance = 0;
@@ -558,9 +558,9 @@ const projName = {
                     _popup.el.btn.close = document.createElement("a");
                     $(_popup.target).append(_popup.el.btn.close);
                     $(_popup.el.btn.close)
-                        .addClass("com_modal-popup-btn btn-close")
+                        .addClass("com_modal-popup-btn btn-close group")
                         .html(
-                            '<svg class="w-7 h-7 transition duration-300 hover:stroke-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>'
+                            '<svg class="w-7 h-7 transition duration-200 group-hover:stroke-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" /></svg>'
                         );
                     _popup.el.btn.close.setAttribute("href", "#");
 
