@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
     content: [
         "./pages/**/*.{html,njk}",
@@ -8,6 +11,7 @@ module.exports = {
         // Exclude specific file
         "./assets/scss/!(_bootstrap.min).scss",
     ],
+    safelist: ["animateFade"],
     theme: {
         // screens: {
         //   sm: "640px",
@@ -45,6 +49,8 @@ module.exports = {
         // require("@tailwindcss/forms"),
         // require("daisyui"),
         require("autoprefixer"),
+        require("./tailwind/plugins/default"),
+        require("./tailwind/plugins/animate"),
     ],
     daisyui: {
         themes: false, // https://daisyui.com/docs/themes/

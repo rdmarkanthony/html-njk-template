@@ -70,13 +70,7 @@ gulp.task("styles", () => {
                 outputStyle: "compact",
             }).on("error", sass.logError)
         )
-        .pipe(
-            postcss([
-                tailwindcss,
-                autoprefixer({ overrideBrowserslist: ["last 3 version"] }),
-                // cssnano,
-            ])
-        )
+        .pipe(postcss([tailwindcss, autoprefixer({ overrideBrowserslist: ["last 3 version"] })]))
         .pipe(gulp.dest("./public/assets/css/"));
 });
 
