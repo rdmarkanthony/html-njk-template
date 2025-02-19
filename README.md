@@ -2,8 +2,8 @@
 
 ### Requirements
 
--   Node.js (`v14.18.0` or later)
--   npm (`v8.12.1` or later)
+-   Node.js (`v16.16.0` or later)
+-   npm (`v8.11.0` or later)
 
 ### Instructions
 
