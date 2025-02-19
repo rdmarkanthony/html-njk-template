@@ -1,20 +1,19 @@
-// mostly default imports
-@use "fonts"; // for all embedded fonts
+@use "fonts";
 
 // @use "bootstrap.min"; // css framework: bootstrap
 
-@use "reset"; // this includes all normalize or reset css
-@use "typography"; // for the paragraphs including header, p, line-height,etc
+@use "reset";
+@use "typography";
 
 @use "animate";
 
-// all customized styles
-@use "header"; // the main style css
-@use "footer"; // the main style css
-@use "main"; // the main style css
+// all custom styles
+@use "header";
+@use "footer";
+@use "main";
 @use "home";
 
-@use "mobile"; // the main style css
+@use "mobile";
 
 @tailwind base; // css framework: tailwind
 @tailwind components;

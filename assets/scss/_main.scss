@@ -130,9 +130,3 @@ $breakpoints: (
     overflow-scrolling: touch;
     -webkit-overflow-scrolling: touch;
 }
-
-.anthony {
-    @include breakpoint(md) {
-        font-weight: bold;
-    }
-}
