@@ -11,6 +11,7 @@ module.exports = {
         // Exclude specific file
         "./assets/scss/!(_bootstrap.min).scss",
     ],
+    safelist: ["animateFade"],
     theme: {
         // screens: {
         //   sm: "640px",
