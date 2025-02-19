@@ -10,7 +10,7 @@ const cssnano = require("cssnano");
 
 // load all required plugins (listed in package.json)
 const plugins = require("gulp-load-plugins")({
-    pattern: ["*"],
+    pattern: "*",
 });
 
 console.log(plugins); // logs loaded plugins in terminal
@@ -62,30 +62,22 @@ gulp.task("njk", () => {
 
 // compile scss
 gulp.task("styles", () => {
-    return (
-        gulp
-            .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
-            .pipe(header("$folder: '../fonts';\n"))
-            .pipe(
-                sass({
-                    outputStyle: "compact",
-                }).on("error", sass.logError)
-            )
-            // .pipe(
-            //   plugins.autoprefixer({
-            //     overrideBrowserslist: ["last 3 versions"],
-            //     cascade: false,
-            //   })
-            // )
-            .pipe(
-                postcss([
-                    tailwindcss,
-                    autoprefixer({ overrideBrowserslist: ["last 3 version"] }),
-                    // cssnano,
-                ])
-            )
-            .pipe(gulp.dest("./public/assets/css/"))
-    );
+    return gulp
+        .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
+        .pipe(header("$folder: '../fonts';\n"))
+        .pipe(
+            sass({
+                outputStyle: "compact",
+            }).on("error", sass.logError)
+        )
+        .pipe(
+            postcss([
+                tailwindcss,
+                autoprefixer({ overrideBrowserslist: ["last 3 version"] }),
+                // cssnano,
+            ])
+        )
+        .pipe(gulp.dest("./public/assets/css/"));
 });
 
 // compile js
