@@ -1,5 +1,5 @@
 const gulp = require("gulp");
-const sass = require("gulp-sass")(require("node-sass"));
+const sass = require("gulp-sass")(require("sass-embedded"));
 const header = require("gulp-header");
 const htmlbeautify = require("gulp-html-beautify");
 const argv = require("yargs").argv;
@@ -10,7 +10,7 @@ const cssnano = require("cssnano");
 
 // load all required plugins (listed in package.json)
 const plugins = require("gulp-load-plugins")({
-    pattern: "*",
+    pattern: ["*"],
 });
 
 console.log(plugins); // logs loaded plugins in terminal
