@@ -124,7 +124,6 @@ gulp.task("concat-styles", () => {
             //     overrideBrowserslist: ["last 3 versions"],
             //     cascade: false,
             //   })
-            // )
             .pipe(postcss([tailwindcss, autoprefixer({ overrideBrowserslist: ["last 3 version"] }), cssnano]))
             .pipe(gulp.dest("./public/assets/css/"))
             .pipe(

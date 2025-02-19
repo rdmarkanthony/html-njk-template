@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "mixins" as *;
+
 // this is area is for reserved class
 #main-container {
     height: 100%;
@@ -126,4 +129,10 @@ $breakpoints: (
     overflow: auto;
     overflow-scrolling: touch;
     -webkit-overflow-scrolling: touch;
+}
+
+.anthony {
+    @include breakpoint(md) {
+        font-weight: bold;
+    }
 }

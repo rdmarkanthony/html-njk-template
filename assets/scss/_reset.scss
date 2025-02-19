@@ -1,3 +1,6 @@
+@use "variables" as *;
+@use "mixins" as *;
+
 /* Addresses margins handled incorrectly in IE 6/7. */
 * {
     margin: 0;
