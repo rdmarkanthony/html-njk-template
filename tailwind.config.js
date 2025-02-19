@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
     content: [
         "./pages/**/*.{html,njk}",
@@ -42,9 +45,11 @@ module.exports = {
     },
     plugins: [
         require("tailwindcss"),
-        // require("@tailwindcss/forms"),
-        // require("daisyui"),
+        require("@tailwindcss/forms"),
+        require("daisyui"),
         require("autoprefixer"),
+        require("./tailwind/plugins/default"),
+        require("./tailwind/plugins/animate"),
     ],
     daisyui: {
         themes: false, // https://daisyui.com/docs/themes/
