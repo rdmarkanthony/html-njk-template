@@ -1,5 +1,5 @@
 const gulp = require("gulp");
-const sass = require("gulp-sass")(require("node-sass"));
+const sass = require("gulp-sass")(require("sass-embedded"));
 const header = require("gulp-header");
 const htmlbeautify = require("gulp-html-beautify");
 const argv = require("yargs").argv;
@@ -65,30 +65,22 @@ gulp.task("njk", () => {
 
 // compile scss
 gulp.task("styles", () => {
-    return (
-        gulp
-            .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
-            .pipe(header("$folder: '../fonts';\n"))
-            .pipe(
-                sass({
-                    outputStyle: "compact",
-                }).on("error", sass.logError)
-            )
-            // .pipe(
-            //   plugins.autoprefixer({
-            //     overrideBrowserslist: ["last 3 versions"],
-            //     cascade: false,
-            //   })
-            // )
-            .pipe(
-                postcss([
-                    tailwindcss,
-                    autoprefixer({ overrideBrowserslist: ["last 3 version"] }),
-                    // cssnano,
-                ])
-            )
-            .pipe(gulp.dest("./public/assets/css/"))
-    );
+    return gulp
+        .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
+        .pipe(header("$folder: '../fonts';\n"))
+        .pipe(
+            sass({
+                outputStyle: "compact",
+            }).on("error", sass.logError)
+        )
+        .pipe(
+            postcss([
+                tailwindcss,
+                autoprefixer({ overrideBrowserslist: ["last 3 version"] }),
+                // cssnano,
+            ])
+        )
+        .pipe(gulp.dest("./public/assets/css/"));
 });
 
 // compile js
@@ -126,46 +118,36 @@ gulp.task("lint-scripts", () => {
 
 // merge and minify files
 gulp.task("concat-styles", () => {
-    return (
-        gulp
-            .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
-            .pipe(header("$folder: '../fonts';\n"))
-            .pipe(sass({ outputStyle: "compressed" }).on("error", sass.logError))
-            // .pipe(
-            //   plugins.autoprefixer({
-            //     overrideBrowserslist: ["last 3 versions"],
-            //     cascade: false,
-            //   })
-            // )
-            .pipe(postcss([tailwindcss, autoprefixer({ overrideBrowserslist: ["last 3 version"] }), cssnano]))
-            .pipe(gulp.dest("./public/assets/css/"))
-            .pipe(
-                plugins.rename({
-                    suffix: ".min",
-                })
-            )
-            // .pipe(plugins.sourcemaps.write())
-            .pipe(gulp.dest("./public/assets/css/"))
-    );
+    return gulp
+        .src(["./assets/scss/**/*.scss", "!./assets/scss/fontawesome/**/*.scss"])
+        .pipe(header("$folder: '../fonts';\n"))
+        .pipe(sass({ outputStyle: "compact" }).on("error", sass.logError))
+        .pipe(postcss([tailwindcss, autoprefixer({ overrideBrowserslist: ["last 3 version"] })]))
+        .pipe(gulp.dest("./public/assets/css/"))
+        .pipe(postcss([cssnano]))
+        .pipe(
+            plugins.rename({
+                suffix: ".min",
+            })
+        )
+        .pipe(gulp.dest("./public/assets/css/")); // Save minified version
 });
 
 gulp.task("concat-scripts", () => {
-    return (
-        gulp
-            .src(["./public/assets/js/script.js"])
-            .pipe(plugins.concat("script.js"))
-            .pipe(plugins.uglify())
-            .on("error", function (err) {
-                console.log(err);
+    return gulp
+        .src(["./public/assets/js/script.js"])
+        .pipe(plugins.concat("script.js"))
+        .pipe(gulp.dest("./public/assets/js/"))
+        .pipe(plugins.uglify())
+        .on("error", function (err) {
+            console.log(err);
+        })
+        .pipe(
+            plugins.rename({
+                suffix: ".min",
             })
-            .pipe(
-                plugins.rename({
-                    suffix: ".min",
-                })
-            )
-            // .pipe(plugins.sourcemaps.write())
-            .pipe(gulp.dest("./public/assets/js"))
-    );
+        )
+        .pipe(gulp.dest("./public/assets/js/"));
 });
 
 // gulp watch

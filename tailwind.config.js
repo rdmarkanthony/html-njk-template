@@ -42,7 +42,12 @@ module.exports = {
         //   },
         // },
     },
-    plugins: [require("tailwindcss"), require("@tailwindcss/forms"), require("daisyui"), require("autoprefixer")],
+    plugins: [
+        require("tailwindcss"),
+        // require("@tailwindcss/forms"),
+        // require("daisyui"),
+        require("autoprefixer"),
+    ],
     daisyui: {
         themes: false, // https://daisyui.com/docs/themes/
     },
