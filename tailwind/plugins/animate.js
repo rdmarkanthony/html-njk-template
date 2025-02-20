@@ -1,13 +1,7 @@
 const plugin = require("tailwindcss/plugin");
 
 module.exports = plugin(function ({ addUtilities, addComponents }) {
-    addUtilities({
-        "[data-animate]": {
-            opacity: "0",
-        },
-        ".visible": {
-            opacity: "1",
-        },
+    addComponents({
         "@keyframes animateFade": {
             "0%": {
                 opacity: "0",
@@ -17,6 +11,15 @@ module.exports = plugin(function ({ addUtilities, addComponents }) {
                 opacity: "1",
                 transform: "translate3d(0, 0, 0)",
             },
+        },
+    });
+
+    addUtilities({
+        "[data-animate]": {
+            opacity: "0",
+        },
+        ".visible": {
+            opacity: "1",
         },
         ".animateFade": {
             animation: "animateFade 1s ease-out",
