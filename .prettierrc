@@ -10,6 +10,24 @@
                 "tabWidth": 4,
                 "endOfLine": "auto"
             }
+        },
+        {
+            "files": "*.njk",
+            "options": {
+                "printWidth": 100,
+                "htmlWhitespaceSensitivity": "ignore",
+                "tabWidth": 4,
+                "endOfLine": "auto"
+            }
+        },
+        {
+            "files": "*.scss",
+            "options": {
+                "printWidth": 100,
+                "htmlWhitespaceSensitivity": "ignore",
+                "tabWidth": 4,
+                "endOfLine": "auto"
+            }
         }
     ]
 }
