@@ -20,4 +20,4 @@
 
 -   Output files such as HTML, CSS, JavaScript, and images can be found in the `/public` folder.
 -   Raw HTML files in NJK format can be found in the `/pages` directory.
--   The header, footer, and HTML5 template are located in the `/templates` directory.
+-   The header, footer, and layout templates are located in the `/templates` directory.
