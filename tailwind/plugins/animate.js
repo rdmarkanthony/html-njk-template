@@ -12,6 +12,18 @@ module.exports = plugin(function ({ addUtilities, addComponents }) {
                 transform: "translate3d(0, 0, 0)",
             },
         },
+        "@keyframes fadeInDown": {
+            from: {
+                opacity: "0",
+                "-webkit-transform": "translate3d(0, -100%, 0)",
+                transform: "translate3d(0, -100%, 0)",
+            },
+            to: {
+                opacity: "1",
+                "-webkit-transform": "translate3d(0, 0, 0)",
+                transform: "translate3d(0, 0, 0)",
+            },
+        },
     });
 
     addUtilities({
@@ -23,6 +35,9 @@ module.exports = plugin(function ({ addUtilities, addComponents }) {
         },
         ".animateFade": {
             animation: "animateFade 1s ease-out",
+        },
+        ".fadeInDown": {
+            animation: "fadeInDown 1s ease-out",
         },
         ".animated": {
             animationDuration: "var(--animate-duration)",

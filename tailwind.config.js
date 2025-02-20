@@ -3,12 +3,13 @@
 const plugin = require("tailwindcss/plugin");
 
 module.exports = {
+    mode: "jit",
     content: [
         "./pages/**/*.{html,njk}",
         "./templates/**/*.{html,njk}",
         "./assets/scss/**/*.{css,scss}",
         "./assets/js/**/*.js",
-        // Exclude specific file
+        // exclude specific file
         "!./assets/scss/_bootstrap.min.scss",
         "!./assets/js/lib/**/*.js",
     ],
