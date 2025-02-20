@@ -7,11 +7,12 @@ module.exports = {
         "./pages/**/*.{html,njk}",
         "./templates/**/*.{html,njk}",
         "./assets/scss/**/*.{css,scss}",
-        // "./assets/js/**/*.js",
+        "./assets/js/**/*.js",
         // Exclude specific file
-        "./assets/scss/!(_bootstrap.min).scss",
+        "!./assets/scss/_bootstrap.min.scss",
+        "!./assets/js/lib/**/*.js",
     ],
-    safelist: ["animateFade"],
+    safelist: [],
     theme: {
         // screens: {
         //   sm: "640px",
