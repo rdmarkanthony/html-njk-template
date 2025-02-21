@@ -69,7 +69,7 @@ const projName = {
                 if (!_target) return;
                 // for auto scroll
                 setTimeout(() => {
-                    projName.scroll.auto({
+                    projName.autoScroll({
                         target: _target,
                         offset: null,
                         speed: null,
@@ -97,45 +97,45 @@ const projName = {
                     if (!_target) return;
                     e.preventDefault();
 
-                    projName.scroll.auto({ target: _target });
+                    projName.autoScroll({ target: _target });
                 });
             });
         },
         top() {
             return window.pageYOffset || document.documentElement.scrollTop;
         },
-        auto(opt) {
-            if (!opt.target) return;
+    },
+    autoScroll(opt) {
+        if (!opt.target) return;
 
-            // if need to scroll to parent of the target
-            let _changeTarget = opt.target.dataset.scrollParent;
-            if (_changeTarget) {
-                _changeTarget = $(opt.target).closest(_changeTarget)[0];
-                if (_changeTarget) opt.target = _changeTarget;
-            }
+        // if need to scroll to parent of the target
+        let _changeTarget = opt.target.dataset.scrollParent;
+        if (_changeTarget) {
+            _changeTarget = $(opt.target).closest(_changeTarget)[0];
+            if (_changeTarget) opt.target = _changeTarget;
+        }
 
-            // for direction
-            opt.direction = projName.scroll.top() >= opt.target.offsetTop ? "up" : "down";
+        // for direction
+        opt.direction = projName.scroll.top() >= opt.target.offsetTop ? "up" : "down";
 
-            // for offset
-            if (!opt.offset) {
-                opt.offset = 0;
+        // for offset
+        if (!opt.offset) {
+            opt.offset = 0;
 
-                // if target has no padding-top
-                if (parseFloat(getComputedStyle(opt.target).paddingTop) <= 0) opt.offset += 20;
-            }
+            // if target has no padding-top
+            if (parseFloat(getComputedStyle(opt.target).paddingTop) <= 0) opt.offset += 20;
+        }
 
-            // for speed
-            if (!opt.speed) opt.speed = 700;
+        // for speed
+        if (!opt.speed) opt.speed = 700;
 
-            // animate
-            window.scrollTo({
-                top: opt.target.offsetTop - opt.offset,
-                behavior: "smooth",
-            });
+        // animate
+        window.scrollTo({
+            top: opt.target.offsetTop - opt.offset,
+            behavior: "smooth",
+        });
 
-            if (opt.callback) setTimeout(opt.callback, opt.speed);
-        },
+        if (opt.callback) setTimeout(opt.callback, opt.speed);
     },
     isMobile() {
         return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
