@@ -68,7 +68,7 @@ const projName = {
 
                 if (!_target) return;
                 // for auto scroll
-                setTimeout(function () {
+                setTimeout(() => {
                     projName.scroll.auto({
                         target: _target,
                         offset: null,
@@ -80,7 +80,7 @@ const projName = {
                 // for auto popup
                 const _btnPopup = document.querySelector('a[href="' + projName.url.getHash() + '"]');
                 if (!_btnPopup) return;
-                setTimeout(function () {
+                setTimeout(() => {
                     _btnPopup.click();
                 }, 300);
             }
@@ -173,7 +173,7 @@ const projName = {
     },
     event: {
         init() {
-            projName.event.resize(function (event) {
+            projName.event.resize((event) => {
                 projName.emit("resize", event);
             });
 
@@ -186,22 +186,22 @@ const projName = {
 
             callback("init");
 
-            window.addEventListener("load", function (e) {
+            window.addEventListener("load", (e) => {
                 callback("ready", e);
             });
 
-            window.addEventListener("resize", function (e) {
+            window.addEventListener("resize", (e) => {
                 callback("resize", e);
 
                 clearTimeout(_resizeTimer);
-                _resizeTimer = setTimeout(function () {
+                _resizeTimer = setTimeout(() => {
                     callback("after", e);
                 }, 300);
             });
         },
         scroll(callback) {
             callback();
-            window.addEventListener("scroll", function (e) {
+            window.addEventListener("scroll", (e) => {
                 callback(e);
             });
         },
