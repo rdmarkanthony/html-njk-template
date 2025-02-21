@@ -1,5 +1,3 @@
-"use strict";
-
 const projName = {
     debug: false,
     init() {

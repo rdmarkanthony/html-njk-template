@@ -229,4 +229,11 @@
         </div>
     </div>
 </div>
+{% endblock %} {% block footerscript %}
+<script>
+    projName.on("ready", () => {
+        new _inview({ target: document.querySelector("#animate") });
+        console.log("inview");
+    });
+</script>
 {% endblock %}

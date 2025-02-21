@@ -81,11 +81,13 @@ gulp.task("scripts", () => {
             // libraries
             // "./assets/js/lib/jquery.min.js",
             // "./assets/js/lib/jquery-ui.min.js",
+            "./assets/js/utils/_inview.js",
 
             // custom
             "./assets/js/script.js",
         ])
         .pipe(plugins.concat("script.js"))
+        .pipe(header('"use strict";\n\n'))
         .pipe(gulp.dest("./public/assets/js/"));
 });
 
@@ -132,6 +134,7 @@ gulp.task("concat-scripts", () => {
         .on("error", function (err) {
             console.log(err);
         })
+        .pipe(plugins.header('"use strict";'))
         .pipe(
             plugins.rename({
                 suffix: ".min",
@@ -151,7 +154,7 @@ gulp.task(
         gulp.watch(["./assets/scss/**/*.scss"], gulp.series("styles", reload));
 
         // watch js files
-        gulp.watch(["./assets/js/*.js"], gulp.series("scripts", "styles", reload));
+        gulp.watch(["./assets/js/**/*.js"], gulp.series("scripts", "styles", reload));
     })
 );
 
