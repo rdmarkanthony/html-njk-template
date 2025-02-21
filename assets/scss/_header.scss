@@ -1,4 +1,7 @@
-// ionclude all your related style here in the header, you can leave it empty if the page has no header
+@use "variables" as *;
+@use "mixins" as *;
+
+// include all your related style here in the header, you can leave it empty if the page has no header
 html,
 body {
     height: 100%;
