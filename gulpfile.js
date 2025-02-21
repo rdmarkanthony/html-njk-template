@@ -79,8 +79,8 @@ gulp.task("scripts", () => {
     return gulp
         .src([
             // libraries
-            "./assets/js/lib/jquery.min.js",
-            "./assets/js/lib/jquery.inview.min.js",
+            // "./assets/js/lib/jquery.min.js",
+            // "./assets/js/lib/jquery-ui.min.js",
 
             // custom
             "./assets/js/script.js",
