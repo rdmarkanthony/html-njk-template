@@ -231,9 +231,15 @@
 </div>
 {% endblock %} {% block footerscript %}
 <script>
+    // for inview
     projName.on("ready", () => {
         new _inview({ target: document.querySelector("#animate") });
         console.log("inview");
+    });
+
+    // for resize
+    projName.on("resize", (status) => {
+        console.log("resize", status);
     });
 </script>
 {% endblock %}

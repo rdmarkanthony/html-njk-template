@@ -31,23 +31,61 @@ const projName = {
     },
     ready() {
         // for auto-scroll
-        projName.scroll.init();
+        if (projName.url.getHash()) {
+            const _target = document.querySelector(projName.url.getHash());
+
+            if (!_target) return;
+            // for auto scroll
+            setTimeout(() => {
+                projName.autoScroll({
+                    target: _target,
+                    offset: null,
+                    speed: null,
+                    callback: null,
+                });
+            }, 500);
+
+            // for auto popup
+            const _btnPopup = document.querySelector('a[href="' + projName.url.getHash() + '"]');
+            if (!_btnPopup) return;
+            setTimeout(() => {
+                _btnPopup.click();
+            }, 300);
+        }
+
+        document.querySelectorAll("[data-auto-scroll]").forEach((item) => {
+            const _item = item;
+
+            _item.addEventListener("click", (e) => {
+                let _target = _item.getAttribute("href");
+
+                if (!_target) return;
+                _target = document.querySelector(_target);
+
+                if (!_target) return;
+                e.preventDefault();
+
+                projName.autoScroll({ target: _target });
+            });
+        });
 
         if (projName.debug) console.log(projName);
     },
     header: {
         target: document.querySelector(".header-content"),
         height() {
-            if (!projName.header.target || projName.header.target.offsetHeight <= 0) return null;
-            return projName.header.target.offsetHeight;
+            return !projName.header.target || projName.header.target.offsetHeight <= 0
+                ? 0
+                : projName.header.target.offsetHeight;
         },
         init() {},
     },
     footer: {
         target: document.querySelector(".footer-content"),
         height() {
-            if (!projName.footer.target || projName.footer.target.offsetHeight <= 0) return null;
-            return projName.footer.target.offsetHeight;
+            return !projName.footer.target || projName.footer.target.offsetHeight <= 0
+                ? 0
+                : projName.footer.target.offsetHeight;
         },
         init() {},
     },
@@ -60,50 +98,8 @@ const projName = {
             if (_mainWrapper) _mainWrapper.style.paddingBottom = `${projName.footer.height()}px`;
         }
     },
-    scroll: {
-        init() {
-            // for auto scroll
-            if (projName.url.getHash()) {
-                const _target = document.querySelector(projName.url.getHash());
-
-                if (!_target) return;
-                // for auto scroll
-                setTimeout(() => {
-                    projName.autoScroll({
-                        target: _target,
-                        offset: null,
-                        speed: null,
-                        callback: null,
-                    });
-                }, 500);
-
-                // for auto popup
-                const _btnPopup = document.querySelector('a[href="' + projName.url.getHash() + '"]');
-                if (!_btnPopup) return;
-                setTimeout(() => {
-                    _btnPopup.click();
-                }, 300);
-            }
-
-            document.querySelectorAll("[data-auto-scroll]").forEach((item) => {
-                const _item = item;
-
-                _item.addEventListener("click", (e) => {
-                    let _target = _item.getAttribute("href");
-
-                    if (!_target) return;
-                    _target = document.querySelector(_target);
-
-                    if (!_target) return;
-                    e.preventDefault();
-
-                    projName.autoScroll({ target: _target });
-                });
-            });
-        },
-        top() {
-            return window.pageYOffset || document.documentElement.scrollTop;
-        },
+    scrollTop() {
+        return window.pageYOffset || document.documentElement.scrollTop;
     },
     autoScroll(opt) {
         if (!opt.target) return;
@@ -116,7 +112,7 @@ const projName = {
         }
 
         // for direction
-        opt.direction = projName.scroll.top() >= opt.target.offsetTop ? "up" : "down";
+        opt.direction = projName.scrollTop() >= opt.target.offsetTop ? "up" : "down";
 
         // for offset
         if (!opt.offset) {
