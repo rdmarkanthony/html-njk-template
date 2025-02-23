@@ -233,8 +233,13 @@
 <script>
     // for inview
     projName.on("ready", () => {
-        new _inview({ target: document.querySelector("#animate") });
-        console.log("inview");
+        new _inview({
+            target: document.querySelector("#animate"),
+            observeOnce: false,
+            callback: () => {
+                console.log("inview");
+            },
+        });
     });
 
     // for resize
