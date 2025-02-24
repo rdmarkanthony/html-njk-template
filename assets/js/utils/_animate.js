@@ -82,6 +82,7 @@ const _animate = {
             });
         });
 
+        return;
         // for header titles or splittext animate
         document.querySelectorAll(".js-splittext").forEach((item) => {
             const _item = item;

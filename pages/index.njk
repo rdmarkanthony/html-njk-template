@@ -233,13 +233,15 @@
 <script>
     // for inview
     projName.on("ready", () => {
+        console.log("ready");
+
         // for entrance animation
         _animate.init();
     });
 
     // for resize
     projName.on("resize", (status) => {
-        // console.log("resize", status);
+        console.log("resize", status);
     });
 </script>
 {% endblock %}

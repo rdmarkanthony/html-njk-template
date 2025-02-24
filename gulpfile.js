@@ -81,9 +81,9 @@ gulp.task("scripts", () => {
             // libraries
             // "./assets/js/lib/jquery.min.js",
             // "./assets/js/lib/jquery-ui.min.js",
-            "./assets/js/lib/splittype.min.js",
+            // "./assets/js/lib/splittype.min.js",
             "./assets/js/utils/_inview.js",
-            "./assets/js/utils/_splitText.js",
+            // "./assets/js/utils/_splitText.js",
             "./assets/js/utils/_animate.js",
 
             // custom
