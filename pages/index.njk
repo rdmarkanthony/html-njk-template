@@ -1,5 +1,5 @@
 {% set pageTitle = 'PageName | ProjectName' %} {% extends 'layout.njk' %} {% block content %}
-<div class="px-5 py-10">
+<div class="px-5 py-24">
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>
@@ -82,7 +82,7 @@
         </div>
     </div>
 </div>
-<div class="px-5 py-10 bg-slate-50">
+<div class="px-5 py-24 bg-slate-50">
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>
@@ -130,13 +130,13 @@
         </div>
     </div>
 </div>
-<div id="animate" class="px-5 py-10 bg-slate-50" data-animate>
+<div id="animate" class="px-5 py-24 bg-slate-50" data-animate>
     <div class="container mx-auto" data-animate="parent">
-        <div class="mb-3">
-            <h1>Animate</h1>
-        </div>
-        <div data-animate="child">
-            <div class="flex flex-col gap-4" data-animate="child">
+        <div data-animate="children">
+            <h1 class="js-splittext mb-3 text-7xl">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit
+            </h1>
+            <div class="flex flex-col gap-4" data-animate="children">
                 <p>
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut, blanditiis fuga!
                     Quod, recusandae optio cupiditate laborum aspernatur facilis expedita pariatur
@@ -178,11 +178,11 @@
     </div>
     <div class="container mx-auto mt-4">
         <div>
-            <div data-animate="fadeInDown,1,1">fadeInDown</div>
+            <div data-animate="fadeInDown,2,0.8">fadeInDown</div>
         </div>
     </div>
 </div>
-<div id="content1" class="px-5 py-10">
+<div id="content1" class="px-5 py-24">
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>Autoscroll</h1>
@@ -193,7 +193,7 @@
         </div>
     </div>
 </div>
-<div id="group-height" class="px-5 py-10 bg-slate-50">
+<div id="group-height" class="px-5 py-24 bg-slate-50">
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>Group Height</h1>
@@ -233,18 +233,13 @@
 <script>
     // for inview
     projName.on("ready", () => {
-        new _inview({
-            target: document.querySelector("#animate"),
-            observeOnce: false,
-            callback: () => {
-                console.log("inview");
-            },
-        });
+        // for entrance animation
+        _animate.init();
     });
 
     // for resize
     projName.on("resize", (status) => {
-        console.log("resize", status);
+        // console.log("resize", status);
     });
 </script>
 {% endblock %}
