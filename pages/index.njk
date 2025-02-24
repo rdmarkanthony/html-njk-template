@@ -231,7 +231,9 @@
 </div>
 {% endblock %} {% block footerscript %}
 <script>
-    // for inview
+    // these scripts are being used externally, but they should be included in the main script
+
+    // once main scrip is ready
     projName.on("ready", () => {
         console.log("ready");
 
