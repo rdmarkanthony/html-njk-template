@@ -79,13 +79,15 @@ gulp.task("scripts", () => {
     return gulp
         .src([
             // libraries
-            "./assets/js/lib/jquery.min.js",
-            "./assets/js/lib/jquery.inview.min.js",
+            // "./assets/js/lib/jquery.min.js",
+            // "./assets/js/lib/jquery-ui.min.js",
+            // "./assets/js/utils/_inview.js",
 
             // custom
             "./assets/js/script.js",
         ])
         .pipe(plugins.concat("script.js"))
+        .pipe(header('"use strict";\n\n'))
         .pipe(gulp.dest("./public/assets/js/"));
 });
 
@@ -132,6 +134,7 @@ gulp.task("concat-scripts", () => {
         .on("error", function (err) {
             console.log(err);
         })
+        .pipe(plugins.header('"use strict";'))
         .pipe(
             plugins.rename({
                 suffix: ".min",
@@ -145,13 +148,16 @@ gulp.task(
     "watch",
     gulp.series("njk", "styles", "scripts", "browser-sync", () => {
         // watch njk files
-        gulp.watch(["./pages/**/*.+(html|njk)", "./templates/**/*.+(html|njk)"], gulp.series("njk", "styles", reload));
+        gulp.watch(
+            ["./pages/**/*.+(html|njk)", "./templates/**/*.+(html|njk)"],
+            gulp.series("njk", "styles", reload)
+        );
 
         // watch sass files
         gulp.watch(["./assets/scss/**/*.scss"], gulp.series("styles", reload));
 
         // watch js files
-        gulp.watch(["./assets/js/*.js"], gulp.series("scripts", "styles", reload));
+        gulp.watch(["./assets/js/**/*.js"], gulp.series("scripts", "styles", reload));
     })
 );
 

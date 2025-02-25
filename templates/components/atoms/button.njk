@@ -1,0 +1,15 @@
+{% macro renderButton(props) %}
+    {% set tag = "a" if props.url else "button" %}
+
+    {% set primaryClassName = 'block p-4 text-base bg-green-600 hover:bg-green-700 text-white' %}
+    {% set secondaryClassName = 'block p-3 text-sm bg-blue-600 hover:bg-blue-700 text-white' %}
+    
+    {% set baseClass = primaryClassName if props.type == 'primary' or not props.type else secondaryClassName %}
+    {% set className = baseClass ~ (' ' ~ props.class if props.class else '') %}
+
+    <{{ tag }} 
+    class="{{ className }}"
+        {% if props.url %}href="{{ props.url }}"{% endif %}
+        {% if props.target and props.url %}target="{{ props.target }}"{% endif %}
+    >{{ props.label }}</{{ tag }}>
+{% endmacro %}

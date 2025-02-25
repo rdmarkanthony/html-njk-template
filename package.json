@@ -4,7 +4,7 @@
     "description": "slicing html",
     "main": "index.html",
     "engines": {
-        "node": ">=14.18.0",
+        "node": ">=16.16.0",
         "npm": ">=8.11.0"
     },
     "scripts": {
