@@ -146,7 +146,7 @@ const projName = {
         },
         getVars() {
             let vars = {};
-            const parts = window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi, function (m, key, value) {
+            const parts = window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi, (m, key, value) => {
                 vars[key] = value;
             });
             return vars;
@@ -203,6 +203,7 @@ const projName = {
         },
         dispatch(elem, eventName) {
             let event;
+            console.log(typeof Event);
             if (typeof Event === "function") {
                 event = new Event(eventName);
             } else {
