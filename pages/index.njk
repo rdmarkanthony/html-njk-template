@@ -1,4 +1,9 @@
-{% set pageTitle = 'PageName | ProjectName' %} {% extends 'layout.njk' %} {% block content %}
+{% set pageTitle = 'PageName | ProjectName' %}
+
+{% extends 'layout.njk' %}
+{% from "components/atoms/button.njk" import renderButton %}
+
+{% block content %}
 <div class="px-5 py-24">
     <div class="container mx-auto">
         <div class="mb-3">
@@ -82,7 +87,7 @@
         </div>
     </div>
 </div>
-<div class="px-5 py-24 bg-slate-50">
+<div id="flex" class="px-5 py-24 bg-slate-50">
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>
@@ -130,6 +135,7 @@
         </div>
     </div>
 </div>
+{#
 <div id="animate" class="px-5 py-24 bg-slate-50" data-animate>
     <div class="container mx-auto" data-animate="parent">
         <div data-animate="children">
@@ -182,17 +188,72 @@
         </div>
     </div>
 </div>
+#}
 <div id="content1" class="px-5 py-24">
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>Autoscroll</h1>
         </div>
         <div class="section-par">
-            <p><a data-auto-scroll href="#animate">Autoscroll to previous content</a></p>
-            <p><a data-auto-scroll href="#group-height">Autoscroll to next content</a></p>
+            <p><a data-auto-scroll href="#flex">Autoscroll to previous content</a></p>
+            <p><a data-auto-scroll href="#button">Autoscroll to next content</a></p>
         </div>
     </div>
 </div>
+<div id="button" class="px-5 py-24 bg-slate-50">
+    <div class="container mx-auto">
+        <div class="mb-3">
+            <h1>
+                <a
+                    class="text-inherit hover:text-sky-500"
+                    href="https://tailwindui.com/components/application-ui/elements/buttons"
+                    target="_blank"
+                >
+                    Buttons
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        class="inline w-5 h-5"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M4.25 5.5a.75.75 0 0 0-.75.75v8.5c0 .414.336.75.75.75h8.5a.75.75 0 0 0 .75-.75v-4a.75.75 0 0 1 1.5 0v4A2.25 2.25 0 0 1 12.75 17h-8.5A2.25 2.25 0 0 1 2 14.75v-8.5A2.25 2.25 0 0 1 4.25 4h5a.75.75 0 0 1 0 1.5h-5Z"
+                            clip-rule="evenodd"
+                        />
+                        <path
+                            fill-rule="evenodd"
+                            d="M6.194 12.753a.75.75 0 0 0 1.06.053L16.5 4.44v2.81a.75.75 0 0 0 1.5 0v-4.5a.75.75 0 0 0-.75-.75h-4.5a.75.75 0 0 0 0 1.5h2.553l-9.056 8.194a.75.75 0 0 0-.053 1.06Z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                </a>
+            </h1>
+        </div>
+        <div class="flex gap-4">
+            <div>
+                {{
+                    renderButton({
+                        'type': 'primary',
+                        'label': 'Primary Button',
+                        'url': 'https://www.youtube.com/',
+                        'target': '_blank',
+                        'class': 'primary-button'
+                    })
+                }}
+            </div>
+            <div>
+                {{
+                    renderButton({
+                        'type': 'secondary',
+                        'label': 'Secondary Button'
+                    })
+                }}
+            </div>
+        </div>
+    </div>
+</div>
+{#
 <div id="group-height" class="px-5 py-24 bg-slate-50">
     <div class="container mx-auto">
         <div class="mb-3">
@@ -229,7 +290,10 @@
         </div>
     </div>
 </div>
-{% endblock %} {% block footerscript %}
+#}
+{% endblock %}
+
+{% block footerscript %}
 <script>
     // these scripts are being used externally, but they should be included in the main script
 

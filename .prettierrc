@@ -1,23 +1,15 @@
 {
-    "printWidth": 120,
+    "printWidth": 100,
     "tabWidth": 4,
     "overrides": [
         {
-            "files": "*.html",
+            "files": ["*.html", "*.njk"],
             "options": {
                 "printWidth": 100,
                 "htmlWhitespaceSensitivity": "ignore",
                 "tabWidth": 4,
-                "endOfLine": "auto"
-            }
-        },
-        {
-            "files": "*.njk",
-            "options": {
-                "printWidth": 100,
-                "htmlWhitespaceSensitivity": "ignore",
-                "tabWidth": 4,
-                "endOfLine": "auto"
+                "endOfLine": "auto",
+                "parser": "nunjucks"
             }
         },
         {

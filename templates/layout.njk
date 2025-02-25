@@ -16,7 +16,8 @@
         <meta property="og:description" content="{{ pageDescription }}" />
         <meta property="og:url" content="{{ pageURL }}" />
         <link rel="canonical" href="{{ pageURL }}" />
-        {% endif %} {#
+        {% endif %}
+        {#
         <link rel="apple-touch-icon" sizes="57x57" href="{{ rootDir }}favicon/apple-icon-57x57.png" />
         <link rel="apple-touch-icon" sizes="60x60" href="{{ rootDir }}favicon/apple-icon-60x60.png" />
         <link rel="apple-touch-icon" sizes="72x72" href="{{ rootDir }}favicon/apple-icon-72x72.png" />
@@ -34,9 +35,11 @@
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content="{{ rootDir }}favicon/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
-        #} {% block styles %}
+        #}
+        {% block styles %}
         <link rel="stylesheet" href="{{ rootDir }}assets/css/style.css{{ version }}" media="all" />
-        {% endblock %} {% block headerscript -%}{%- endblock %}
+        {% endblock %}
+        {% block headerscript -%}{%- endblock %}
     </head>
     <body {% if bodyClass %}class="{{ bodyClass }}" {% endif %}>
         {% block bodyscript -%}{%- endblock %}
@@ -46,7 +49,9 @@
         </section>
         {% block popup -%}{%- endblock %}
         <footer>{% include "partials/footer.njk" %}</footer>
-        {% block beforescript -%}{%- endblock %} {% block scripts %} {#
+        {% block beforescript -%}{%- endblock %}
+        {% block scripts %}
+        {#
         <script src="{{ rootDir }}assets/js/lib/jquery.min.js"></script>
         #}
         <script src="{{ rootDir }}assets/js/script.js{{ version }}"></script>
