@@ -148,7 +148,10 @@ gulp.task(
     "watch",
     gulp.series("njk", "styles", "scripts", "browser-sync", () => {
         // watch njk files
-        gulp.watch(["./pages/**/*.+(html|njk)", "./templates/**/*.+(html|njk)"], gulp.series("njk", "styles", reload));
+        gulp.watch(
+            ["./pages/**/*.+(html|njk)", "./templates/**/*.+(html|njk)"],
+            gulp.series("njk", "styles", reload)
+        );
 
         // watch sass files
         gulp.watch(["./assets/scss/**/*.scss"], gulp.series("styles", reload));
