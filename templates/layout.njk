@@ -51,10 +51,9 @@
         <footer>{% include "partials/footer.njk" %}</footer>
         {% block beforescript -%}{%- endblock %}
         {% block scripts %}
-        {#
-        <script src="{{ rootDir }}assets/js/lib/jquery.min.js"></script>
-        #}
+        {#<script src="{{ rootDir }}assets/js/lib/jquery.min.js"></script>#}
         <script src="{{ rootDir }}assets/js/script.js{{ version }}"></script>
-        {% endblock %} {% block footerscript -%}{%- endblock %}
+        {% endblock %}
+        {% block footerscript -%}{%- endblock %}
     </body>
 </html>

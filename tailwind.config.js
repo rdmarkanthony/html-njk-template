@@ -1,9 +1,4 @@
-/** @type {import('tailwindcss').Config} */
-
-const plugin = require("tailwindcss/plugin");
-
 module.exports = {
-    mode: "jit",
     content: [
         "./pages/**/*.{html,njk}",
         "./templates/**/*.{html,njk}",

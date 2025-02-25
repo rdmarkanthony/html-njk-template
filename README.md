@@ -8,8 +8,9 @@
 ### Instructions
 
 1. Clone the repository: `git clone https://github.com/rdmarkanthony/html-njk-template`
-2. Install dependencies: `npm install`
-3. Run the development server: `gulp watch`
+2. Navigate to the project directory: `cd html-njk-template`
+3. Install dependencies: `npm install`
+4. Run the development server: `gulp watch`
 
 ### Troubleshooting
 
