@@ -2,7 +2,6 @@ const gulp = require("gulp");
 const sass = require("gulp-sass")(require("sass-embedded"));
 const header = require("gulp-header");
 const htmlbeautify = require("gulp-html-beautify");
-const argv = require("yargs").argv;
 const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const tailwindcss = require("tailwindcss");
