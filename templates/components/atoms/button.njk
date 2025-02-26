@@ -22,8 +22,15 @@
         "href": url if url else "",
         "target": target if url else ""
     } %}
+    
+    {% set extraAttrs = '' %}
+    {% for attr in attributes %}
+        {% for key, value in attr %}
+            {% set extraAttrs = extraAttrs + ' ' + key + (('="' + value + '"') if value else '') %}
+        {% endfor %}
+    {% endfor %}
 
-    {%- call dynamicElement(buttonTag, buttonAttrs) -%}
-        {{ label }}
+    {%- call dynamicElement(buttonTag, buttonAttrs, extraAttrs) -%}
+        <span>{{ label }}</span>
     {%- endcall -%}
 {% endmacro %}
