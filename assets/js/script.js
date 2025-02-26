@@ -2,7 +2,9 @@ const projName = {
     debug: false,
     init() {
         // if mobile/desktop
-        document.querySelector("html").classList.add(projName.isMobile() ? "is-mobile" : "is-desktop");
+        document
+            .querySelector("html")
+            .classList.add(projName.isMobile() ? "is-mobile" : "is-desktop");
 
         // for debugging
         if (projName.url.getVars().debug === "true") projName.debug = true;
@@ -138,33 +140,33 @@ const projName = {
     },
     url: {
         getHash() {
-            if (window.location.hash) {
-                return window.location.hash.split("?")[0];
-            } else {
-                return false;
-            }
+            return window.location.hash ? window.location.hash.split("?")[0] : false;
         },
         getVars() {
             let vars = {};
-            const parts = window.location.href.replace(/[?&]+([^=&]+)=([^&#]*)/gi, (m, key, value) => {
-                vars[key] = value;
-            });
+            window.location.search
+                .substring(1)
+                .split("&")
+                .forEach((param) => {
+                    const [key, value] = param.split("=");
+                    if (key) vars[decodeURIComponent(key)] = decodeURIComponent(value || "");
+                });
             return vars;
         },
         setVars(key, value) {
-            let url = window.location.href;
-            const hash = location.hash;
+            let vars = this.getVars();
+            vars[key] = value;
 
-            url = url.replace(hash, "");
+            const queryString = Object.entries(vars)
+                .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+                .join("&");
 
-            if (url.indexOf(key + "=") >= 0) {
-                const old = ocbc.getUrlVars()[key];
-                url = url.replace(key + "=" + old, key + "=" + value);
-            } else {
-                if (url.indexOf("?") < 0) url += "?" + key + "=" + value;
-                else url += "&" + key + "=" + value;
-            }
-            window.history.pushState({ path: url + hash }, "", url + hash);
+            const newUrl =
+                window.location.pathname +
+                (queryString ? "?" + queryString : "") +
+                window.location.hash;
+
+            window.history.pushState({ path: newUrl }, "", newUrl);
         },
     },
     event: {

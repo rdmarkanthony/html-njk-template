@@ -234,11 +234,13 @@
             <div>
                 {{
                     renderButton({
-                        'type': 'primary',
                         'label': 'Primary Button',
                         'url': 'https://www.youtube.com/',
                         'target': '_blank',
-                        'class': 'primary-button'
+                        'class': 'primary-button',
+                        'attr': [
+                            {'data-fancybox': ''}
+                        ]
                     })
                 }}
             </div>
