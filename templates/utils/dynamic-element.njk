@@ -1,0 +1,11 @@
+{% macro dynamicElement(tag, attrs) %}
+    {%- set attrString = "" -%}
+    {%- for key, value in attrs -%}
+        {%- if value -%}
+            {%- set attrString = attrString + " " + key + '="' + value + '"' -%}
+        {%- endif -%}
+    {%- endfor -%}
+    {%- set openTag = "<" + tag + attrString + ">" -%}
+    {%- set closeTag = "</" + tag + ">" -%}
+    {{ openTag | safe }}{{ caller() }}{{ closeTag | safe }}
+{% endmacro %}

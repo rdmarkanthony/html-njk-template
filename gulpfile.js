@@ -37,27 +37,24 @@ gulp.task("browser-sync", (after) => {
 // renders nunjucks
 gulp.task("njk", () => {
     // Gets .html and .njk files in pages
-    return (
-        gulp
-            .src("./pages/**/**/*.+(html|njk)")
-            .pipe(
-                plugins.nunjucksRender({
-                    path: ["./templates"],
-                })
-            )
-            .on("error", function (err) {
-                console.log(err.message); //don't output error for now
-                console.log(err.fileName); //don't output error for now
-                this.emit("end");
+    return gulp
+        .src("./pages/**/**/*.+(html|njk)")
+        .pipe(
+            plugins.nunjucksRender({
+                path: ["./templates"],
             })
-            .pipe(
-                htmlbeautify({
-                    preserve_newlines: false,
-                })
-            )
-            // output files in app folder
-            .pipe(gulp.dest("./public"))
-    );
+        )
+        .on("error", function (err) {
+            console.log(err.message);
+            console.log(err.fileName);
+            this.emit("end");
+        })
+        .pipe(
+            htmlbeautify({
+                preserve_newlines: false,
+            })
+        )
+        .pipe(gulp.dest("./public"));
 });
 
 // compile scss
@@ -81,6 +78,8 @@ gulp.task("scripts", () => {
             // libraries
             // "./assets/js/lib/jquery.min.js",
             // "./assets/js/lib/jquery-ui.min.js",
+
+            // utils
             // "./assets/js/utils/_inview.js",
 
             // custom
