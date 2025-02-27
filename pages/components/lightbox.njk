@@ -221,7 +221,7 @@
             e.preventDefault();
 
             const _href = _item.getAttribute('href');
-            const _target = _href ? document.querySelector(_href) : null;
+            const _target = _href && _href !== '#' ? document.querySelector(_href) : null;
 
             new _lightbox({target: _target, modal: _modal});
         });

@@ -48,7 +48,7 @@ class _lightbox {
 
         if (!this.content.original) {
             this.content.original = document.createElement("div");
-            this.content.original.classList.add("lightbox-content", "container", "width-3");
+            this.content.original.classList.add("lightbox-content", "container", "mx-auto");
             this.content.original.innerHTML =
                 '<div class="section-par text-center"><h3>Lightbox content not found!</h3></div>';
         }
