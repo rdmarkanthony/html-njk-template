@@ -1,24 +1,25 @@
 class _lightbox {
-    constructor(opt) {
+    constructor(props) {
         if (!window._lightboxList) window._lightboxList = [];
 
-        this.modal = opt?.modal || false;
+        this.modal = props?.modal || false;
         this.content = { parent: "", original: "" };
         this.el = { cover: "", main: "", btn: { close: "" } };
         this.target = "";
         this.listeners = {};
 
-        if (this.isInPopup(opt?.target)) return;
-        this.init(opt);
+        if (this.isInLightbox(props?.target)) return;
+        this.init(props);
     }
 
-    isInPopup(target) {
-        return window._lightboxList.some(
-            (popup) => popup.content.original === document.querySelector(target)
-        );
+    isInLightbox(target) {
+        const _target = typeof target === "string" ? document.querySelector(target) : target;
+        if (!_target) return false;
+
+        return window._lightboxList.some((lightbox) => lightbox.content.original === _target);
     }
 
-    init(opt) {
+    init(props) {
         if (!this.modal) this.close("all");
 
         this.target = document.createElement("div");
@@ -33,19 +34,23 @@ class _lightbox {
         this.el.main.classList.add("js-lightbox-main");
         this.target.appendChild(this.el.main);
 
-        if (opt?.target) {
-            const _content = projName.findElement(opt.target);
-            if (_content) {
-                this.content.parent = _content.parentNode;
-                this.content.original = _content;
+        if (props?.target) {
+            const _target =
+                typeof props.target === "string"
+                    ? document.querySelector(props.target)
+                    : props.target;
+
+            if (_target) {
+                this.content.parent = _target.parentNode;
+                this.content.original = _target;
             }
         }
 
         if (!this.content.original) {
             this.content.original = document.createElement("div");
-            this.content.original.classList.add("popup-content", "container", "width-3");
+            this.content.original.classList.add("lightbox-content", "container", "width-3");
             this.content.original.innerHTML =
-                '<div class="section-par text-center"><h3>Popup content not found!</h3></div>';
+                '<div class="section-par text-center"><h3>Lightbox content not found!</h3></div>';
         }
 
         this.el.main.appendChild(this.content.original);
@@ -66,7 +71,7 @@ class _lightbox {
         this.el.btn.close = document.createElement("a");
         this.el.btn.close.classList.add("js-lightbox-btn", "btn-close");
         this.el.btn.close.href = "#";
-        this.el.btn.close.innerHTML = '<i class="fal fa-times"></i>';
+        this.el.btn.close.innerHTML = `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.207 6.207a1 1 0 0 0-1.414-1.414L12 10.586 6.207 4.793a1 1 0 0 0-1.414 1.414L10.586 12l-5.793 5.793a1 1 0 1 0 1.414 1.414L12 13.414l5.793 5.793a1 1 0 0 0 1.414-1.414L13.414 12l5.793-5.793z" fill="currentColor"/></svg>`;
         this.target.appendChild(this.el.btn.close);
 
         this.el.btn.close.addEventListener("click", (e) => {
@@ -78,7 +83,7 @@ class _lightbox {
     handleEscapeKey(event) {
         if (!this.target) return;
         if (event.key === "Escape" || event.keyCode === 27) {
-            if (pru.popup.list[pru.popup.list.length - 1] === this) this.close();
+            if (window._lightboxList[window._lightboxList.length - 1] === this) this.close();
         }
     }
 
@@ -88,37 +93,38 @@ class _lightbox {
             (parseFloat(getComputedStyle(this.el.main).paddingTop) +
                 parseFloat(getComputedStyle(this.el.main).paddingBottom));
         this.target.classList.toggle(
-            "popup-short",
+            "lightbox-short",
             this.content.original.offsetHeight < mainHeight
         );
     }
 
     show() {
-        document.body.classList.add("popup-active");
-        this.target.classList.add("popup-visible");
+        document.body.classList.add("lightbox-active");
+        this.target.classList.add("lightbox-visible");
         setTimeout(() => this.emit("afterShow"), 500);
     }
 
     close(status) {
         if (status === "all") {
-            while (window._lightboxList.length) {
-                window._lightboxList[0].close();
-            }
+            [...window._lightboxList].forEach((item, index, arr) => {
+                item.close();
+            });
 
             return;
         }
 
-        this.target.classList.remove("popup-visible");
-        this.target.classList.add("popup-hiding");
+        this.target.classList.remove("lightbox-visible");
+        this.target.classList.add("lightbox-hiding");
 
         setTimeout(() => {
             if (this.content.parent) this.content.parent.appendChild(this.content.original);
             this.content.original.classList.remove("js-lightbox-center");
 
-            window._lightboxList = window._lightboxList.filter((popup) => popup !== this);
+            window._lightboxList = window._lightboxList.filter((lightbox) => lightbox !== this);
             this.target.remove();
 
-            if (window._lightboxList.length === 0) document.body.classList.remove("popup-active");
+            if (window._lightboxList.length === 0)
+                document.body.classList.remove("lightbox-active");
 
             this.emit("afterClose");
         }, 500);
@@ -132,5 +138,13 @@ class _lightbox {
     emit(event) {
         if (!this.listeners[event]) return;
         this.listeners[event].forEach((callback) => callback(this));
+    }
+
+    static command(action) {
+        if (action === "close" || action === "closeAll") {
+            [...window._lightboxList].forEach((item, index, arr) => {
+                if (action === "closeAll" || index === arr.length - 1) item.close();
+            });
+        }
     }
 }
