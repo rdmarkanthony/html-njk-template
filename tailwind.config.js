@@ -1,15 +1,14 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
         "./pages/**/*.{html,njk}",
         "./templates/**/*.{html,njk}",
         "./assets/scss/**/*.{css,scss}",
-        "./assets/js/**/script.js",
-        // Exclude specific file
-        "./assets/scss/!(_bootstrap.min).scss",
-        "./assets/scss/!(_reset.min).scss",
-        "./assets/scss/!(_animate.min).scss",
+        "./assets/js/**/*.js",
+        // exclude specific file
+        "!./assets/scss/_bootstrap.min.scss",
+        "!./assets/js/lib/**/*.js",
     ],
+    safelist: [],
     theme: {
         // screens: {
         //   sm: "640px",
@@ -47,6 +46,8 @@ module.exports = {
         // require("@tailwindcss/forms"),
         // require("daisyui"),
         require("autoprefixer"),
+        require("./tailwind/plugins/default"),
+        require("./tailwind/plugins/animate"),
     ],
     daisyui: {
         themes: false, // https://daisyui.com/docs/themes/

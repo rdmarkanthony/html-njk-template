@@ -2,7 +2,6 @@ const gulp = require("gulp");
 const sass = require("gulp-sass")(require("sass-embedded"));
 const header = require("gulp-header");
 const htmlbeautify = require("gulp-html-beautify");
-const argv = require("yargs").argv;
 const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const tailwindcss = require("tailwindcss");
@@ -40,27 +39,24 @@ gulp.task("browser-sync", (after) => {
 // renders nunjucks
 gulp.task("njk", () => {
     // Gets .html and .njk files in pages
-    return (
-        gulp
-            .src("./pages/**/**/*.+(html|njk)")
-            .pipe(
-                plugins.nunjucksRender({
-                    path: ["./templates"],
-                })
-            )
-            .on("error", function (err) {
-                console.log(err.message); //don't output error for now
-                console.log(err.fileName); //don't output error for now
-                this.emit("end");
+    return gulp
+        .src("./pages/**/**/*.+(html|njk)")
+        .pipe(
+            plugins.nunjucksRender({
+                path: ["./templates"],
             })
-            .pipe(
-                htmlbeautify({
-                    preserve_newlines: false,
-                })
-            )
-            // output files in app folder
-            .pipe(gulp.dest("./public"))
-    );
+        )
+        .on("error", function (err) {
+            console.log(err.message);
+            console.log(err.fileName);
+            this.emit("end");
+        })
+        .pipe(
+            htmlbeautify({
+                preserve_newlines: false,
+            })
+        )
+        .pipe(gulp.dest("./public"));
 });
 
 // compile scss
@@ -73,13 +69,7 @@ gulp.task("styles", () => {
                 outputStyle: "compact",
             }).on("error", sass.logError)
         )
-        .pipe(
-            postcss([
-                tailwindcss,
-                autoprefixer({ overrideBrowserslist: ["last 3 version"] }),
-                // cssnano,
-            ])
-        )
+        .pipe(postcss([tailwindcss, autoprefixer({ overrideBrowserslist: ["last 3 version"] })]))
         .pipe(gulp.dest("./public/assets/css/"));
 });
 
@@ -88,14 +78,17 @@ gulp.task("scripts", () => {
     return gulp
         .src([
             // libraries
-            "./assets/js/lib/jquery.min.js",
-            "./assets/js/lib/jquery.inview.min.js",
-            "./assets/js/lib/lodash.min.js",
+            // "./assets/js/lib/jquery.min.js",
+            // "./assets/js/lib/jquery-ui.min.js",
+
+            // utils
+            // "./assets/js/utils/_inview.js",
 
             // custom
             "./assets/js/script.js",
         ])
         .pipe(plugins.concat("script.js"))
+        .pipe(header('"use strict";\n\n'))
         .pipe(gulp.dest("./public/assets/js/"));
 });
 
@@ -142,6 +135,7 @@ gulp.task("concat-scripts", () => {
         .on("error", function (err) {
             console.log(err);
         })
+        .pipe(plugins.header('"use strict";'))
         .pipe(
             plugins.rename({
                 suffix: ".min",
@@ -155,13 +149,16 @@ gulp.task(
     "watch",
     gulp.series("njk", "styles", "scripts", "browser-sync", () => {
         // watch njk files
-        gulp.watch(["./pages/**/*.+(html|njk)", "./templates/**/*.+(html|njk)"], gulp.series("njk", "styles", reload));
+        gulp.watch(
+            ["./pages/**/*.+(html|njk)", "./templates/**/*.+(html|njk)"],
+            gulp.series("njk", "styles", reload)
+        );
 
         // watch sass files
         gulp.watch(["./assets/scss/**/*.scss"], gulp.series("styles", reload));
 
         // watch js files
-        gulp.watch(["./assets/js/*.js"], gulp.series("scripts", "styles", reload));
+        gulp.watch(["./assets/js/**/*.js"], gulp.series("scripts", "styles", reload));
     })
 );
 

@@ -2,14 +2,15 @@
 
 ### Requirements
 
--   Node.js (`v14.18.0` or later)
--   npm (`v8.12.1` or later)
+-   Node.js (`v16.16.0` or later)
+-   npm (`v8.11.0` or later)
 
 ### Instructions
 
 1. Clone the repository: `git clone https://github.com/rdmarkanthony/html-njk-template`
-2. Install dependencies: `npm install`
-3. Run the development server: `gulp watch`
+2. Navigate to the project directory: `cd html-njk-template`
+3. Install dependencies: `npm install`
+4. Run the development server: `gulp watch`
 
 ### Troubleshooting
 
@@ -20,4 +21,4 @@
 
 -   Output files such as HTML, CSS, JavaScript, and images can be found in the `/public` folder.
 -   Raw HTML files in NJK format can be found in the `/pages` directory.
--   The header, footer, and HTML5 template are located in the `/templates` directory.
+-   The header, footer, and layout templates are located in the `/templates` directory.
