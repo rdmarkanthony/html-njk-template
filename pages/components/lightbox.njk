@@ -5,16 +5,16 @@
 {% block content %}
 <section class="section py-14 md:py-28 bg-slate-950 text-white">
     <div class="container w-[calc(100%-2rem)] mx-auto">
-        <h1 class="text-5xl md:text-7xl">Popup</h1>
+        <h1 class="text-5xl md:text-7xl">Lightbox</h1>
     </div>
 </section>
 <div class="section py-14 md:py-28">
     <div class="container w-[calc(100%-2rem)] mx-auto">
         <div class="flex gap-3">
-            <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#">Open a popup</a>
+            <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#sample-popup">Open a popup</a>
             <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#">Open a neutral popup</a>
         </div>
-        <div class="mt-10">
+        <div class="hidden mt-10">
             <div id="sample-popup" class="popup-content container mx-auto">
                 <div class="section-par">
                     <h2>Popup Usage Guide</h2>
@@ -23,11 +23,11 @@
                     <ul class="list-disc list-inside">
                         <li>
                             Open a
-                            <a class="link-underline" data-modal-popup="modal" href="#sample-modal">new popup</a>
+                            <a class="link-underline" data-lightbox="modal" href="#sample-modal">new popup</a>
                             without closing the current one.
                         </li>
                         <li>
-                            Click <a class="link-underline" data-modal-popup href="#sample-popup2">this link</a> to open
+                            Click <a class="link-underline" data-lightbox href="#sample-popup2">this link</a> to open
                             a new popup.
                         </li>
                         <li>
@@ -94,7 +94,7 @@
                             >
                         </div>
                         <div>
-                            <a class="btn btn-outline min-w-32 rounded-full" data-modal-popup href="#sample-popup2"
+                            <a class="btn btn-outline min-w-32 rounded-full" data-lightbox href="#sample-popup2"
                                 >Close all of the popups and open a new one</a
                             >
                         </div>
@@ -105,7 +105,7 @@
                 <div class="section-par text-center">
                     <h2>
                         This is the second sample popup. Alternatively, you may want to open
-                        <a class="link-underline" data-modal-popup href="#sample-popup3">another popup</a> with very
+                        <a class="link-underline" data-lightbox href="#sample-popup3">another popup</a> with very
                         long content.
                     </h2>
                     <div class="mt-10 mb-0">
