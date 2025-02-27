@@ -2,16 +2,25 @@ class _lightbox {
     constructor(props) {
         if (!window._lightboxList) window._lightboxList = []; // storage for all opened lightbox
 
-        this.modal = props?.modal || false;
+        this.modal = props.modal ?? false;
 
-        this.content = { parent: "", original: "" };
-        this.el = { cover: "", main: "", btn: { close: "" } };
         this.target = "";
+        this.el = {
+            cover: "",
+            main: "",
+            btn: {
+                close: "",
+            },
+        };
+        this.content = {
+            parent: "",
+            original: "",
+        };
 
-        this.events = props?.events || {}; // for events eg. 'BeforeShow'
+        this.events = props.events ?? {}; // for events eg. 'BeforeShow'
         this.listeners = {};
 
-        if (this.isInLightbox(props?.target)) return; // prevent duplicate lightbox instances
+        if (this.isInLightbox(props.target)) return; // prevent duplicate lightbox instances
 
         this.init(props);
     }
@@ -25,7 +34,7 @@ class _lightbox {
     }
 
     init(props) {
-        if (!this.modal) this.close("all"); // close existing non-modal lightboxes
+        if (!this.modal) this.hide("all"); // hide existing non-modal lightboxes
 
         // create main lightbox elements
         this.target = document.createElement("div");
@@ -41,7 +50,7 @@ class _lightbox {
         this.target.appendChild(this.el.main);
 
         // set target content
-        if (props?.target) {
+        if (props.target) {
             const _target =
                 typeof props.target === "string"
                     ? document.querySelector(props.target)
@@ -72,7 +81,7 @@ class _lightbox {
 
         projName.event.resize(() => this.resize()); // need to recalculate spaces every resize
 
-        this.emit("beforeShow"); // Call custom callback event
+        this.emit("beforeShow"); // call custom callback event
 
         this.show(); // show the popup
         window._lightboxList.push(this); // store this lightbox
@@ -88,7 +97,7 @@ class _lightbox {
 
         this.el.btn.close.addEventListener("click", (e) => {
             e.preventDefault();
-            this.close();
+            this.hide();
         });
     }
 
@@ -96,7 +105,7 @@ class _lightbox {
     handleEscapeKey(event) {
         if (!this.target) return;
         if (event.key === "Escape" || event.keyCode === 27) {
-            if (window._lightboxList[window._lightboxList.length - 1] === this) this.close();
+            if (window._lightboxList[window._lightboxList.length - 1] === this) this.hide();
         }
     }
 
@@ -120,11 +129,11 @@ class _lightbox {
     }
 
     // hide the lightbox
-    close(status) {
-        // if want to close all existing lightbox
+    hide(status) {
+        // if want to hide all existing lightbox
         if (status === "all") {
             [...window._lightboxList].forEach((item, index, arr) => {
-                item.close();
+                item.hide();
             });
 
             return;
@@ -171,12 +180,10 @@ class _lightbox {
     }
 
     // static method
-    static command(action) {
-        // to close the latest or all active lightboxes
-        if (action === "close" || action === "closeAll") {
-            [...window._lightboxList].forEach((item, index, arr) => {
-                if (action === "closeAll" || index === arr.length - 1) item.close();
-            });
-        }
+    static close(status) {
+        // to hide the latest or all active lightboxes
+        [...window._lightboxList].forEach((item, index, arr) => {
+            if (status === "all" || index === arr.length - 1) item.hide();
+        });
     }
 }

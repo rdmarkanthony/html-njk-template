@@ -10,7 +10,7 @@
 </section>
 <div class="section py-14 md:py-28">
     <div class="container w-[calc(100%-2rem)] mx-auto">
-        <div class="flex gap-3">
+        <div class="flex flex-col md:flex-row gap-3">
             <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#sample-lightbox" data-lightbox>Open a lightbox</a>
             <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#sample-lightbox" target="_blank" data-lightbox>Open a lightbox in new tab</a>
             <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#" data-lightbox>Open a neutral lightbox</a>
@@ -33,12 +33,12 @@
                             <li>Press the <code class="text-pink-500">Escape</code> key.</li>
                             <li>Click the <code class="text-pink-500">X</code> at the top-right corner of the page.</li>
                             <li>
-                                Use the script: <code class="text-pink-500">_lightbox.command('close');</code> or
+                                Use the script: <code class="text-pink-500">_lightbox.close();</code> or
                                 <code class="text-pink-500">.command('closeAll');</code>.
                             </li>
                             <li>
                                 Click this
-                                <a class="underline" onclick="_lightbox.command('close'); event.preventDefault();" href="#"
+                                <a class="underline" onclick="_lightbox.close(); event.preventDefault();" href="#"
                                     >link</a
                                 >.
                             </li>
@@ -48,7 +48,7 @@
                         <div class="text-center">
                             <a
                                 class="inline-block min-w-32 py-2 px-3 bg-blue-400 hover:bg-blue-500 text-white rounded"
-                                onclick="_lightbox.command('close'); event.preventDefault();"
+                                onclick="_lightbox.close(); event.preventDefault();"
                                 href="#"
                                 >Close</a
                             >
@@ -56,38 +56,38 @@
                     </div>
                 </div>
             </div>
-            <div id="sample-modal" class="lightbox-content container w-[64rem] mx-auto">
+            <div id="sample-modal" class="lightbox-content container md:w-[64rem] mx-auto">
                 <div class="section-par text-center">
                     <p>
                         This is a sample modal or small lightbox. With this, the previous lightbox won't close, but you have
                         the option to
-                        <a class="link-underline" onclick="_lightbox.command('close'); event.preventDefault();" href="#"
+                        <a class="link-underline" onclick="_lightbox.close(); event.preventDefault();" href="#"
                             >close just this one</a
                         >
                         or
-                        <a class="link-underline" onclick="_lightbox.command('closeAll'); event.preventDefault();" href="#"
+                        <a class="link-underline" onclick="_lightbox.close('all'); event.preventDefault();" href="#"
                             >all opened lightboxs</a
                         >.
                     </p>
-                    <div class="flex gap-4 justify-center mt-10">
+                    <div class="flex flex-col md:flex-row gap-4 justify-center mt-10">
                         <div>
                             <a
-                                class="inline-block min-w-32 py-2 px-3 bg-blue-400 hover:bg-blue-500 text-white rounded"
-                                onclick="_lightbox.command('close'); event.preventDefault();"
+                                class="block min-w-32 py-2 px-3 bg-blue-400 hover:bg-blue-500 text-white rounded"
+                                onclick="_lightbox.close(); event.preventDefault();"
                                 href="#"
                                 >Close this modal</a
                             >
                         </div>
                         <div>
                             <a
-                                class="inline-block min-w-32 py-2 px-3 bg-blue-400 hover:bg-blue-500 text-white rounded"
-                                onclick="_lightbox.command('closeAll'); event.preventDefault();"
+                                class="block min-w-32 py-2 px-3 bg-blue-400 hover:bg-blue-500 text-white rounded"
+                                onclick="_lightbox.close('all'); event.preventDefault();"
                                 href="#"
                                 >Close all lightbox</a
                             >
                         </div>
                         <div>
-                            <a class="inline-block min-w-32 py-2 px-3 bg-blue-400 hover:bg-blue-500 text-white rounded" data-lightbox href="#sample-lightbox2"
+                            <a class="block min-w-32 py-2 px-3 bg-blue-400 hover:bg-blue-500 text-white rounded" data-lightbox href="#sample-lightbox2"
                                 >Close all of the lightboxs and open a new one</a
                             >
                         </div>
@@ -105,7 +105,7 @@
                         <div class="text-center">
                             <a
                                 class="inline-block min-w-32 py-2 px-3 bg-blue-400 hover:bg-blue-500 text-white rounded"
-                                onclick="_lightbox.command('close'); event.preventDefault();"
+                                onclick="_lightbox.close(); event.preventDefault();"
                                 href="#"
                                 >Close</a
                             >
@@ -194,7 +194,7 @@
                     <div class="text-center">
                         <a
                             class="inline-block min-w-32 py-2 px-3 bg-blue-400 hover:bg-blue-500 text-white rounded"
-                            onclick="_lightbox.command('close'); event.preventDefault();"
+                            onclick="_lightbox.close(); event.preventDefault();"
                             href="#"
                             >Close</a
                         >
