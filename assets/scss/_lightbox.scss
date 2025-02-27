@@ -1,7 +1,7 @@
 @use "variables" as *;
 @use "mixins" as *;
 
-.com_modal-popup {
+.js-lightbox {
     z-index: 500;
     position: fixed;
     top: 0;
@@ -25,6 +25,7 @@
         width: 100%;
         height: 100%;
         padding: 15px;
+        overflow: auto;
         overflow: auto;
         -webkit-overflow-scrolling: touch;
         @include breakpoint(md) {
@@ -56,38 +57,38 @@
         }
     }
 
-    &.popup-short {
-        .com_modal-popup-main {
+    &.lightbox-short {
+        .js-lightbox-main {
             display: flex;
             align-items: center;
             justify-content: center;
         }
     }
-    &.popup-visible {
-        .com_modal-popup-cover {
+    &.lightbox-visible {
+        .js-lightbox-cover {
             animation: fadeIn 0.5s ease forwards;
         }
-        .com_modal-popup-center {
+        .js-lightbox-center {
             animation: fadeInUp 0.5s cubic-bezier(0.5, 0, 0, 1.25) forwards;
         }
-        .com_modal-popup-btn.btn-close {
+        .js-lightbox-btn.btn-close {
             animation: fadeIn 0.5s ease forwards;
         }
     }
-    &.popup-hiding {
-        .com_modal-popup-cover {
+    &.lightbox-hiding {
+        .js-lightbox-cover {
             animation: fadeOut 0.5s ease forwards;
         }
-        .com_modal-popup-center {
+        .js-lightbox-center {
             animation: fadeOutDown 0.5s cubic-bezier(0.5, 0, 0, 1.25) forwards;
         }
-        .com_modal-popup-btn.btn-close {
+        .js-lightbox-btn.btn-close {
             animation: fadeOut 0.5s ease forwards;
         }
     }
 }
 
-.popup-content {
+.lightbox-content {
     position: relative;
     padding: 48px 32px 64px 32px;
     border-radius: 16px;
@@ -98,13 +99,13 @@
         padding-right: 32px;
     }
 
-    &.popup-small {
+    &.lightbox-small {
         max-width: 355px;
         margin-left: auto;
         margin-right: auto;
     }
 }
 
-.popup-active {
+.lightbox-active {
     overflow: hidden;
 }

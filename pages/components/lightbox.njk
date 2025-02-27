@@ -11,8 +11,8 @@
 <div class="section py-14 md:py-28">
     <div class="container w-[calc(100%-2rem)] mx-auto">
         <div class="flex gap-3">
-            <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#sample-popup">Open a popup</a>
-            <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#">Open a neutral popup</a>
+            <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" data-lightbox href="#sample-popup">Open a popup</a>
+            <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" data-lightbox href="#">Open a neutral popup</a>
         </div>
         <div class="hidden mt-10">
             <div id="sample-popup" class="popup-content container mx-auto">
@@ -211,4 +211,22 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block footerscript %}
+<script>
+    // _lightbox class can be found in assets/js/utils folder
+    document.querySelectorAll('[data-lightbox]').forEach((item) => {
+        const _item = item;
+
+        const _dataset = _item.dataset.lightbox.split(',s')
+        const _modal = _dataset[0] === 'modal' ? true : false;
+
+        _item.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            new _lightbox({target: null, modal: _modal});
+        });
+    });
+</script>
 {% endblock %}
