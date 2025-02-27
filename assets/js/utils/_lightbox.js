@@ -1,17 +1,22 @@
 class _lightbox {
     constructor(props) {
-        if (!window._lightboxList) window._lightboxList = [];
+        if (!window._lightboxList) window._lightboxList = []; // storage for all opened lightbox
 
         this.modal = props?.modal || false;
+
         this.content = { parent: "", original: "" };
         this.el = { cover: "", main: "", btn: { close: "" } };
         this.target = "";
+
+        this.events = props?.events || {}; // for events eg. 'BeforeShow'
         this.listeners = {};
 
-        if (this.isInLightbox(props?.target)) return;
+        if (this.isInLightbox(props?.target)) return; // prevent duplicate lightbox instances
+
         this.init(props);
     }
 
+    // check if target element is already in a lightbox
     isInLightbox(target) {
         const _target = typeof target === "string" ? document.querySelector(target) : target;
         if (!_target) return false;
@@ -20,8 +25,9 @@ class _lightbox {
     }
 
     init(props) {
-        if (!this.modal) this.close("all");
+        if (!this.modal) this.close("all"); // close existing non-modal lightboxes
 
+        // create main lightbox elements
         this.target = document.createElement("div");
         this.target.classList.add("js-lightbox");
         document.body.appendChild(this.target);
@@ -34,6 +40,7 @@ class _lightbox {
         this.el.main.classList.add("js-lightbox-main");
         this.target.appendChild(this.el.main);
 
+        // set target content
         if (props?.target) {
             const _target =
                 typeof props.target === "string"
@@ -46,6 +53,7 @@ class _lightbox {
             }
         }
 
+        // default content if none is provided
         if (!this.content.original) {
             this.content.original = document.createElement("div");
             this.content.original.classList.add("lightbox-content", "container", "mx-auto");
@@ -56,17 +64,21 @@ class _lightbox {
         this.el.main.appendChild(this.content.original);
         this.content.original.classList.add("js-lightbox-center");
 
+        // if non-modal
         if (!this.modal) {
-            this.createCloseButton();
-            document.addEventListener("keydown", this.handleEscapeKey.bind(this));
+            this.createCloseButton(); // create close btn
+            document.addEventListener("keydown", this.handleEscapeKey.bind(this)); // can use esc key
         }
 
-        projName.event.resize(() => this.resize());
+        projName.event.resize(() => this.resize()); // need to recalculate spaces every resize
 
-        this.show();
-        window._lightboxList.push(this);
+        this.emit("beforeShow"); // Call custom callback event
+
+        this.show(); // show the popup
+        window._lightboxList.push(this); // store this lightbox
     }
 
+    // create close btn
     createCloseButton() {
         this.el.btn.close = document.createElement("a");
         this.el.btn.close.classList.add("js-lightbox-btn", "btn-close");
@@ -80,6 +92,7 @@ class _lightbox {
         });
     }
 
+    // for esc key
     handleEscapeKey(event) {
         if (!this.target) return;
         if (event.key === "Escape" || event.keyCode === 27) {
@@ -98,13 +111,17 @@ class _lightbox {
         );
     }
 
+    // show the lightbox
     show() {
         document.body.classList.add("lightbox-active");
         this.target.classList.add("lightbox-visible");
+
         setTimeout(() => this.emit("afterShow"), 500);
     }
 
+    // hide the lightbox
     close(status) {
+        // if want to close all existing lightbox
         if (status === "all") {
             [...window._lightboxList].forEach((item, index, arr) => {
                 item.close();
@@ -113,9 +130,12 @@ class _lightbox {
             return;
         }
 
+        this.emit("beforeClose"); // call custom callback event
+
         this.target.classList.remove("lightbox-visible");
         this.target.classList.add("lightbox-hiding");
 
+        // clean any traces of this instance
         setTimeout(() => {
             if (this.content.parent) this.content.parent.appendChild(this.content.original);
             this.content.original.classList.remove("js-lightbox-center");
@@ -130,17 +150,29 @@ class _lightbox {
         }, 500);
     }
 
+    // register event listener
     on(event, callback) {
         if (!this.listeners[event]) this.listeners[event] = [];
         this.listeners[event].push(callback);
     }
 
+    // remove event listener
+    off(event, callback) {
+        if (!this.listeners[event]) return;
+        this.listeners[event] = this.listeners[event].filter((cb) => cb !== callback);
+    }
+
+    // emit certain event
     emit(event) {
+        if (this.events[event]) this.events[event](this);
+
         if (!this.listeners[event]) return;
         this.listeners[event].forEach((callback) => callback(this));
     }
 
+    // static method
     static command(action) {
+        // to close the latest or all active lightboxes
         if (action === "close" || action === "closeAll") {
             [...window._lightboxList].forEach((item, index, arr) => {
                 if (action === "closeAll" || index === arr.length - 1) item.close();

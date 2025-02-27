@@ -223,7 +223,24 @@
             const _href = _item.getAttribute('href');
             const _target = _href && _href !== '#' ? document.querySelector(_href) : null;
 
-            new _lightbox({target: _target, modal: _modal});
+            new _lightbox({
+                target: _target,
+                modal: _modal,
+                events: {
+                    beforeShow: (lightbox) => {
+                        console.log('beforeShow', lightbox);
+                    },
+                    afterShow: (lightbox) => {
+                        console.log('afterShow', lightbox);
+                    },
+                    beforeClose: (lightbox) => {
+                        console.log('beforeClose', lightbox);
+                    },
+                    afterClose: (lightbox) => {
+                        console.log('afterClose', lightbox);
+                    }
+                }
+            });
         });
     });
 </script>
