@@ -30,23 +30,6 @@ const projName = {
 
         // initialize the events
         projName.event.init();
-
-        // for popup
-        $("[data-modal-popup]").each(function () {
-            const _this = this;
-            let _modal = false;
-
-            const _dataset = _this.dataset.modalPopup.split(",");
-            if (_dataset[0]) {
-                if (_dataset[0] == "modal") _modal = true;
-            }
-
-            $(_this).click(function (e) {
-                e.preventDefault();
-
-                new projName.popup.open({ target: _this.getAttribute("href"), modal: _modal });
-            });
-        });
     },
     ready() {
         // for auto-scroll
