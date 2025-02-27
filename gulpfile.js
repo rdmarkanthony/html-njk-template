@@ -82,7 +82,7 @@ gulp.task("scripts", () => {
             // "./assets/js/lib/jquery-ui.min.js",
 
             // utils
-            // "./assets/js/utils/_inview.js",
+            "./assets/js/utils/**/*.js",
 
             // custom
             "./assets/js/script.js",
