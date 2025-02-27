@@ -1,34 +1,21 @@
-{% set pageTitle = 'Components' %}
+{% set pageTitle = 'Popup | Components' %}
 
 {% extends 'layout.njk' %}
 
 {% block content %}
 <section class="section py-14 md:py-28 bg-slate-950 text-white">
     <div class="container w-[calc(100%-2rem)] mx-auto">
-        <h1 class="text-5xl md:text-7xl">Components</h1>
+        <h1 class="text-5xl md:text-7xl">Popup</h1>
     </div>
 </section>
 <div class="section py-14 md:py-28">
     <div class="container w-[calc(100%-2rem)] mx-auto">
-        <ul>
-            <li><a href="{{ rootDir }}components/popup.html" target="_blank">Popup</a></li>
-        </ul>
-    </div>
-</div>
-
-<div class="section">
-    <div class="container mx-auto">
-        <div class="mb-3">
-            <h1>Popups</h1>
+        <div class="flex gap-3">
+            <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#">Open a popup</a>
+            <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#">Open a neutral popup</a>
         </div>
-        <div class="flex gap-4">
-            <div>
-                <a class="btn btn-primary" data-modal-popup href="#sample-popup">Open a popup</a>
-            </div>
-            <div><a class="btn btn-secondary" data-modal-popup href="#">Open a neutral popup</a></div>
-        </div>
-        <div class="row-list-mb3 mt-5" style="display: none">
-            <div id="sample-popup" class="popup-content container max-w-screen-lg mx-auto">
+        <div class="mt-10">
+            <div id="sample-popup" class="popup-content container mx-auto">
                 <div class="section-par">
                     <h2>Popup Usage Guide</h2>
                     <br />
@@ -76,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            <div id="sample-modal" class="popup-content container max-w-screen-md mx-auto">
+            <div id="sample-modal" class="popup-content container mx-auto">
                 <div class="section-par text-center">
                     <p>
                         This is a sample modal or small popup. With this, the previous popup won't close, but you have
@@ -114,7 +101,7 @@
                     </div>
                 </div>
             </div>
-            <div id="sample-popup2" class="popup-content container max-w-screen-lg mx-auto">
+            <div id="sample-popup2" class="popup-content container mx-auto">
                 <div class="section-par text-center">
                     <h2>
                         This is the second sample popup. Alternatively, you may want to open
@@ -222,51 +209,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="section">
-    <div class="container mx-auto">
-        <div class="mb-3">
-            <h1>Dropdown</h1>
-        </div>
-        <!-- https://inspiramedia.com/anthony/madu/corporate.html -->
-        <div class="com_select-box">
-            <select name="" id="">
-                <option value="" disabled selected>Select option</option>
-                <option value="">Option 1</option>
-                <option value="">Option 2</option>
-                <option value="">Option 3</option>
-            </select>
-        </div>
-    </div>
-</div>
-<div class="section">
-    <div class="container mx-auto">
-        <div class="mb-3">
-            <h1>Accordion</h1>
-        </div>
-    </div>
-</div>
-<div class="section">
-    <div class="container mx-auto">
-        <div class="mb-3">
-            <h1>Hover Indicator</h1>
-        </div>
-    </div>
-</div>
-<div class="section">
-    <div class="container mx-auto">
-        <div class="mb-3">
-            <h1>Tabs</h1>
-        </div>
-    </div>
-</div>
-<div class="section">
-    <div class="container mx-auto">
-        <div class="mb-3">
-            <h1>Typing animation</h1>
-        </div>
-        <!-- https://breeze.com.sg/index#download-app -->
     </div>
 </div>
 {% endblock %}
