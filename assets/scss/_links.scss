@@ -1,6 +1,2 @@
 @use "variables" as *;
 @use "mixins" as *;
-
-.link-underline {
-    @include underline(currentColor);
-}

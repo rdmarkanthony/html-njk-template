@@ -1,8 +1,0 @@
-#main-wrapper {
-    .section {
-        @apply px-5 py-10;
-        &:nth-child(2n) {
-            @apply bg-slate-50;
-        }
-    }
-}
