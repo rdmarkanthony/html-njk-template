@@ -79,7 +79,15 @@ class _lightbox {
             document.addEventListener("keydown", this.handleEscapeKey.bind(this)); // can use esc key
         }
 
-        projName.event.resize(() => this.resize()); // need to recalculate spaces every resize
+        // need to recalculate spaces every resize
+        let _resizeTimer = 0;
+        window.addEventListener("resize", () => {
+            this.resize();
+
+            clearTimeout(_resizeTimer);
+            _resizeTimer = setTimeout(() => this.resize(), 100);
+        });
+        this.resize();
 
         this.emit("beforeShow"); // call custom callback event
 
@@ -110,13 +118,14 @@ class _lightbox {
     }
 
     resize() {
-        const mainHeight =
+        const _mainStyle = getComputedStyle(this.el.main);
+        const _mainHeight =
             this.el.main.offsetHeight -
-            (parseFloat(getComputedStyle(this.el.main).paddingTop) +
-                parseFloat(getComputedStyle(this.el.main).paddingBottom));
+            (parseFloat(_mainStyle.paddingTop) + parseFloat(_mainStyle.paddingBottom));
+
         this.target.classList.toggle(
             "lightbox-short",
-            this.content.original.offsetHeight < mainHeight
+            this.content.original.offsetHeight < _mainHeight
         );
     }
 
