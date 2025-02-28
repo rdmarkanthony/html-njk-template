@@ -37,8 +37,10 @@
         overflow: hidden;
     }
 
-    .word {
-        transform: translateY(100%);
+    &-animate {
+        .word {
+            transform: translateY(100%);
+        }
     }
 
     &-animated {

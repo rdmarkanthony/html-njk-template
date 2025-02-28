@@ -15,7 +15,7 @@
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo culpa facere, harum quis reiciendis quisquam aliquam illum neque aperiam cumque magnam sapiente, ea assumenda numquam saepe adipisci possimus earum quidem?</p>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tenetur recusandae explicabo consequuntur, fuga esse totam labore, repudiandae dolores saepe, possimus ipsam itaque facere odio ratione perferendis eum cupiditate iste ex?</p>
             </div>
-            <h1 class="js-splittext text-4xl md:text-7xl">
+            <h1 class="js-splittext text-4xl md:text-7xl md:leading-[1.2]">
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit
             </h1>
             <div class="flex flex-col gap-4" data-animate="children">
@@ -79,11 +79,11 @@
             // /assets/scss/_data-animate.scss
 
     projName.on('ready', () => {
-        _animate.init({
-            debug: true, // Keeps inline animation styles on elements (for debugging)
+        new _animate({
+            debug: false, // keeps inline animation styles on elements (for debugging)
             delay: 0.1,
             adjacentDelay: 0.2,
-            duration: 0.75,
+            duration: 0.8,
             keyframe: 'fadeInUpSmall'
         });
     });
