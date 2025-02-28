@@ -1,3 +1,9 @@
+const fs = require("fs");
+const path = require("path");
+
+const pluginDir = path.resolve(__dirname, "tailwind/plugins");
+const pluginFiles = fs.readdirSync(pluginDir).map((file) => require(path.join(pluginDir, file)));
+
 module.exports = {
     content: [
         "./pages/**/*.{html,njk}",
@@ -46,8 +52,7 @@ module.exports = {
         // require("@tailwindcss/forms"),
         // require("daisyui"),
         require("autoprefixer"),
-        require("./tailwind/plugins/default"),
-        require("./tailwind/plugins/animate"),
+        ...pluginFiles, // spread all plugins from the folder
     ],
     daisyui: {
         themes: false, // https://daisyui.com/docs/themes/
