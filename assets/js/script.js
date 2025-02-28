@@ -205,7 +205,6 @@ const projName = {
         },
         dispatch(elem, eventName) {
             let event;
-            console.log(typeof Event);
             if (typeof Event === "function") {
                 event = new Event(eventName);
             } else {
