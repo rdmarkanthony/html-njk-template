@@ -229,6 +229,8 @@
                 events: {
                     beforeShow: (lightbox) => {
                         console.log('beforeShow', lightbox);
+                        
+                        // if(lightbox.el.btn.close) lightbox.content.original.appendChild(lightbox.el.btn.close); // can move the close btn inside the lightbox's center content
                     },
                     afterShow: (lightbox) => {
                         console.log('afterShow', lightbox);
