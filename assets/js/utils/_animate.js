@@ -1,5 +1,5 @@
 const _animate = {
-    debug: false,
+    debug: true,
     init() {
         // find all the animate containers
         document.querySelectorAll("[data-animate]").forEach((item) => {
@@ -123,7 +123,7 @@ const _animate = {
     },
     show(target) {
         let _className =
-            target.dataset.animate?.split(",")[0] || target.dataset.animateClass || "animateFade";
+            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "animateFade";
         if (["parent", "children", "child"].includes(_className)) _className = "animateFade";
 
         // show and animate the element
@@ -134,7 +134,7 @@ const _animate = {
         if (_animate.debug) return;
 
         let _className =
-            target.dataset.animate?.split(",")[0] || target.dataset.animateClass || "animateFade";
+            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "animateFade";
         if (["parent", "children", "child"].includes(_className)) _className = "animateFade";
 
         // hide the element after delay
