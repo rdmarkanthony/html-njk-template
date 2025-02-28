@@ -1,14 +1,22 @@
 const _animate = {
-    debug: true,
-    init() {
+    debug: false,
+    delay: 0,
+    adjacentDelay: 0,
+    duration: 0,
+    init(props = {}) {
+        _animate.debug = props.debug ?? false;
+        _animate.delay = props.delay ?? 0.5;
+        _animate.adjacentDelay = props.adjacentDelay ?? 0.15;
+        _animate.duration = props.duration ?? 0.8;
+
         // find all the animate containers
         document.querySelectorAll("[data-animate]").forEach((item) => {
             const _item = item;
             const _dataset = _item.dataset.animate.split(",");
 
             const _relation = _dataset[0] ? _dataset[0] : "";
-            let _delay = _dataset[1] ? parseFloat(_dataset[1]) : 0.5; // default animation delay
-            let _duration = _dataset[2] ? parseFloat(_dataset[2]) : 0.8; // default animation duration
+            let _delay = _dataset[1] ? parseFloat(_dataset[1]) : _animate.delay; // default animation delay
+            let _duration = _dataset[2] ? parseFloat(_dataset[2]) : _animate.duration; // default animation duration
 
             if (_relation === "parent") {
                 // for parent
@@ -22,7 +30,7 @@ const _animate = {
                         const _item = item;
 
                         // if this children has children too
-                        if (_item.dataset.animate == "children") {
+                        if (_item.dataset.animate === "children") {
                             Array.from(_item.children).forEach((item) => {
                                 const _item = item;
 
@@ -30,7 +38,7 @@ const _animate = {
 
                                 _animate.set(_item, _delay, _duration);
 
-                                _delay += 0.15; // stagger the delay for all child
+                                _delay += _animate.adjacentDelay; // stagger the delay for all child
                             });
                         } else {
                             if (_item.dataset.animate) return;
@@ -39,13 +47,14 @@ const _animate = {
 
                             _animate.set(_item, _delay, _duration);
 
-                            _delay += 0.15; // stagger the delay for all child
+                            _delay += _animate.adjacentDelay; // stagger the delay for all child
                         }
                     });
                 });
-            } else if (_relation !== "children") {
+            } else {
                 // for single item
-                _animate.set(_item, _delay, _duration);
+                if (!["children", "child"].includes(_relation))
+                    _animate.set(_item, _delay, _duration);
             }
 
             // animate the containers upon inview
@@ -115,27 +124,29 @@ const _animate = {
                 }, _timeOut * 1000);
             });
         });
+
+        if (_animate.debug) console.log(_animate);
     },
     set(target, delay, duration) {
-        target.style.setProperty("--animation-delay", `${delay}s`);
         target.style.animationDelay = `${delay}s`;
-        target.style.animationDuration = `${duration}s`;
+        target.style.setProperty("--animate-delay", `${delay}s`);
+        target.style.setProperty("--animate-duration", `${duration}s`);
     },
     show(target) {
         let _className =
-            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "fadeInDown";
-        if (["parent", "children", "child"].includes(_className)) _className = "fadeInDown";
+            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "fadeInUp";
+        if (["parent", "children", "child"].includes(_className)) _className = "fadeInUp";
 
         // show and animate the element
         target.classList.remove("opacity-0");
-        target.classList.add("in-animate", _className);
+        target.classList.add("animate__animated", `animate__${_className}`);
     },
     clean(target, callback) {
         if (_animate.debug) return;
 
         let _className =
-            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "fadeInDown";
-        if (["parent", "children", "child"].includes(_className)) _className = "fadeInDown";
+            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "fadeInUp";
+        if (["parent", "children", "child"].includes(_className)) _className = "fadeInUp";
 
         // hide the element after delay
         const _styles = window.getComputedStyle(target);
@@ -143,11 +154,12 @@ const _animate = {
 
         window.setTimeout(() => {
             target.removeAttribute("data-animate");
-            target.classList.remove("in-animate", _className, "opacity-0");
+            target.classList.remove("animate__animated", `animate__${_className}`, "opacity-0");
 
-            target.style.setProperty("--animation-delay", "");
-            target.style.animationDuration = "";
             target.style.animationDelay = "";
+            target.style.setProperty("--animate-delay", "");
+            target.style.animationDuration = "";
+            target.style.setProperty("--animate-duration", "");
             target.style.animationFillMode = "";
 
             target.removeAttribute("data-animate-class");
