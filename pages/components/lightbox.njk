@@ -8,7 +8,7 @@
         <h1 class="text-5xl md:text-7xl">Lightbox</h1>
     </div>
 </section>
-<div class="section py-14 md:py-28">
+<section class="section py-14 md:py-28">
     <div class="container w-[calc(100%-2rem)] mx-auto">
         <div class="flex flex-col md:flex-row gap-3">
             <a class="block py-2 px-4 bg-green-600 hover:bg-green-700 text-white" href="#sample-lightbox" data-lightbox>Open a lightbox</a>
@@ -203,12 +203,17 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}
 
 {% block footerscript %}
 <script>
-    // _lightbox class can be found in assets/js/utils folder
+    // Requirements
+        // JS
+            // /assets/js/utils/_lightbox.js
+        // CSS
+            // /assets/scss/_lightbox.scss
+
     document.querySelectorAll('[data-lightbox]').forEach((item) => {
         const _item = item;
         const _target = _item.getAttribute('target');
