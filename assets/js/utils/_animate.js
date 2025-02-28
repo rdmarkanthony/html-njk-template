@@ -3,11 +3,13 @@ const _animate = {
     delay: 0,
     adjacentDelay: 0,
     duration: 0,
+    keyframe: "",
     init(props = {}) {
         _animate.debug = props.debug ?? false;
-        _animate.delay = props.delay ?? 0.5;
+        _animate.delay = props.delay ?? 0.1;
         _animate.adjacentDelay = props.adjacentDelay ?? 0.15;
         _animate.duration = props.duration ?? 0.8;
+        _animate.keyframe = props.keyframe ?? "fadeInUpSmall";
 
         // find all the animate containers
         document.querySelectorAll("[data-animate]").forEach((item) => {
@@ -92,38 +94,40 @@ const _animate = {
         });
 
         // for header titles or splittext animate
-        document.querySelectorAll(".js-splittext").forEach((item) => {
-            const _item = item;
-            const _splittext = new _splitText({ target: _item });
+        if (typeof _splitText !== "undefined" && typeof SplitType !== "undefined") {
+            document.querySelectorAll(".js-splittext").forEach((item) => {
+                const _item = item;
+                const _splittext = new _splitText({ target: _item });
 
-            if (!_item.dataset.animate) return;
-            _item.classList.add("js-splittext-animate");
+                if (!_item.dataset.animate) return;
+                _item.classList.add("js-splittext-animate");
 
-            _item.addEventListener("visible", () => {
-                _item.classList.add("js-splittext-animated");
-                _item.style.setProperty(
-                    "--pullup-delay",
-                    window.getComputedStyle(_item).animationDelay
-                );
+                _item.addEventListener("visible", () => {
+                    _item.classList.add("js-splittext-animated");
+                    _item.style.setProperty(
+                        "--pullup-delay",
+                        window.getComputedStyle(_item).animationDelay
+                    );
 
-                if (_animate.debug) return;
+                    if (_animate.debug) return;
 
-                const _words = _splittext?.split?.words;
+                    const _words = _splittext?.split?.words;
 
-                if (!_words) return;
+                    if (!_words) return;
 
-                let _timeOut =
-                    (_words.length + 1) *
-                    parseFloat(window.getComputedStyle(_words[0]).animationDuration);
-                if (_timeOut <= 1) _timeOut = 1;
+                    let _timeOut =
+                        (_words.length + 1) *
+                        parseFloat(window.getComputedStyle(_words[0]).animationDuration);
+                    if (_timeOut <= 1) _timeOut = 1;
 
-                window.setTimeout(() => {
-                    _splittext?.split?.revert();
-                    _item.classList.remove("js-splittext-animate", "js-splittext-animated");
-                    _item.style.setProperty("--pullup-delay", "");
-                }, _timeOut * 1000);
+                    window.setTimeout(() => {
+                        _splittext?.split?.revert();
+                        _item.classList.remove("js-splittext-animate", "js-splittext-animated");
+                        _item.style.setProperty("--pullup-delay", "");
+                    }, _timeOut * 1000);
+                });
             });
-        });
+        }
 
         if (_animate.debug) console.log(_animate);
     },
@@ -134,8 +138,10 @@ const _animate = {
     },
     show(target) {
         let _className =
-            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "fadeInUp";
-        if (["parent", "children", "child"].includes(_className)) _className = "fadeInUp";
+            target.dataset.animateClass ||
+            target.dataset.animate?.split(",")[0] ||
+            _animate.keyframe;
+        if (["parent", "children", "child"].includes(_className)) _className = _animate.keyframe;
 
         // show and animate the element
         target.classList.remove("opacity-0");
@@ -145,8 +151,10 @@ const _animate = {
         if (_animate.debug) return;
 
         let _className =
-            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "fadeInUp";
-        if (["parent", "children", "child"].includes(_className)) _className = "fadeInUp";
+            target.dataset.animateClass ||
+            target.dataset.animate?.split(",")[0] ||
+            _animate.keyframe;
+        if (["parent", "children", "child"].includes(_className)) _className = _animate.keyframe;
 
         // hide the element after delay
         const _styles = window.getComputedStyle(target);
