@@ -123,8 +123,8 @@ const _animate = {
     },
     show(target) {
         let _className =
-            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "animateFade";
-        if (["parent", "children", "child"].includes(_className)) _className = "animateFade";
+            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "fadeInDown";
+        if (["parent", "children", "child"].includes(_className)) _className = "fadeInDown";
 
         // show and animate the element
         target.classList.remove("opacity-0");
@@ -134,8 +134,8 @@ const _animate = {
         if (_animate.debug) return;
 
         let _className =
-            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "animateFade";
-        if (["parent", "children", "child"].includes(_className)) _className = "animateFade";
+            target.dataset.animateClass || target.dataset.animate?.split(",")[0] || "fadeInDown";
+        if (["parent", "children", "child"].includes(_className)) _className = "fadeInDown";
 
         // hide the element after delay
         const _styles = window.getComputedStyle(target);
