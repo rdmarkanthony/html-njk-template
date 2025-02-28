@@ -1,0 +1,71 @@
+{% set pageTitle = 'Animate | Components' %}
+
+{% extends 'layout.njk' %}
+
+{% block content %}
+<section class="section py-14 md:py-28 bg-slate-950 text-white">
+    <div class="container w-[calc(100%-2rem)] mx-auto">
+        <h1 class="text-5xl md:text-7xl">Animate</h1>
+    </div>
+</section>
+<div class="section py-14 md:py-28" data-animate>
+    <div class="container w-[calc(100%-2rem)] mx-auto" data-animate="parent">
+        <div data-animate="children">
+            <h1 class="js-splittext mb-3 text-7xl">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit
+            </h1>
+            <div class="flex flex-col gap-4" data-animate="children">
+                <p>
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aut, blanditiis fuga!
+                    Quod, recusandae optio cupiditate laborum aspernatur facilis expedita pariatur
+                    nulla obcaecati, reiciendis quas, perferendis consequuntur laboriosam. Quis, vel
+                    exercitationem?
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Porro eaque inventore
+                    sit nostrum suscipit neque hic minima iusto! Rerum quisquam provident quibusdam
+                    quis sint minus, amet id! Ducimus, voluptatibus dolorum.
+                </p>
+                <p>
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam quia illum
+                    nostrum cum nihil doloribus, quaerat amet repellendus provident doloremque
+                    possimus molestias rem dolorum nesciunt quam facere harum nulla deleniti!
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, dignissimos
+                    excepturi? Quo quas distinctio vero, tempore atque aliquam, non excepturi
+                    voluptas adipisci quae expedita obcaecati totam quibusdam, at molestiae
+                    recusandae!
+                </p>
+            </div>
+            <div>
+                <div class="flex flex-col gap-4" data-animate="child">
+                    <p>
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti maxime
+                        aut iure aperiam dicta recusandae totam, quis saepe officiis, voluptates
+                        porro, repudiandae illum! Eos ipsam ullam a laborum inventore aliquam.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
+                        cupiditate, aut quis alias qui atque enim! Rerum culpa corrupti, voluptatum,
+                        nostrum explicabo ducimus eligendi quo soluta, ea facere delectus veniam.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container w-[calc(100%-2rem)] mx-auto">
+        <div>
+            <div data-animate="fadeInDown,2,0.8">fadeInDown</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footerscript %}
+<script>
+    projName.on('ready', () => {
+        _animate.init();
+    });
+</script>
+{% endblock %}

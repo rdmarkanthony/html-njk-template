@@ -10,8 +10,22 @@
 </section>
 <div class="section py-14 md:py-28">
     <div class="container w-[calc(100%-2rem)] mx-auto">
-        <ul>
-            <li><a href="{{ rootDir }}components/lightbox.html" target="_blank">Lightbox</a></li>
+        {%
+            set components = [
+                {
+                    url: rootDir + 'components/animate.html',
+                    label: 'Animate'
+                },
+                {
+                    url: rootDir + 'components/lightbox.html',
+                    label: 'Lightbox'
+                }
+            ]
+        %}
+        <ul class="grid grid-cols-5 gap-3">
+            {% for component in components %}
+                <li><a class="block" href="{{ component.url }}" target="_blank">{{ component.label }}</a></li>
+            {% endfor %}
         </ul>
     </div>
 </div>
