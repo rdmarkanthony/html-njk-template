@@ -20,8 +20,15 @@ class _animate {
             const _dataset = _item.dataset.animate.split(",");
 
             const _relation = _dataset[0] ? _dataset[0] : "";
-            let _delay = _dataset[1] ? parseFloat(_dataset[1]) : this.delay; // default animation delay
-            let _duration = _dataset[2] ? parseFloat(_dataset[2]) : this.duration; // default animation duration
+            let _delay = _dataset[1]
+                ? !isNaN(parseFloat(_dataset[1]))
+                    ? parseFloat(_dataset[1])
+                    : _dataset[1]
+                : this.delay; // default animation delay
+            let _duration =
+                _dataset[2] && !isNaN(parseFloat(_dataset[2]))
+                    ? parseFloat(_dataset[2])
+                    : this.duration; // default animation duration
 
             if (_relation === "parent") {
                 // for parent
@@ -137,8 +144,10 @@ class _animate {
     }
 
     set(target, delay, duration) {
-        target.style.animationDelay = `${delay.toFixed(2)}s`;
-        target.style.setProperty("--animate-delay", `${delay.toFixed(2)}s`);
+        const _delay = parseFloat(delay) ? `${delay.toFixed(2)}s` : delay;
+
+        target.style.animationDelay = _delay;
+        if (parseFloat(delay)) target.style.setProperty("--animate-delay", _delay);
         target.style.setProperty("--animate-duration", `${duration}s`);
     }
 
