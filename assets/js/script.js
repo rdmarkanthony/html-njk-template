@@ -29,7 +29,13 @@ const projName = {
         projName.on("ready", () => projName.ready());
 
         // initialize the events
-        projName.event.init();
+        projName.event.resize((status, event) => {
+            projName.emit("resize", status, event);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            projName.emit("ready");
+        });
     },
     ready() {
         // for auto-scroll
@@ -170,15 +176,6 @@ const projName = {
         },
     },
     event: {
-        init() {
-            projName.event.resize((status, event) => {
-                projName.emit("resize", status, event);
-            });
-
-            document.addEventListener("DOMContentLoaded", () => {
-                projName.emit("ready");
-            });
-        },
         resize(callback) {
             let _resizeTimer = "";
 
