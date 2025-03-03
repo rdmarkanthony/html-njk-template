@@ -171,8 +171,8 @@ const projName = {
     },
     event: {
         init() {
-            projName.event.resize((event) => {
-                projName.emit("resize", event);
+            projName.event.resize((status, event) => {
+                projName.emit("resize", status, event);
             });
 
             document.addEventListener("DOMContentLoaded", () => {
@@ -225,10 +225,10 @@ const projName = {
         if (!projName.listeners[event]) projName.listeners[event] = [];
         projName.listeners[event].push(callback);
     },
-    emit(event, data) {
+    emit(event, data = null, status = null) {
         if (!projName.listeners[event]) return;
         projName.listeners[event].forEach((callback) => {
-            if (callback) callback(data);
+            if (callback) callback(data, status);
         });
     },
 };
