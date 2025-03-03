@@ -1,0 +1,102 @@
+{% set pageTitle = 'Group height | Components' %}
+
+{% extends 'layout.njk' %}
+
+{% block content %}
+<section class="section py-14 md:py-28 bg-slate-950 text-white">
+    <div class="container w-[calc(100%-2rem)] mx-auto">
+        <h1 class="text-5xl md:text-7xl">Group height</h1>
+    </div>
+</section>
+<section class="section flex flex-col gap-10 py-14 md:py-28">
+    <div class="container w-[calc(100%-2rem)] mx-auto">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 items-start" data-gh-parent>
+            <div class="flex flex-col gap-3 p-4 outline-dashed">
+                <p>Column 1</p>
+                <div class="flex flex-col grow gap-2" data-gh="1,768">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius quo alias repellat blanditiis molestiae fuga dolorum vero rem eveniet, voluptatem eos mollitia minus quaerat culpa aperiam consectetur quod neque voluptatibus.</p>
+                    <p><small class="text-green-900"><code>Will have min-height >=768px</code></small></p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-3 p-4 outline-dashed">
+                <p>Column 2</p>
+                <div class="flex flex-col grow gap-2" data-gh="1">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur illum expedita quibusdam laudantium architecto quaerat, esse hic consequatur illo ipsam ipsa earum. Consequuntur molestiae modi itaque ipsa soluta in consequatur.</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-3 p-4 outline-dashed">
+                <p>Column 3</p>
+                <div class="flex flex-col grow gap-2" data-gh="1,768">
+                    <p>Tempore nostrum quos obcaecati ipsum error nulla placeat magnam voluptatibus odio in animi, cupiditate magni suscipit asperiores consequuntur a, cum, id repellendus.</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-3 p-4 outline-dashed">
+                <p>Column 4</p>
+                <div class="flex flex-col grow gap-2" data-gh="2">
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem fugiat dolorem pariatur placeat autem rem magnam, excepturi at voluptatibus ut delectus alias qui consequuntur nisi praesentium soluta eligendi minus id!</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-3 p-4 outline-dashed">
+                <p>Column 5</p>
+                <div class="flex flex-col grow gap-2" data-gh="2,768">
+                    <p>Quibusdam, optio? Sed explicabo assumenda, quasi doloribus reprehenderit error molestiae iusto vitae tempore distinctio animi non atque enim rem qui! Rerum, eligendi.</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-3 p-4 outline-dashed">
+                <p>Column 6</p>
+                <div class="flex flex-col grow gap-2" data-gh="2">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae voluptatibus doloribus magnam nihil vel asperiores. Dicta at excepturi repellat atque unde molestias aut. Ducimus labore quaerat libero nisi ab eos!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block footerscript %}
+<script>
+    projName.equalHeight = (elements, style = 'minHeight') => {
+        if(elements.length <= 0) return;
+
+        elements.forEach((item) => {
+             item.style[style] = '';
+        });
+
+        let _commonHeight = 0;
+
+        elements.forEach((item) => {
+            const _height = item.offsetHeight;
+            if(_height > _commonHeight) _commonHeight = _height;
+        });
+
+        elements.forEach((item) => {
+            item.style[style] = `${_commonHeight}px`;
+        });
+    }
+
+    projName.event.resize((status, event) => {
+        if(status === 'resize') return;
+
+        document.querySelectorAll('[data-gh-parent]').forEach((item) => {
+            const _parent = item;
+            const _items = _parent.querySelectorAll('[data-gh]');
+            const _groups = [];
+
+            _items.forEach((item) => {
+                const _item = item;
+                const _dataset = _item.dataset.gh.split(',');
+
+                const _group = _dataset[0] ? _dataset[0] : 0;
+                const _within = _dataset[1] && parseFloat(_dataset[1]) ? parseFloat(_dataset[1]) : 0;
+
+                if(!_groups[_group]) _groups[_group] = [];
+                if(projName.width() >= _within) _groups[_group].push(_item);
+            });
+
+            _groups.forEach((item) => projName.equalHeight(item));
+
+            console.log(_groups);
+        });
+    });
+</script>
+{% endblock %}
