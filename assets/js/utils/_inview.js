@@ -4,6 +4,7 @@ class _inview {
         this.observeOnce = props.observeOnce !== false;
         this.observeRatio = props.observeRatio ?? 0;
         this.threshold = props.threshold ?? 0;
+        this.delay = props.delay ?? 0;
 
         this.visible = false;
 
@@ -18,7 +19,7 @@ class _inview {
                         if (this.visible) return;
                         this.visible = true;
 
-                        if (callback) callback();
+                        if (callback) setTimeout(() => callback(this), this.delay);
 
                         if (this.observeOnce) _observer.disconnect();
                     } else {
