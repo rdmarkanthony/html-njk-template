@@ -33,7 +33,7 @@
     const _label = _runningNumber.querySelector('.js-runner-number-label');
     const _input = _runningNumber.querySelector('input');
     const _button = _runningNumber.querySelector('button');
-    let _instance = null;
+    const _numbers = [];
 
     const _cleanNumber = (value) => {
         return value.replace(/,/g, "").replace(/[^0-9.]/g, "");
@@ -72,22 +72,29 @@
     if(typeof _inview !== 'undefined') {
         _label.innerHTML = '';
 
-        const _div = document.createElement('div');
-        _label.appendChild(_div);
+        const _value = 123456789.01;
+        const _values = _value.toLocaleString().split('');
 
-        const _number = new _rollingNumber({
-            target: _div,
-            debug: true
+        _values.forEach((item) => {
+            const _div = document.createElement('div');
+            _label.appendChild(_div);
+
+            _numbers.push(new _rollingNumber({target: _div, numeric: parseFloat(item) ? true : false}));
         });
 
         new _inview({
             target: _label,
             delay: 500,
             callback: (inview) => {
-                _number.roll({
-                    from: 0,
-                    to: 9,
-                    duration: 1000
+                _values.forEach((item, index) => {
+                    const _value = item;
+                    const _number = _numbers[index];
+
+                    _number.roll({
+                        from: 0,
+                        to: _value,
+                        duration: 1000
+                    });
                 });
             }
         });
