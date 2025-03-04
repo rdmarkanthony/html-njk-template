@@ -23,6 +23,12 @@
 
 {% block footerscript %}
 <script>
+    // Requirements
+        // JS
+            // /assets/js/lib/popmotion.min.js
+            // /assets/js/utils/_inview.js
+            // /assets/js/utils/_rolling-number.js
+
     const _runningNumber = document.querySelector('.js-running-number');
     const _label = _runningNumber.querySelector('.js-runner-number-label');
     const _input = _runningNumber.querySelector('input');
@@ -81,7 +87,7 @@
                 _number.roll({
                     from: 0,
                     to: 9,
-                    speed: 10
+                    duration: 1000
                 });
             }
         });

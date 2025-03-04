@@ -81,6 +81,7 @@ gulp.task("scripts", () => {
             // "./assets/js/lib/jquery.min.js",
             // "./assets/js/lib/jquery-ui.min.js",
             "./assets/js/lib/splittype.min.js",
+            "./assets/js/lib/popmotion.min.js",
 
             // utils
             "./assets/js/utils/**/*.js",
