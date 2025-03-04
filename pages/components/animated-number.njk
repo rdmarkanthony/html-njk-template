@@ -71,14 +71,17 @@
         });
     });
 
+    // animate number on inview
     if(typeof _inview !== 'undefined') {
         new _inview({
-            target: _label, 
+            target: _label,
+            delay: 500,
             callback: (inview) => {
-                _instance = new _animatedNumber({
+                new _animatedNumber({
                     target: _label,
                     from: 0,
-                    to: 1234567890
+                    to: 1234567890,
+                    duration: 2000
                 })
             }
         });

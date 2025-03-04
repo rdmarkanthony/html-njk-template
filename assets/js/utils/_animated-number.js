@@ -11,7 +11,7 @@ class _animatedNumber {
         if (this.number.from === this.number.to) this.number.from = 0;
 
         this.duration = props.duration ?? 500;
-        this.steps = props.steps ?? 10;
+        this.steps = Math.max(props.steps ?? 10, this.duration / 50);
         this.stepSize =
             (this.number.to > this.number.from
                 ? this.number.to - this.number.from
