@@ -33,13 +33,17 @@
     const _label = _runningNumber.querySelector('.js-runner-number-label');
     const _input = _runningNumber.querySelector('input');
     const _button = _runningNumber.querySelector('button');
-    const _instances = [];
 
     const _cleanNumber = (value) => {
         return value.replace(/,/g, "").replace(/[^0-9.]/g, "");
     }
 
+    const _instances = [];
+    let _animating = false;
     const _update = (value) => {
+        if(_animating) return;
+        _animating = true;
+
         const _values = value.toLocaleString().split(''); // split the value
 
         // hide/show digits
@@ -65,7 +69,10 @@
             _number.roll({
                 from: _number.currentNumber,
                 to: _value,
-                duration: 1000
+                duration: 1000,
+                callback: () => {
+                    _animating = false;
+                }
             });
         });
     }
@@ -94,7 +101,7 @@
         
         const _value = _cleanNumber(_input.value);
 
-        if(!isNaN(_value) || _value.length > 0) _update(parseFloat(_value)); // animate
+        if (!isNaN(_value) && _value.length > 0) _update(parseFloat(_value)); // animate
     });
 
     // animate number on inview

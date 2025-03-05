@@ -88,6 +88,8 @@ class _rollingNumber {
             },
             onComplete: () => {
                 this.currentNumber = parseFloat(_to);
+
+                if (props.callback) props.callback(this);
             },
         });
 
