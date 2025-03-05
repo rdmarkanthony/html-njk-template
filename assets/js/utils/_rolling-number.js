@@ -76,6 +76,13 @@ class _rollingNumber {
         }
 
         // if (_to >= this.maxNumber) _to = this.maxNumber - 1;
+        if (
+            this.numeric &&
+            this.currentNumber === 0 &&
+            _from === 0 &&
+            parseFloat(_to) === this.maxNumber - 1
+        )
+            _from = this.el.numbers.length - 1; // for countdowns
         if (_from === _to) return;
 
         animate({
