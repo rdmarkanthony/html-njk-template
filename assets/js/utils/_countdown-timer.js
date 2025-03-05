@@ -25,7 +25,12 @@ class _countdownTimer {
         this.emit("beforeInit");
 
         this.interval = setInterval(() => {
-            if (parseInt(this.dateTime.diff.seconds) <= 0) {
+            if (
+                this.dateTime.diff.days === 0 &&
+                this.dateTime.diff.hours === 0 &&
+                this.dateTime.diff.minutes === 0 &&
+                parseInt(this.dateTime.diff.seconds) <= 0
+            ) {
                 this.dateTime.ended = true;
                 this.destroy();
                 return;
