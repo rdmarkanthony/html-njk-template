@@ -6,6 +6,7 @@ class _countdownTimer {
             target: props.dateTime ?? null,
             now: null,
             diff: null,
+            ended: false,
         };
 
         this.timeZone = props.target ?? "Asia/Manila";
@@ -24,7 +25,8 @@ class _countdownTimer {
         this.emit("beforeInit");
 
         this.interval = setInterval(() => {
-            if (this.dateTime.diff.seconds < 0) {
+            if (parseInt(this.dateTime.diff.seconds) <= 0) {
+                this.dateTime.ended = true;
                 this.destroy();
                 return;
             }

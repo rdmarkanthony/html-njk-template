@@ -15,9 +15,9 @@
                 <p>You can change the target date & time</p>
                 <div><input class="js-datetime-picker min-w-[15rem] py-2 px-3 border border-gray-500 rounded" type="text" name="" value="" placeholder="Please select date & time"></div>
             </div>
-            <div class="flex flex-col gap-2 text-center">
-                <p class="text-2xl">Countdown continues till <strong>March 6, 2025</strong>.</p>
-                <div class="js-countdown-timer flex gap-8 md:gap-11 justify-center md:text-xl text-center">
+            <div class="js-countdown-timer flex flex-col gap-2 text-center">
+                <p class="text-2xl">Countdown continues till <strong class="js-countdown-timer-label">--</strong>.</p>
+                <div class="flex gap-8 md:gap-11 justify-center md:text-xl text-center">
                     <div class="flex flex-col gap-1">
                         <div class="js-countdown-timer-days font-bold text-6xl md:text-8xl">00</div>
                         <div>days</div>
@@ -36,9 +36,9 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col gap-2 text-center">
-                <p class="text-2xl">Countdown continues till <strong>March 6, 2025</strong>.</p>
-                <div class="js-countdown-timer flex gap-8 md:gap-11 justify-center md:text-xl text-center">
+            <div class="js-countdown-timer flex flex-col gap-2 text-center">
+                <p class="text-2xl">Countdown continues till <strong class="js-countdown-timer-label">--</strong>.</p>
+                <div class="flex gap-8 md:gap-11 justify-center md:text-xl text-center">
                     <div class="flex flex-col gap-1">
                         <div class="js-countdown-timer-days font-bold text-6xl md:text-8xl">00</div>
                         <div>days</div>
@@ -75,8 +75,9 @@
 
     const _timeZone = 'Asia/Manila';
     const _currentDateTime = DateTime.now().setZone(_timeZone); // get current date & time
-    const _minDateTime = _currentDateTime.plus({days: 1}).set({hour: 18, minute: 0, second: 0});
-    const _dateTimeFormat = "MM-dd-yyyy HH:mm:ss";
+    const _minDateTime = _currentDateTime.plus({minutes: 2}).set({second: 0}); // set minimum date to select
+
+    const _dateTimePicker = document.querySelector('.js-datetime-picker'); // date & time picker
 
     const _countdowns = []; // instances
     const _updateCountdown = (dateTime) => {
@@ -85,19 +86,22 @@
         document.querySelectorAll('.js-countdown-timer').forEach((item, index) => {
             const _item = item;
             const _label = {
+                dateTime: _item.querySelector('.js-countdown-timer-label'),
                 days: _item.querySelector('.js-countdown-timer-days'),
                 hours: _item.querySelector('.js-countdown-timer-hours'),
                 minutes: _item.querySelector('.js-countdown-timer-minutes'),
                 seconds: _item.querySelector('.js-countdown-timer-seconds')
             }
 
-            if(index > 0) return;
-
             // create new instance
             const _countdown = new _countdownTimer({
                 dateTime: dateTime,
                 timeZone: _timeZone,
                 events: {
+                    beforeInit: (instance) => {
+                        _label.dateTime.parentNode.style.display = 'block';
+                        _label.dateTime.innerHTML = instance.dateTime.target.toFormat("MMMM d, yyyy hh:mm a");
+                    },
                     update: (instance) => {
                         _label.days.innerHTML = String(instance.dateTime.diff.days).padStart(2, '0');
                         _label.hours.innerHTML = String(instance.dateTime.diff.hours).padStart(2, '0');
@@ -108,25 +112,26 @@
             });
 
             _countdown.on('end', (instance) => {
-                console.log('end', instance);
+                if(!instance.dateTime.ended) return;
+
+                _label.dateTime.parentNode.style.display = 'none';
+                _dateTimePicker.parentNode.parentNode.style.display = 'none';
             });
 
             _countdowns.push(_countdown);
         });
     }
+    _updateCountdown(_minDateTime); // first countdown
 
     // for date & time picker
-    const _dateTimePicker = document.querySelector('.js-datetime-picker');
     flatpickr(_dateTimePicker, {
         enableTime: true,
         dateFormat: 'F j, Y h:i K',
         defaultDate: new Date(_minDateTime),
         minDate: new Date(_minDateTime),
         onClose: (selectedDates) => {
-            _updateCountdown(selectedDates[0]);
+            _updateCountdown(DateTime.fromJSDate(selectedDates[0]).setZone(_timeZone));
         }
     });
-
-    _updateCountdown(_minDateTime);
 </script>
 {% endblock %}
