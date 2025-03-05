@@ -11,11 +11,12 @@ class _rollingNumber {
 
         this.numeric = props.numeric ?? true;
 
-        this.maxNumber = props.maxNumber ?? 10;
+        this.maxNumber = Math.min(props.maxNumber ?? 9, 9) + 1;
         this.duration = props.duration ?? 750;
         this.currentNumber = null;
 
         this.height = 0;
+        this.currentOffset = 0;
 
         if (this.target) this.init();
     }
@@ -28,7 +29,6 @@ class _rollingNumber {
 
         this.el.main.style.pointerEvents = "none";
         this.el.main.style.willChange = "transform";
-        this.el.main.style.textAlign = "center";
 
         // create numbers
         for (let i = 0; i < this.maxNumber; i++) {
@@ -44,7 +44,7 @@ class _rollingNumber {
         window.addEventListener("resize", () => {
             clearTimeout(_resizeTimer);
 
-            _resizeTimer = setTimeout(() => this.resize(), 100);
+            _resizeTimer = setTimeout(() => this.resize(), 10);
         });
         this.resize();
 
@@ -53,7 +53,10 @@ class _rollingNumber {
 
     createNumber(value) {
         let _number = document.createElement("div");
-        _number.innerText = value;
+        const _span = document.createElement("span");
+        _number.appendChild(_span);
+
+        _span.innerText = value;
         this.el.numbers.push(_number);
         this.el.main.appendChild(_number);
     }
@@ -81,9 +84,21 @@ class _rollingNumber {
             duration: _duration,
             onUpdate: (value) => {
                 this.el.main.style.transform = `translate3d(0, -${value}px, 0)`;
+                this.currentOffset = value;
             },
             onComplete: () => {
-                this.currentNumber = _to;
+                this.currentNumber = parseFloat(_to);
+            },
+        });
+
+        // animate the width
+        animate({
+            from: this.el.numbers[_from].querySelector("span").offsetWidth,
+            to: this.el.numbers[_to].querySelector("span").offsetWidth,
+            duration: _duration * 0.5,
+            elapsed: _duration * 0.5 * -1,
+            onUpdate: (value) => {
+                this.target.style.width = `${value}px`;
             },
         });
     }
@@ -95,9 +110,24 @@ class _rollingNumber {
             if (item.offsetHeight > _height) _height = item.offsetHeight;
         });
 
-        this.target.style.height = `${_height}px`;
-        this.height = _height;
+        if (_height === this.height) return;
 
-        if (this.currentNumber > 0) this.roll({ from: 0, to: this.currentNumber }); // reset position
+        this.target.style.width = `${
+            this.el.numbers[this.currentNumber ?? 0].querySelector("span").offsetWidth
+        }px`;
+
+        this.height = _height;
+        this.target.style.height = `${_height}px`;
+
+        // need to reposition
+        animate({
+            from: this.currentOffset,
+            to: this.currentNumber * this.height,
+            duration: this.duration,
+            onUpdate: (value) => {
+                this.el.main.style.transform = `translate3d(0, -${value}px, 0)`;
+                this.currentOffset = value;
+            },
+        });
     }
 }
