@@ -16,7 +16,7 @@
                 <div><input class="js-datetime-picker min-w-[15rem] py-2 px-3 border border-gray-500 rounded" type="text" name="" value="" placeholder="Please select date & time"></div>
             </div>
             <div class="js-countdown-timer flex flex-col gap-2 text-center">
-                <p class="text-2xl">Countdown continues till <strong class="js-countdown-timer-label">--</strong>.</p>
+                <p class="text-2xl">Countdown continues till <strong class="js-countdown-timer-label inline-block">--</strong>.</p>
                 <div class="flex gap-8 md:gap-11 justify-center md:text-xl text-center">
                     <div class="flex flex-col gap-1">
                         <div class="js-countdown-timer-days flex font-bold text-6xl md:text-8xl">00</div>
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="js-countdown-timer flex flex-col gap-2 text-center">
-                <p class="text-2xl">Countdown continues till <strong class="js-countdown-timer-label">--</strong>.</p>
+                <p class="text-2xl">Countdown continues till <strong class="js-countdown-timer-label inline-block">--</strong>.</p>
                 <div class="flex gap-8 md:gap-11 justify-center md:text-xl text-center">
                     <div class="flex flex-col gap-1">
                         <div class="js-countdown-timer-days flex font-bold text-6xl md:text-8xl">00</div>
@@ -75,7 +75,7 @@
 
     const _timeZone = 'Asia/Manila';
     const _currentDateTime = DateTime.now().setZone(_timeZone); // get current date & time
-    const _minDateTime = _currentDateTime.plus({minutes: 2}).set({second: 0}); // set minimum date to select
+    const _minDateTime = _currentDateTime.plus({minutes: 3}).set({second: 0}); // set minimum date to select
 
     const _dateTimePicker = document.querySelector('.js-datetime-picker'); // input; date & time picker
 
