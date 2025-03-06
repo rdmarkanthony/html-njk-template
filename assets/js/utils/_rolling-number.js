@@ -2,7 +2,6 @@ const { animate } = window.popmotion;
 class _rollingNumber {
     constructor(props) {
         this.target = props.target ?? null;
-        this.debug = props.debug ?? false;
 
         this.el = {
             main: document.createElement("div"),
@@ -14,9 +13,12 @@ class _rollingNumber {
         this.maxNumber = Math.min(props.maxNumber ?? 9, 9) + 1;
         this.duration = props.duration ?? 750;
         this.currentNumber = null;
+        this.startNumber = props.startNumber ?? 0;
 
         this.height = 0;
         this.currentOffset = 0;
+
+        this.debug = props.debug ?? false;
 
         if (this.target) this.init();
     }
@@ -46,7 +48,7 @@ class _rollingNumber {
 
             _resizeTimer = setTimeout(() => this.resize(), 10);
         });
-        this.resize();
+        this.resize("init");
 
         if (this.debug) console.log("_rollingNumber", this);
     }
@@ -101,18 +103,19 @@ class _rollingNumber {
         });
 
         // animate the width
-        animate({
-            from: this.el.numbers[_from].querySelector("span").offsetWidth,
-            to: this.el.numbers[_to].querySelector("span").offsetWidth,
-            duration: _duration * 0.5,
-            elapsed: _duration * 0.5 * -1,
-            onUpdate: (value) => {
-                this.target.style.width = `${value}px`;
-            },
-        });
+        if (!this.numeric)
+            animate({
+                from: this.el.numbers[_from].querySelector("span").offsetWidth,
+                to: this.el.numbers[_to].querySelector("span").offsetWidth,
+                duration: _duration * 0.5,
+                elapsed: _duration * 0.5 * -1,
+                onUpdate: (value) => {
+                    this.target.style.width = `${value}px`;
+                },
+            });
     }
 
-    resize() {
+    resize(status) {
         let _height = 0;
 
         this.el.numbers.forEach((item) => {
@@ -121,17 +124,18 @@ class _rollingNumber {
 
         if (_height === this.height) return;
 
-        this.target.style.width = `${
-            this.el.numbers[this.currentNumber ?? 0].querySelector("span").offsetWidth
-        }px`;
+        if (!this.numeric)
+            this.target.style.width = `${
+                this.el.numbers[this.currentNumber ?? 0].querySelector("span").offsetWidth
+            }px`;
 
         this.height = _height;
         this.target.style.height = `${_height}px`;
 
         // need to reposition
         animate({
-            from: this.currentOffset,
-            to: this.currentNumber * this.height,
+            from: status === "init" ? this.startNumber * this.height : this.currentOffset,
+            to: (status === "init" ? this.startNumber : this.currentNumber) * this.height,
             duration: this.duration,
             onUpdate: (value) => {
                 this.el.main.style.transform = `translate3d(0, -${value}px, 0)`;
