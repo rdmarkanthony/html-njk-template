@@ -81,6 +81,7 @@ class _youtubePlayer {
                 showinfo: 0,
                 modestbranding: 1,
                 rel: 0,
+                playlist: this.autoplay ? this.id : null,
             },
             events: {
                 onReady: (event) => {
