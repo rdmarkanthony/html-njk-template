@@ -80,10 +80,11 @@ gulp.task("scripts", () => {
             // libraries
             // "./assets/js/lib/jquery.min.js",
             // "./assets/js/lib/jquery-ui.min.js",
-            "./assets/js/lib/splittype.min.js",
+            "./assets/js/lib/splittype.min.js", // for animate
             "./assets/js/lib/popmotion.min.js",
-            "./assets/js/lib/luxon.min.js",
-            "./assets/js/lib/flatpickr.js",
+            "./assets/js/lib/luxon.min.js", // for countdown
+            "./assets/js/lib/flatpickr.js", // for date picker
+            "./assets/js/lib/hls.min.js", // for video player
 
             // utils
             "./assets/js/utils/**/*.js",

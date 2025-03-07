@@ -38,10 +38,27 @@ class _videoPlayer {
         this.el.video.style.height = "100%";
 
         this.el.video.controls = this.controls;
-        this.el.video.muted = this.autoplay;
+        this.el.video.muted = this.autoplay; // if muted & autoplay
         this.el.video.loop = this.autoplay;
         this.el.video.autoplay = this.autoplay;
-        this.el.video.src = this.src;
+
+        if (this.src.endsWith(".m3u8")) {
+            // if m3u8 file
+            if (typeof Hls !== "undefined" && Hls.isSupported()) {
+                this.hls = new Hls();
+                this.hls.loadSource(this.src);
+                this.hls.attachMedia(this.el.video);
+                this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                    if (this.autoplay) this.el.video.play();
+                });
+            } else if (this.el.video.canPlayType("application/vnd.apple.mpegurl")) {
+                this.el.video.src = this.src;
+            } else {
+                console.error("HLS is not supported in this browser.");
+            }
+        } else {
+            this.el.video.src = this.src; // for standard
+        }
 
         this.el.video.addEventListener("play", () => {
             this.target.classList.add("video-playing");
