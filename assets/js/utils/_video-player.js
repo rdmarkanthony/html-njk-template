@@ -1,0 +1,143 @@
+class _videoPlayer {
+    constructor(props) {
+        this.target = props.target ?? null;
+        this.src = props.src ?? null;
+
+        if (!this.target && !this.src) return;
+
+        this.el = {
+            video: document.createElement("video"),
+        };
+
+        this.autoplay = props.autoplay ?? false;
+        this.controls = props.controls || !this.autoplay;
+        this.stretch = props.stretch ?? false;
+
+        this.isPlaying = false;
+
+        this.debug = props.debug ?? false;
+
+        this.events = props.events ?? {}; // for events eg. 'beforeInit'
+        this.listeners = {};
+
+        this.init();
+    }
+
+    init() {
+        this.emit("beforeInit");
+
+        if (!window._videoPlayer) window._videoPlayer = []; // storage for yt players
+        window._videoPlayer.push(this);
+
+        this.target.appendChild(this.el.video);
+        this.el.video.style.position = "absolute";
+        this.el.video.style.top = 0;
+        this.el.video.style.left = 0;
+        this.el.video.style.width = "100%";
+        this.el.video.style.maxWidth = "max-content";
+        this.el.video.style.height = "100%";
+
+        this.el.video.controls = this.controls;
+        this.el.video.muted = this.autoplay;
+        this.el.video.loop = this.autoplay;
+        this.el.video.autoplay = this.autoplay;
+        this.el.video.src = this.src;
+
+        this.el.video.addEventListener("play", () => {
+            this.target.classList.add("video-playing");
+            this.target.classList.remove("video-paused", "video-ended");
+
+            if (!this.autoplay) _videoPlayer.pauseAll(this);
+        });
+        this.el.video.addEventListener("pause", () => {
+            this.target.classList.add("video-paused");
+            this.target.classList.remove("video-playing", "video-ended");
+        });
+        this.el.video.addEventListener("ended", () => {
+            this.target.classList.add("video-ended");
+            this.target.classList.remove("video-playing", "video-paused");
+        });
+
+        if (this.stretch) {
+            if (getComputedStyle(this.target).overflow === "visible")
+                this.target.style.overflow = "hidden";
+
+            let _resizeTimer = null;
+            window.addEventListener("resize", () => {
+                clearTimeout(_resizeTimer);
+
+                _resizeTimer = setTimeout(() => this.resize(), 50);
+            });
+            this.resize();
+        }
+
+        this.emit("afterInit");
+    }
+
+    resize() {
+        if (!this.stretch) return;
+
+        const _parent = {
+            width: this.target.offsetWidth,
+            height: this.target.offsetHeight,
+        };
+        const _new = {
+            width: 0,
+            height: 0,
+        };
+        const _aspectRatio = 16 / 9;
+
+        if (_parent.width / _parent.height > _aspectRatio) {
+            _new.width = _parent.width;
+            _new.height = _parent.width / _aspectRatio;
+        } else {
+            _new.width = _parent.height * _aspectRatio;
+            _new.height = _parent.height;
+        }
+
+        this.el.video.style.top = `${(_parent.height - _new.height) / 2}px`;
+        this.el.video.style.left = `${(_parent.width - _new.width) / 2}px`;
+        this.el.video.style.width = `${_new.width}px`;
+        this.el.video.style.height = `${_new.height}px`;
+    }
+
+    // register event listener
+    on(event, callback) {
+        if (!this.listeners[event]) this.listeners[event] = [];
+        this.listeners[event].push(callback);
+    }
+
+    // remove event listener
+    off(event, callback) {
+        if (!this.listeners[event]) return;
+        this.listeners[event] = this.listeners[event].filter((cb) => cb !== callback);
+    }
+
+    // emit certain event
+    emit(event) {
+        if (this.events[event]) this.events[event](this);
+
+        if (!this.listeners[event]) return;
+        this.listeners[event].forEach((callback) => callback(this));
+    }
+
+    static pauseAll(currentPlayer) {
+        if (window._videoPlayer)
+            window._videoPlayer.forEach((item) => {
+                // for youtube
+                if (
+                    item.player &&
+                    !item.autoplay &&
+                    item.player.getPlayerState &&
+                    item.player.getPlayerState() === 1
+                ) {
+                    if (!currentPlayer || item !== currentPlayer) item.player.pauseVideo();
+                }
+
+                // for video
+                if (item.el.video && !item.autoplay) {
+                    if (!currentPlayer || item !== currentPlayer) item.el.video.pause();
+                }
+            });
+    }
+}
