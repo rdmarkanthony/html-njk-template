@@ -8,7 +8,7 @@ const _youtubeAPI = () => {
     document.head.appendChild(_tag);
 
     window.onYouTubeIframeAPIReady = () => {
-        if (window._videoPlayer) window._videoPlayer.forEach((item) => item.generate());
+        if (window._videoPlayer) window._videoPlayer.forEach((item) => item.generate?.());
     };
 };
 
@@ -28,10 +28,9 @@ class _youtubePlayer {
 
         this.autoplay = props.autoplay ?? false;
         this.controls = props.controls !== undefined ? (props.controls ? 1 : 0) : 1;
+        this.stretch = props.stretch ?? false;
 
         this.isPlaying = false;
-
-        this.stretch = props.stretch ?? false;
 
         this.debug = props.debug ?? false;
 
@@ -87,16 +86,21 @@ class _youtubePlayer {
                     this.emit("onReady");
                 },
                 onStateChange: (event) => {
-                    if (event.data === 0) {
-                        this.target.classList.remove("video-playing");
-                    } else {
+                    if (event.data === 1) {
                         this.target.classList.add("video-playing");
+                        this.target.classList.remove("video-paused", "video-ended");
+                    } else if (event.data === 2) {
+                        this.target.classList.add("video-paused");
+                        this.target.classList.remove("video-playing", "video-ended");
+                    } else if (event.data === 0) {
+                        this.target.classList.add("video-ended");
+                        this.target.classList.remove("video-playing", "video-paused");
                     }
 
                     // pause other playing video
                     if (event.data === 1) {
                         this.isPlaying = true;
-                        _youtubePlayer.pauseAll(this);
+                        if (!this.autoplay) _youtubePlayer.pauseAll(this);
                     } else {
                         this.isPlaying = false;
                     }
@@ -172,15 +176,22 @@ class _youtubePlayer {
     }
 
     static pauseAll(currentPlayer) {
-        window._videoPlayer.forEach((item) => {
-            if (
-                item.player &&
-                !item.autoplay &&
-                item.player.getPlayerState &&
-                item.player.getPlayerState() === 1
-            ) {
-                if (!currentPlayer || item !== currentPlayer) item.player.pauseVideo();
-            }
-        });
+        if (window._videoPlayer)
+            window._videoPlayer.forEach((item) => {
+                // for youtube
+                if (
+                    item.player &&
+                    !item.autoplay &&
+                    item.player.getPlayerState &&
+                    item.player.getPlayerState() === 1
+                ) {
+                    if (!currentPlayer || item !== currentPlayer) item.player.pauseVideo();
+                }
+
+                // for video
+                if (item.el.video && !item.autoplay) {
+                    if (!currentPlayer || item !== currentPlayer) item.el.video.pause();
+                }
+            });
     }
 }

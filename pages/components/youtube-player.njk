@@ -61,8 +61,9 @@
         const _stretch = _dataset[2] && _dataset[2] === 'stretch' ? true : false;
 
         if(!_id) return;
+        _item.removeAttribute('data-yt-player');
 
-        const _player = new _youtubePlayer({
+        new _youtubePlayer({
             target: _item,
             id: _id,
             autoplay: _autoplay ? true : false,
@@ -71,14 +72,14 @@
             events: {
                 beforeInit: (instance) => {
                     // hide the loading state of muted vids
-                    if(_autoplay) {
+                    if(instance.autoplay) {
                         instance.el.player.style.transition = 'opacity 0.8s';
                         instance.el.player.style.opacity = 0;
                     }
                 },
                 onStateChange: (instance) => {
                     // show the muted vids after loading
-                    if(_autoplay && instance.player.getPlayerState) {
+                    if(instance.autoplay && instance.player.getPlayerState) {
                         if(instance.player.getPlayerState() === 1) instance.el.player.style.opacity = '';
                     }
                 }
