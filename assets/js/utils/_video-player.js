@@ -34,7 +34,7 @@ class _videoPlayer {
         this.el.video.style.top = 0;
         this.el.video.style.left = 0;
         this.el.video.style.width = "100%";
-        this.el.video.style.maxWidth = "max-content";
+        this.el.video.style.maxWidth = "inherit";
         this.el.video.style.height = "100%";
 
         this.el.video.controls = this.controls;
