@@ -72,7 +72,7 @@
         const _video = _videos.find((item) => item[0] === _src);
         if(_video) _src = _video[1];
 
-        new _videoPlayer({
+        const _player = new _videoPlayer({
             target: _item,
             src: _src,
             autoplay: _autoplay,
@@ -83,13 +83,12 @@
                         instance.el.video.style.transition = 'opacity 0.8s';
                         instance.el.video.style.opacity = 0;
                     }
-                },
-                afterInit: (instance) => {
-                    instance.el.video.addEventListener('play', () => {
-                        instance.el.video.style.opacity = '';
-                    });
                 }
             }
+        });
+
+        _player.on('play', (instance) => {
+            instance.el.video.style.opacity = '';
         });
     });
 </script>

@@ -65,14 +65,20 @@ class _videoPlayer {
             this.target.classList.remove("video-paused", "video-ended");
 
             if (!this.autoplay) _videoPlayer.pauseAll(this);
+
+            this.emit("play");
         });
         this.el.video.addEventListener("pause", () => {
             this.target.classList.add("video-paused");
             this.target.classList.remove("video-playing", "video-ended");
+
+            this.emit("pause");
         });
         this.el.video.addEventListener("ended", () => {
             this.target.classList.add("video-ended");
             this.target.classList.remove("video-playing", "video-paused");
+
+            this.emit("ended");
         });
 
         if (this.stretch) {
