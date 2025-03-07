@@ -8,7 +8,7 @@
         <h1 class="text-5xl md:text-7xl">Youtube player</h1>
     </div>
     <div class="absolute top-0 left-0 w-full h-full bg-black overflow-hidden pointer-events-none">
-        <div class="absolute top-0 left-0 w-full h-full bg-black overflow-hidden" data-yt-player="gPIfZ2Zrv5w" data-stretch muted></div>
+        <div class="absolute top-0 left-0 w-full h-full bg-black overflow-hidden" data-yt-player="gPIfZ2Zrv5w,autoplay,stretch"></div>
         <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
     </div>
 </section>
@@ -25,19 +25,19 @@
             </div>
             <div class="flex flex-col gap-4">
                 <div class="text-lg md:text-2xl">Autoplay</div>
-                <div class="relative aspect-video bg-black" data-yt-player="z9Ug-3qhrwY" muted>
+                <div class="relative aspect-video bg-black" data-yt-player="z9Ug-3qhrwY,autoplay">
                     <div class="z-10 absolute top-0 left-0 w-full h-full"></div>
                 </div>
             </div>
             <div class="flex flex-col gap-4">
                 <div class="text-lg md:text-2xl">Stretched: Square</div>
-                <div class="relative aspect-square bg-black" data-yt-player="z9Ug-3qhrwY" data-stretch muted>
+                <div class="relative aspect-square bg-black" data-yt-player="z9Ug-3qhrwY,autoplay,stretch">
                     <div class="z-10 absolute top-0 left-0 w-full h-full"></div>
                 </div>
             </div>
             <div class="flex flex-col gap-4">
                 <div class="text-lg md:text-2xl">Stretched: Vertical</div>
-                <div class="relative aspect-[9/16] bg-black" data-yt-player="z9Ug-3qhrwY" data-stretch muted>
+                <div class="relative aspect-[9/16] bg-black" data-yt-player="z9Ug-3qhrwY,autoplay,stretch">
                     <div class="z-10 absolute top-0 left-0 w-full h-full"></div>
                 </div>
             </div>
@@ -50,38 +50,35 @@
 <script>
     // Requirements
         // JS
-            // /assets/js/lib/flatpickr.js // (optional; for date & time picker)
-            // /assets/js/lib/luxon.min.js // to get current date & time
-            // /assets/js/utils/_countdown-timer.js // for countdown interval
-            // /assets/js/utils/_rolling-number.js // for animated rolling number
-        // CSS
-            // /assets/scss/_flatpickr.min.scss (optional)
+            // /assets/js/utils/_youtube-player.js
     
     document.querySelectorAll('[data-yt-player]').forEach((item) => {
         const _item = item;
-        const _id = _item.dataset.ytPlayer ?? null;
-        const _stretch = _item.hasAttribute('data-stretch') ?? false;
-        const _muted = _item.hasAttribute('muted') ?? _item.hasAttribute('data-muted') ?? false;
+        const _dataset = _item.dataset.ytPlayer.split(',');
+        
+        const _id = _dataset[0] ? _dataset[0] : null;
+        const _autoplay = _dataset[1] && _dataset[1] === 'autoplay' ? true : false;
+        const _stretch = _dataset[2] && _dataset[2] === 'stretch' ? true : false;
 
         if(!_id) return;
 
         const _player = new _youtubePlayer({
             target: _item,
             id: _id,
-            muted: _muted ? true : false,
-            controls: _muted ? false : true,
+            autoplay: _autoplay ? true : false,
+            controls: _autoplay ? false : true,
             stretch: _stretch,
             events: {
                 beforeInit: (instance) => {
                     // hide the loading state of muted vids
-                    if(_muted) {
+                    if(_autoplay) {
                         instance.el.player.style.transition = 'opacity 0.8s';
                         instance.el.player.style.opacity = 0;
                     }
                 },
                 onStateChange: (instance) => {
                     // show the muted vids after loading
-                    if(_muted && instance.player.getPlayerState) {
+                    if(_autoplay && instance.player.getPlayerState) {
                         if(instance.player.getPlayerState() === 1) instance.el.player.style.opacity = '';
                     }
                 }

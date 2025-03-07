@@ -8,7 +8,7 @@ const _youtubeAPI = () => {
     document.head.appendChild(_tag);
 
     window.onYouTubeIframeAPIReady = () => {
-        if (window._youtubePlayer) window._youtubePlayer.forEach((item) => item.generate());
+        if (window._videoPlayer) window._videoPlayer.forEach((item) => item.generate());
     };
 };
 
@@ -26,8 +26,7 @@ class _youtubePlayer {
             player: this.target.querySelector(".js-yt-player") ?? document.createElement("div"),
         };
 
-        this.muted = props.muted ?? false;
-        this.autoplay = this.autoplay ?? this.muted;
+        this.autoplay = props.autoplay ?? false;
         this.controls = props.controls !== undefined ? (props.controls ? 1 : 0) : 1;
 
         this.isPlaying = false;
@@ -45,11 +44,11 @@ class _youtubePlayer {
     init() {
         this.emit("beforeInit");
 
-        if (!window._youtubePlayer) {
-            window._youtubePlayer = []; // storage for yt players
+        if (!window._videoPlayer) {
+            window._videoPlayer = []; // storage for yt players
             _youtubeAPI(); // call yt api
         }
-        window._youtubePlayer.push(this);
+        window._videoPlayer.push(this);
 
         // for player/iframe
         if (!this.target.contains(this.el.player)) {
@@ -76,7 +75,7 @@ class _youtubePlayer {
                 playsinline: 1,
                 autoplay: this.autoplay ? 1 : 0,
                 loop: this.autoplay ? 1 : 0,
-                mute: this.muted ? 1 : 0,
+                mute: this.autoplay ? 1 : 0,
                 controls: this.controls,
                 showinfo: 0,
                 modestbranding: 1,
@@ -117,7 +116,7 @@ class _youtubePlayer {
             window.addEventListener("resize", () => {
                 clearTimeout(_resizeTimer);
 
-                _resizeTimer = setTimeout(() => this.resize(), 100);
+                _resizeTimer = setTimeout(() => this.resize(), 50);
             });
             this.resize();
         }
@@ -173,7 +172,7 @@ class _youtubePlayer {
     }
 
     static pauseAll(currentPlayer) {
-        window._youtubePlayer.forEach((item) => {
+        window._videoPlayer.forEach((item) => {
             if (
                 item.player &&
                 !item.autoplay &&
