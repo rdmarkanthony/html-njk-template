@@ -42,6 +42,10 @@ class _videoPlayer {
         this.el.video.loop = this.autoplay;
         this.el.video.autoplay = this.autoplay;
 
+        this.el.video.playsInline = true; // enable inline playback
+        this.el.video.setAttribute("playsinline", "");
+        this.el.video.setAttribute("webkit-playsinline", "");
+
         if (this.src.endsWith(".m3u8")) {
             // if m3u8 file
             if (typeof Hls !== "undefined" && Hls.isSupported()) {
