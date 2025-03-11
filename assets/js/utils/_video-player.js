@@ -26,7 +26,7 @@ class _videoPlayer {
     init() {
         this.emit("beforeInit");
 
-        if (!window._videoPlayer) window._videoPlayer = []; // storage for yt players
+        if (!window._videoPlayer) window._videoPlayer = []; // storage for video players
         window._videoPlayer.push(this);
 
         this.target.appendChild(this.el.video);

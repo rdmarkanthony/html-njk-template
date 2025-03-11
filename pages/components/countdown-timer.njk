@@ -117,9 +117,7 @@
 
                     // for _rollingNumber max digit 0 to 9
                     let _maxNumber = 9;
-                    if(time === 'hours') {
-                        _maxNumber = index === 0 ? 2 : 4; // 24 is max number of hours (eg. 24 hours)
-                    }
+                    if(time === 'hours' && index === 0) _maxNumber = 2; // 24 is max number of hours (eg. 24 hours)
                     if((time === 'minutes' || time === 'seconds') && index === 0) _maxNumber = 5; // 59 is max number of minutes and seconds (eg. 59 seconds)
 
                     // create _rollingNumber instance

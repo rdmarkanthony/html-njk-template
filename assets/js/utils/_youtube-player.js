@@ -43,11 +43,9 @@ class _youtubePlayer {
     init() {
         this.emit("beforeInit");
 
-        if (!window._videoPlayer) {
-            window._videoPlayer = []; // storage for yt players
-            _youtubeAPI(); // call yt api
-        }
+        if (!window._videoPlayer) window._videoPlayer = []; // storage for video players
         window._videoPlayer.push(this);
+        _youtubeAPI(); // call yt api
 
         // for player/iframe
         if (!this.target.contains(this.el.player)) {
