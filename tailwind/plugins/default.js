@@ -3,7 +3,7 @@ const plugin = require("tailwindcss/plugin");
 module.exports = plugin(function ({ addUtilities }) {
     addUtilities({
         ".ease, a, input[type='submit'], button": {
-            transition: "all var(--animate-delay) ease",
+            transition: "all var(--animation-delay) ease",
         },
         ".mobile-input": {
             appearance: "none",
@@ -30,7 +30,7 @@ module.exports = plugin(function ({ addUtilities }) {
             backgroundPosition: "100% 100%",
             backgroundRepeat: "no-repeat",
             transition:
-                "color var(--animate-delay) ease-in-out, background-size var(--animate-delay) ease-in-out",
+                "color var(--animation-delay) ease-in-out, background-size var(--animation-delay) ease-in-out",
             "&:hover": {
                 backgroundSize: "0% 3px",
             },
