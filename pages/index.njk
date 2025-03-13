@@ -4,7 +4,7 @@
 {% from "components/atoms/button.njk" import renderButton %}
 
 {% block content %}
-<div class="px-5 py-24">
+<section class="px-5 py-24">
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>
@@ -86,8 +86,8 @@
             </div>
         </div>
     </div>
-</div>
-<div id="flex" class="px-5 py-24 bg-slate-50">
+</section>
+<section id="flex" class="px-5 py-24 bg-slate-50">
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>
@@ -134,19 +134,27 @@
             </div>
         </div>
     </div>
-</div>
-<div id="content1" class="px-5 py-24">
+</section>
+<section id="content1" class="px-5 py-24">
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>Autoscroll</h1>
         </div>
         <div class="section-par">
-            <p><a data-auto-scroll href="#flex">Autoscroll to previous content</a></p>
-            <p><a data-auto-scroll href="#button">Autoscroll to next content</a></p>
+            <p>
+                <a data-auto-scroll class="link-underline hover:text-blue-600" href="#flex">
+                    Autoscroll to previous content
+                </a>
+            </p>
+            <p>
+                <a data-auto-scroll class="link-underline2 hover:text-green-600" href="#button">
+                    Autoscroll to next content
+                </a>
+            </p>
         </div>
     </div>
-</div>
-<div id="button" class="px-5 py-24 bg-slate-50">
+</section>
+<section id="button" class="px-5 py-24 bg-slate-50">
     <div class="container mx-auto">
         <div class="mb-3">
             <h1>
@@ -180,27 +188,25 @@
             <div>
                 {{
                     renderButton({
-                        'label': 'Primary Button',
-                        'url': 'https://www.youtube.com/',
-                        'target': '_blank',
-                        'class': 'primary-button',
-                        'attr': [
-                            {'data-fancybox': ''}
-                        ]
+                        label: "Primary Button",
+                        url: "https://www.youtube.com/",
+                        target: "_blank",
+                        class: "primary-button",
+                        attr: [{ "data-fancybox": "" }]
                     })
                 }}
             </div>
             <div>
                 {{
                     renderButton({
-                        'type': 'secondary',
-                        'label': 'Secondary Button'
+                        type: "secondary",
+                        label: "Secondary Button"
                     })
                 }}
             </div>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}
 
 {% block footerscript %}
