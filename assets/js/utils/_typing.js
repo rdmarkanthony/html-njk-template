@@ -124,8 +124,8 @@ class _typing {
         document.head.appendChild(_style);
 
         _style.innerHTML =
-            `.js-typing-cursor { opacity: 0; font-weight: 100; line-height: normal; }` +
-            ` @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }` +
-            `.js-typing-cursor.cursor-visible { animation: blink 0.7s infinite; }`;
+            `.js-typing-cursor { opacity: 0; position: relative; top: -0.25rem; font-weight: 100; }` +
+            `.js-typing-cursor.cursor-visible { animation: blink 0.7s infinite; }` +
+            ` @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }`;
     }
 }
