@@ -1,0 +1,27 @@
+{% set pageTitle = 'Breakpoints | Components' %}
+
+{% extends 'layout.njk' %}
+
+{% block content %}
+<section class="flex items-center justify-center w-screen h-screen bg-slate-500 xxs:bg-red-500 xs:bg-orange-500 sm:bg-yellow-500 md:bg-lime-500 lg:bg-green-500 xl:bg-emerald-500 2xl:bg-teal-500 3xl:bg-blue-500 4xl:bg-violet-500 text-white transition-colors">
+    <div class="text-2xl xs:text-3xl sm:text-5xl md:text-7xl text-center">
+        <div class="hidden xxs:block xs:hidden">xxs: 0px</div>
+        <div class="hidden xs:block sm:hidden">xs: 320px (iphone se)</div>
+        <div class="hidden sm:block md:hidden">sm: 414px (iphone)</div>
+        <div class="hidden md:block lg:hidden">md: 768px (ipad mini)</div>
+        <div class="hidden lg:block xl:hidden">lg: 992px (ipad air)</div>
+        <div class="hidden xl:block 2xl:hidden">xl: 1024px (ipad landscape)</div>
+        <div class="hidden 2xl:block 3xl:hidden">2xl: 1240px (macbook air 13")</div>
+        <div class="hidden 3xl:block 4xl:hidden">3xl: 1440px (macbook pro 14")</div>
+        <div class="hidden 4xl:block">4xl: 1920px (desktop)</div>
+    </div>
+    <div class="absolute top-0 left-0 p-4"><span class="js-window-width">0</span> <span>current window width</span></div>
+</section>
+{% endblock %}
+
+{% block footerscript %}
+<script>
+    const _label = document.querySelector('.js-window-width');
+    projName.event.resize(() => _label.innerHTML = `${projName.width()}px`);
+</script>
+{% endblock %}
