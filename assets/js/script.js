@@ -150,13 +150,19 @@ const projName = {
         },
         getVars() {
             let vars = {};
-            window.location.search
-                .substring(1)
-                .split("&")
-                .forEach((param) => {
-                    const [key, value] = param.split("=");
-                    if (key) vars[decodeURIComponent(key)] = decodeURIComponent(value || "");
-                });
+            let query = "";
+
+            if (window.location.search) {
+                query = window.location.search.substring(1);
+            } else if (window.location.hash.includes("?")) {
+                query = window.location.hash.split("?")[1];
+            }
+
+            query.split("&").forEach((param) => {
+                const [key, value] = param.split("=");
+                if (key) vars[decodeURIComponent(key)] = decodeURIComponent(value || "");
+            });
+
             return vars;
         },
         setVars(key, value) {
@@ -212,10 +218,10 @@ const projName = {
         },
     },
     width() {
-        return document.documentElement.clientWidth;
+        return window.innerWidth;
     },
     height() {
-        return document.documentElement.clientHeight;
+        return window.innerHeight;
     },
     listeners: {},
     on(event, callback) {
