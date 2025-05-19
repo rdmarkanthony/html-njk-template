@@ -2,7 +2,7 @@ class _lightbox {
     constructor(props) {
         if (!window._lightboxList) window._lightboxList = []; // storage for all opened lightbox
 
-        this.modal = props.modal ?? false;
+        this.modal = props.modal || false;
 
         this.target = "";
         this.el = {
@@ -17,7 +17,9 @@ class _lightbox {
             original: "",
         };
 
-        this.events = props.events ?? {}; // for events eg. 'BeforeShow'
+        this.animation = props.animation || "zoom";
+
+        this.events = props.events || {}; // for events eg. 'BeforeShow'
         this.listeners = {};
 
         if (this.isInLightbox(props.target)) return; // prevent duplicate lightbox instances
@@ -34,19 +36,57 @@ class _lightbox {
     }
 
     init(props) {
+        this.style();
+
         if (!this.modal) this.hide("all"); // hide existing non-modal lightboxes
 
         // create main lightbox elements
         this.target = document.createElement("div");
-        this.target.classList.add("js-lightbox");
+        this.target.classList.add(
+            "js-lightbox",
+            "z-[500]",
+            "fixed",
+            "top-0",
+            "left-0",
+            "w-full",
+            "h-full"
+        );
         document.body.appendChild(this.target);
 
         this.el.cover = document.createElement("div");
-        this.el.cover.classList.add("js-lightbox-cover");
+        this.el.cover.classList.add(
+            "js-lightbox-cover",
+            "z-[1]",
+            "fixed",
+            "top-0",
+            "left-0",
+            "w-full",
+            "h-full",
+            "bg-black",
+            "bg-opacity-50"
+        );
+
         this.target.appendChild(this.el.cover);
 
         this.el.main = document.createElement("div");
-        this.el.main.classList.add("js-lightbox-main");
+        this.el.main.classList.add(
+            "js-lightbox-main",
+            "z-[2]",
+            "fixed",
+            "top-0",
+            "left-0",
+            "w-full",
+            "h-full",
+            "p-4",
+            "pt-16",
+            "xl:p-10",
+            "xl:pt-16",
+            "overflow-auto",
+            "scrolling-touch",
+            "[.lightbox-short_&]:flex",
+            "[.lightbox-short_&]:items-center",
+            "[.lightbox-short_&]:justify-center"
+        );
         this.target.appendChild(this.el.main);
 
         // set target content
@@ -65,13 +105,24 @@ class _lightbox {
         // default content if none is provided
         if (!this.content.original) {
             this.content.original = document.createElement("div");
-            this.content.original.classList.add("lightbox-content", "container", "mx-auto");
+            this.content.original.classList.add(
+                "lightbox-content",
+                "relative",
+                "container",
+                "max-w-[30rem]",
+                "mx-auto",
+                "px-8",
+                "py-12",
+                "rounded-2xl",
+                "bg-white",
+                "shadow-[0_26px_30px_rgba(0,0,0,0.05)]"
+            );
             this.content.original.innerHTML =
                 '<div class="section-par text-center"><h3>Lightbox content not found!</h3></div>';
         }
 
         this.el.main.appendChild(this.content.original);
-        this.content.original.classList.add("js-lightbox-center");
+        this.content.original.classList.add("js-lightbox-center", "relative");
 
         // if non-modal
         if (!this.modal) {
@@ -98,7 +149,20 @@ class _lightbox {
     // create close btn
     createCloseButton() {
         this.el.btn.close = document.createElement("a");
-        this.el.btn.close.classList.add("js-lightbox-btn", "btn-close");
+        this.el.btn.close.classList.add(
+            "js-lightbox-btn",
+            "btn-close",
+            "z-[3]",
+            "block",
+            "fixed",
+            "top-0",
+            "right-0",
+            "p-4",
+            "text-white",
+            "hover:text-red-500",
+            "transition-colors",
+            "duration-200"
+        );
         this.el.btn.close.href = "#";
         this.el.btn.close.innerHTML = `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.207 6.207a1 1 0 0 0-1.414-1.414L12 10.586 6.207 4.793a1 1 0 0 0-1.414 1.414L10.586 12l-5.793 5.793a1 1 0 1 0 1.414 1.414L12 13.414l5.793 5.793a1 1 0 0 0 1.414-1.414L13.414 12l5.793-5.793z" fill="currentColor"/></svg>`;
         this.target.appendChild(this.el.btn.close);
@@ -127,18 +191,54 @@ class _lightbox {
             "lightbox-short",
             this.content.original.offsetHeight < _mainHeight
         );
+
+        this.emit("resize");
     }
 
     // show the lightbox
-    show() {
+    show(status, callback, delay = null) {
         document.body.classList.add("lightbox-active");
         this.target.classList.add("lightbox-visible");
 
-        setTimeout(() => this.emit("afterShow"), 500);
+        if (this.animation !== "none") {
+            // animate the cover
+            this.el.cover.classList.add("lightbox-animate", "lightbox-fadeIn");
+
+            // animate the main content
+            this.content.original.classList.add("lightbox-animate");
+            if (this.animation === "fade") this.content.original.classList.add("lightbox-fadeIn");
+            if (this.animation === "fadeUp")
+                this.content.original.classList.add("lightbox-fadeInUp");
+            if (this.animation === "zoom") this.content.original.classList.add("lightbox-zoomIn");
+
+            // animate the close btn
+            if (this.el.btn.close)
+                this.el.btn.close.classList.add("lightbox-animate", "lightbox-fadeIn");
+        }
+
+        // get animation duration for timeout
+        const _style = getComputedStyle(this.content.original);
+        const _animationDuration =
+            parseFloat(_style.animationDuration) + parseFloat(_style.animationDelay);
+
+        setTimeout(() => {
+            // remove the animate classes
+            this.el.cover.classList.remove("lightbox-animate", "lightbox-fadeIn");
+            this.content.original.classList.remove(
+                "lightbox-animate",
+                "lightbox-fadeIn",
+                "lightbox-fadeInUp",
+                "lightbox-zoomIn"
+            );
+            if (this.el.btn.close)
+                this.el.btn.close.classList.remove("lightbox-animate", "lightbox-fadeIn");
+
+            this.emit("afterShow");
+        }, Math.max(delay ? delay : (_animationDuration ? _animationDuration : 0) * 1000, 0));
     }
 
     // hide the lightbox
-    hide(status) {
+    hide(status, callback, delay = null) {
         // if want to hide all existing lightbox
         if (status === "all") {
             [...window._lightboxList].forEach((item, index, arr) => {
@@ -153,8 +253,44 @@ class _lightbox {
         this.target.classList.remove("lightbox-visible");
         this.target.classList.add("lightbox-hiding");
 
+        // animate the cover
+        if (this.animation !== "none") {
+            this.el.cover.classList.add("lightbox-animate", "lightbox-fadeOut");
+
+            // animate the main content
+            this.content.original.classList.add("lightbox-animate");
+            if (this.animation === "fade") this.content.original.classList.add("lightbox-fadeOut");
+            if (this.animation === "fadeUp")
+                this.content.original.classList.add("lightbox-fadeOutDown");
+            if (this.animation === "zoom") this.content.original.classList.add("lightbox-zoomOut");
+
+            // animate the close btn
+            if (this.el.btn.close)
+                this.el.btn.close.classList.add("lightbox-animate", "lightbox-fadeOut");
+        }
+
+        // get animation duration for timeout
+        const _style = getComputedStyle(this.content.original);
+        const _animationDuration =
+            parseFloat(_style.animationDuration) + parseFloat(_style.animationDelay);
+
         // clean any traces of this instance
         setTimeout(() => {
+            // remove the animate classes
+            this.el.cover.classList.remove("lightbox-animate", "lightbox-fadeOut");
+            this.content.original.classList.remove(
+                "lightbox-animate",
+                "lightbox-fadeOut",
+                "lightbox-fadeOutDown",
+                "lightbox-zoomOut"
+            );
+            if (this.el.btn.close) {
+                this.el.btn.close.classList.add("lightbox-animate", "lightbox-fadeOut");
+
+                // remove the close btn
+                this.el.btn.close.remove();
+            }
+
             if (this.content.parent) this.content.parent.appendChild(this.content.original);
             this.content.original.classList.remove("js-lightbox-center");
 
@@ -165,7 +301,9 @@ class _lightbox {
                 document.body.classList.remove("lightbox-active");
 
             this.emit("afterClose");
-        }, 500);
+        }, Math.max(delay ? delay : (_animationDuration ? _animationDuration : 0) * 1000, 0));
+
+        if (callback) callback(this);
     }
 
     // register event listener
@@ -194,5 +332,31 @@ class _lightbox {
         [...window._lightboxList].forEach((item, index, arr) => {
             if (status === "all" || index === arr.length - 1) item.hide();
         });
+    }
+
+    style() {
+        let _style = document.querySelector(".js-lightbox-style");
+        if (!_style) {
+            _style = document.createElement("style");
+            _style.classList.add("js-lightbox-style");
+            document.head.appendChild(_style);
+
+            _style.innerHTML =
+                `.lightbox-active { overflow: hidden; }` +
+                `.scrolling-touch { overflow-scrolling: touch; -webkit-overflow-scrolling: touch; }` +
+                `.lightbox-animate { animation-duration: 0.5s; animation-timing-function: cubic-bezier(0.5, 0, 0, 1.25); animation-fill-mode: forwards; }` +
+                `.lightbox-fadeIn { animation-name: lightBoxFadeIn; animation-timing-function: ease; }` +
+                `.lightbox-fadeOut { animation-name: lightBoxFadeOut; animation-timing-function: ease; }` +
+                `.lightbox-fadeInUp { animation-name: lightBoxFadeInUp; }` +
+                `.lightbox-fadeOutDown { animation-name: lightBoxFadeOutDown; }` +
+                `.lightbox-zoomIn { animation-name: lightBoxZoomIn; }` +
+                `.lightbox-zoomOut { animation-name: lightBoxZoomOut; }` +
+                `@keyframes lightBoxFadeIn { 0% { opacity: 0; } 100% { opacity: 1; }}` +
+                `@keyframes lightBoxFadeOut { 0% { opacity: 1; } 100% { opacity: 0; }}` +
+                `@keyframes lightBoxFadeInUp { 0% { opacity: 0; transform: translate3d(0, 100%, 0); } 100% { opacity: 1; transform: translateZ(0); }}` +
+                `@keyframes lightBoxFadeOutDown { 0% { opacity: 1; } 100% { opacity: 0; transform: translate3d(0, 100%, 0); }}` +
+                `@keyframes lightBoxZoomIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); }}` +
+                `@keyframes lightBoxZoomOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.8); }}`;
+        }
     }
 }
