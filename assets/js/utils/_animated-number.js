@@ -76,6 +76,9 @@ class _animatedNumber {
     updateText(value) {
         if (!this.target) return;
 
-        this.target.innerText = parseFloat(value).toLocaleString();
+        this.target.innerText = parseFloat(value).toLocaleString(
+            undefined,
+            value % 1 !== 0 ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : {}
+        );
     }
 }
