@@ -60,7 +60,7 @@
     _button.addEventListener('click', (e) => {
         e.preventDefault();
 
-        const _currentValue = _cleanNumber(_label.innerHTML);
+        const _currentValue = _cleanNumber(_label.innerText) || 0;
         const _value = _cleanNumber(_input.value);
 
         if(isNaN(_value) || _value.length <= 0 || _instance) return;
@@ -69,6 +69,7 @@
             target: _label,
             from: parseFloat(_currentValue),
             to: parseFloat(_value),
+            decimals: parseFloat(_value) % 1 !== 0 ? 2 : null,
             duration: 500,
             callback: (animate) => {
                 _instance = null;

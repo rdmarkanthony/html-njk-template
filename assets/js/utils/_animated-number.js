@@ -9,6 +9,7 @@ class _animatedNumber {
             to: props.to ?? 0,
         };
         if (this.number.from === this.number.to) this.number.from = 0;
+        this.decimals = props.decimals || null;
 
         this.duration = props.duration ?? 500;
         this.steps = Math.max(props.steps ?? 10, this.duration / 50);
@@ -77,8 +78,10 @@ class _animatedNumber {
         if (!this.target) return;
 
         this.target.innerText = parseFloat(value).toLocaleString(
-            undefined,
-            value % 1 !== 0 ? { minimumFractionDigits: 2, maximumFractionDigits: 2 } : {}
+            "en-US",
+            this.decimals
+                ? { minimumFractionDigits: this.decimals, maximumFractionDigits: this.decimals }
+                : {}
         );
     }
 }
