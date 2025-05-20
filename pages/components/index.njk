@@ -3,6 +3,10 @@
 {% extends 'layout.njk' %}
 
 {% block content %}
+{#
+    animated text upon hover
+    https://vercel.com/ship
+#}
 <section class="section py-14 md:py-28 bg-slate-950 text-white">
     <div class="container w-[calc(100%-2rem)] mx-auto">
         <h1 class="text-5xl md:text-7xl">Components</h1>
@@ -69,4 +73,37 @@
         </ul>
     </div>
 </div>
+{% endblock %}
+
+{% block footerscript %}
+<script src="/assets/js/lib/gsap.min.js"></script>
+<script>
+    if(typeof gsap !== 'undefined') {
+        let _instance = null;
+
+        let _size = 'small';
+        const _updateCursor = (size = 'small') => {
+            if(size === _size) return;
+            _size = size;
+
+            gsap.to(_instance.el.bg, {
+                width: size === 'big' ? 48 : 16,
+                height: size === 'big' ? 48 : 16,
+                duration: 0.3
+            });
+        }
+
+        _instance = new _cursorBubble({
+            target: document.body,
+            events: {
+                init: (instance) => {
+                    instance.el.main.classList.add('mix-blend-difference');
+                },
+                mousemove: (instance, event) => {
+                    _updateCursor(event.target.tagName.toLowerCase() === 'a' ? 'big' : 'small');
+                }
+            }
+        });
+    }
+</script>
 {% endblock %}
