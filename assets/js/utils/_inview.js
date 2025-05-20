@@ -24,6 +24,8 @@ class _inview {
                         if (this.observeOnce) _observer.disconnect();
                     } else {
                         this.visible = false;
+                        if (!this.observeOnce && callback)
+                            setTimeout(() => callback(this), this.delay);
                     }
                 });
             },
