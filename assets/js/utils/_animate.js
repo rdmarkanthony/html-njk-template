@@ -6,7 +6,8 @@ class _animate {
 
         this.debug = props.debug ?? false;
         this.delay = props.delay ?? 0.1;
-        this.adjacentDelay = props.adjacentDelay ?? 0.1;
+        this.adjacentDelay = props.adjacentDelay ?? this.delay;
+        this.staggerDelay = this.adjacentDelay;
         this.duration = props.duration ?? 0.8;
         this.keyframe = props.keyframe ?? "fadeInUpSmall";
 
@@ -63,12 +64,26 @@ class _animate {
                         }
                     });
                 });
+
+                _item.querySelectorAll('[data-animate="children-inview"]').forEach((item) => {
+                    Array.from(item.children).forEach((item) => {
+                        item.dataset.animate = "";
+                        // item.dataset.animateDelay = "stagger";
+                        item.classList.add("opacity-0");
+                    });
+                });
             } else {
                 // for single item
                 if (!["children", "child"].includes(_relation)) this.set(_item, _delay, _duration);
             }
+        });
 
-            // animate the containers upon inview
+        // animate the containers upon inview
+        document.querySelectorAll("[data-animate]").forEach((item) => {
+            const _item = item;
+            const _dataset = _item.dataset.animate.split(",");
+            const _relation = _dataset[0] ? _dataset[0] : "";
+
             new _inview({
                 target: _item,
                 callback: () => {
@@ -81,8 +96,9 @@ class _animate {
                         _item.querySelectorAll('[data-animate="child"]').forEach((item) => {
                             const _item = item;
 
-                            this.show(_item);
-                            this.clean(_item);
+                            this.show(_item, (target) => {
+                                this.clean(target);
+                            });
 
                             projName.event.dispatch(_item, "visible");
                         });
@@ -95,8 +111,9 @@ class _animate {
                         return;
                     } else {
                         // for single item
-                        this.show(_item);
-                        this.clean(_item);
+                        this.show(_item, (target) => {
+                            this.clean(target);
+                        });
                     }
                 },
             });
@@ -151,7 +168,9 @@ class _animate {
         target.style.setProperty("--animate-duration", `${duration}s`);
     }
 
-    show(target) {
+    show(target, callback) {
+        this.staggerDelay += this.adjacentDelay;
+
         let _className =
             target.dataset.animateClass || target.dataset.animate?.split(",")[0] || this.keyframe;
         if (["parent", "children", "child"].includes(_className)) _className = this.keyframe;
@@ -159,9 +178,52 @@ class _animate {
         // show and animate the element
         target.classList.remove("opacity-0");
         target.classList.add("animate__animated", `animate__${_className}`);
+
+        let _styles = window.getComputedStyle(target);
+        // if no animation-duration
+        if (parseFloat(_styles.animationDuration) === 0)
+            target.style.animationDuration = `${this.duration}s`;
+        // if no animation-delay
+        if (parseFloat(_styles.animationDelay) === 0) {
+            const _delay = `${this.adjacentDelay.toFixed(2)}s`;
+
+            target.style.setProperty("--animate-delay", _delay);
+            target.style.animationDelay = _delay;
+        }
+
+        // if should have stagger animation-delay
+        if (target.dataset.animateDelay) {
+            const _delay = parseFloat(this.staggerDelay)
+                ? `${this.staggerDelay.toFixed(2)}s`
+                : this.staggerDelay;
+
+            target.style.setProperty("--animate-delay", _delay);
+            target.style.animationDelay = _delay;
+        }
+
+        // for callback
+        if (callback) {
+            _styles = window.getComputedStyle(target);
+            const _delay =
+                parseFloat(_styles.animationDuration) + parseFloat(_styles.animationDelay);
+
+            // console.log(
+            //     "show",
+            //     "_delay",
+            //     parseFloat(_styles.animationDuration),
+            //     parseFloat(_styles.animationDelay),
+            //     _delay * 1000
+            // );
+
+            window.setTimeout(() => {
+                callback(target);
+            }, Math.max(_delay * 1000, 1400));
+        }
     }
 
     clean(target, callback) {
+        this.staggerDelay = 0;
+
         if (this.debug) return;
 
         let _className =
@@ -172,8 +234,17 @@ class _animate {
         const _styles = window.getComputedStyle(target);
         let _delay = parseFloat(_styles.animationDuration) + parseFloat(_styles.animationDelay);
 
+        // console.log(
+        //     "clean",
+        //     "_delay",
+        //     parseFloat(_styles.animationDuration),
+        //     parseFloat(_styles.animationDelay),
+        //     _delay * 1000
+        // );
+
         window.setTimeout(() => {
             target.removeAttribute("data-animate");
+            target.removeAttribute("data-animate-delay");
             target.classList.remove("animate__animated", `animate__${_className}`, "opacity-0");
 
             target.style.animationDelay = "";
@@ -186,7 +257,7 @@ class _animate {
 
             if (target.getAttribute("style")?.length <= 0) target.removeAttribute("style");
 
-            if (callback) callback();
-        }, _delay * 1000);
+            if (callback) callback(target);
+        }, Math.max(_delay * 1000, 1400));
     }
 }
