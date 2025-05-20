@@ -44,7 +44,7 @@
         if(_animating) return;
         _animating = true;
 
-        const _values = value.toLocaleString(undefined, value % 1 !== 0 ? {minimumFractionDigits: 2, maximumFractionDigits: 2} : {}).split(''); // split the value
+        const _values = value.toLocaleString("en-US", value % 1 !== 0 ? {minimumFractionDigits: 2, maximumFractionDigits: 2} : {}).split(''); // split the value
 
         // hide/show digits
         _instances.forEach((item, index) => {
