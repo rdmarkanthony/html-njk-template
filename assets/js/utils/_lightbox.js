@@ -18,6 +18,7 @@ class _lightbox {
         };
 
         this.animation = props.animation || "zoom";
+        this.animating = false;
 
         this.events = props.events || {}; // for events eg. 'BeforeShow'
         this.listeners = {};
@@ -38,7 +39,12 @@ class _lightbox {
     init(props) {
         this.style();
 
-        if (!this.modal) this.hide("all"); // hide existing non-modal lightboxes
+        // if this instance is not a modal lightbox, close prev lightboxes
+        if (!this.modal && window._lightboxList) {
+            window._lightboxList.forEach((item) => {
+                item.hide();
+            });
+        }
 
         // create main lightbox elements
         this.target = document.createElement("div");
@@ -197,6 +203,9 @@ class _lightbox {
 
     // show the lightbox
     show(status, callback, delay = null) {
+        if (this.animating) return;
+        this.animating = true;
+
         document.body.classList.add("lightbox-active");
         this.target.classList.add("lightbox-visible");
 
@@ -233,12 +242,17 @@ class _lightbox {
             if (this.el.btn.close)
                 this.el.btn.close.classList.remove("lightbox-animate", "lightbox-fadeIn");
 
+            this.animating = false;
+
             this.emit("afterShow");
         }, Math.max(delay ? delay : (_animationDuration ? _animationDuration : 0) * 1000, 0));
     }
 
     // hide the lightbox
     hide(status, callback, delay = null) {
+        if (this.animating) return;
+        this.animating = true;
+
         // if want to hide all existing lightbox
         if (status === "all") {
             [...window._lightboxList].forEach((item, index, arr) => {
@@ -299,6 +313,8 @@ class _lightbox {
 
             if (window._lightboxList.length === 0)
                 document.body.classList.remove("lightbox-active");
+
+            this.animating = false;
 
             this.emit("afterClose");
         }, Math.max(delay ? delay : (_animationDuration ? _animationDuration : 0) * 1000, 0));
