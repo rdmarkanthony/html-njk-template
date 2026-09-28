@@ -30,6 +30,9 @@ class _youtubePlayer {
         this.controls = props.controls !== undefined ? (props.controls ? 1 : 0) : 1;
         this.stretch = props.stretch ?? false;
 
+        this.revealDelay = props.revealDelay ?? 4500;
+        this.timers = {};
+
         this.isPlaying = false;
 
         this.debug = props.debug ?? false;
@@ -71,13 +74,14 @@ class _youtubePlayer {
             playerVars: {
                 playsinline: 1,
                 autoplay: this.autoplay ? 1 : 0,
-                loop: this.autoplay ? 1 : 0,
                 mute: this.autoplay ? 1 : 0,
                 controls: this.controls,
                 showinfo: 0,
                 modestbranding: 1,
                 rel: 0,
-                playlist: this.autoplay ? this.id : null,
+                disablekb: this.autoplay ? 1 : 0,
+                fs: this.autoplay ? 0 : 1,
+                iv_load_policy: this.autoplay ? 3 : 1,
             },
             events: {
                 onReady: (event) => {
@@ -95,6 +99,8 @@ class _youtubePlayer {
                         this.target.classList.remove("video-playing", "video-paused");
                     }
 
+                    if (this.autoplay) this.background(event.data);
+
                     // pause other playing video
                     if (event.data === 1) {
                         this.isPlaying = true;
@@ -108,7 +114,15 @@ class _youtubePlayer {
             },
         });
 
-        if (this.player.g) this.el.player = this.player.g;
+        // the api replaces the placeholder div with an iframe
+        if (this.player.getIframe) this.el.player = this.player.getIframe();
+
+        // autoplay vids are backgrounds; block hover/click ui and tab focus
+        if (this.autoplay) {
+            this.el.player.style.pointerEvents = "none";
+            this.el.player.setAttribute("tabindex", "-1");
+            this.el.player.style.opacity = 0;
+        }
 
         if (this.stretch) {
             if (getComputedStyle(this.target).overflow === "visible")
@@ -124,6 +138,38 @@ class _youtubePlayer {
         }
 
         this.emit("afterReady");
+    }
+
+    // autoplay vids: hide captions and youtube's ui, loop manually
+    background(state) {
+        clearTimeout(this.timers.reveal);
+        clearTimeout(this.timers.loop);
+
+        if (state === 1) {
+            this.player.unloadModule?.("captions");
+            this.player.unloadModule?.("cc");
+
+            // youtube shows its ui for a few secs after playing starts or seeks
+            this.timers.reveal = setTimeout(() => this.fade(true), this.revealDelay);
+
+            // fade out before the end
+            const _remaining = (this.player.getDuration() - this.player.getCurrentTime()) * 1000;
+            this.timers.loop = setTimeout(() => this.fade(false), _remaining - 1000);
+        } else {
+            // hide right away
+            this.el.player.style.transition = "none";
+            this.el.player.style.opacity = 0;
+
+            if (state === 0) {
+                this.player.seekTo(0);
+                this.player.playVideo();
+            }
+        }
+    }
+
+    fade(show) {
+        this.el.player.style.transition = "opacity 0.8s";
+        this.el.player.style.opacity = show ? "" : 0;
     }
 
     resize() {

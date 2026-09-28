@@ -25,19 +25,19 @@
             </div>
             <div class="flex flex-col gap-2 md:gap-4">
                 <div class="text-lg md:text-2xl">Autoplay</div>
-                <div class="relative aspect-video bg-black" data-yt-player="z9Ug-3qhrwY,autoplay">
+                <div class="relative aspect-video bg-black" data-yt-player="25QyCxVkXwQ,autoplay">
                     <div class="z-10 absolute top-0 left-0 w-full h-full"></div>
                 </div>
             </div>
             <div class="flex flex-col gap-2 md:gap-4">
                 <div class="text-lg md:text-2xl">Stretched: Square</div>
-                <div class="relative aspect-square bg-black" data-yt-player="z9Ug-3qhrwY,autoplay,stretch">
+                <div class="relative aspect-square bg-black" data-yt-player="25QyCxVkXwQ,autoplay,stretch">
                     <div class="z-10 absolute top-0 left-0 w-full h-full"></div>
                 </div>
             </div>
             <div class="flex flex-col gap-2 md:gap-4">
                 <div class="text-lg md:text-2xl">Stretched: Vertical</div>
-                <div class="relative aspect-[9/16] bg-black" data-yt-player="z9Ug-3qhrwY,autoplay,stretch">
+                <div class="relative aspect-[9/16] bg-black" data-yt-player="25QyCxVkXwQ,autoplay,stretch">
                     <div class="z-10 absolute top-0 left-0 w-full h-full"></div>
                 </div>
             </div>
@@ -69,21 +69,6 @@
             autoplay: _autoplay ? true : false,
             controls: _autoplay ? false : true,
             stretch: _stretch,
-            events: {
-                beforeInit: (instance) => {
-                    // hide the loading state of muted vids
-                    if(instance.autoplay) {
-                        instance.el.player.style.transition = 'opacity 0.8s';
-                        instance.el.player.style.opacity = 0;
-                    }
-                },
-                onStateChange: (instance) => {
-                    // show the muted vids after loading
-                    if(instance.autoplay && instance.player.getPlayerState) {
-                        if(instance.player.getPlayerState() === 1) instance.el.player.style.opacity = '';
-                    }
-                }
-            }
         });
     });
 </script>
